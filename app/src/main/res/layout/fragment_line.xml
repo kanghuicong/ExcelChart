@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/qb_px_8">
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/add_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/qb_px_8"
+            app:left_text="@string/add_line_bottom"/>
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/add_right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/qb_px_8"
+            android:layout_marginTop="@dimen/qb_px_1"
+            app:left_text="@string/add_line_right" />
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/merge_cell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/qb_px_8"
+            android:layout_marginTop="@dimen/qb_px_8"
+            app:left_text="@string/merge_cell"/>
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/add_left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/qb_px_8"
+            android:layout_marginTop="@dimen/qb_px_8"
+            app:left_text="@string/add_line_left"/>
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/add_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/qb_px_8"
+            android:layout_marginTop="@dimen/qb_px_1"
+            app:left_text="@string/add_line_top"/>
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/delete_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/qb_px_8"
+            android:layout_marginTop="@dimen/qb_px_8"
+            app:left_text="@string/delete_line"/>
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/delete_column"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/qb_px_8"
+            android:layout_marginTop="@dimen/qb_px_1"
+            app:left_text="@string/delete_column"/>
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

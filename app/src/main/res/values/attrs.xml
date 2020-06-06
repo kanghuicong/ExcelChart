@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TitleView">
+        <attr name="title" format="string" />
+        <attr name="title_color" format="color" />
+        <attr name="title_left" format="string" />
+        <attr name="title_iv_left" format="reference" />
+        <attr name="title_left_color" format="color" />
+        <attr name="title_right" format="string" />
+        <attr name="title_right_color" format="color" />
+        <attr name="title_iv_right" format="reference" />
+        <attr name="title_iv_right2" format="reference" />
+        <attr name="background_color" format="color" />
+        <attr name="background_drawable" format="reference" />
+        <attr name="isBack" format="boolean" />
+        <attr name="isbold" format="boolean" />
+        <attr name="needLine" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SuperItemView">
+        <attr name="isPadding" format="boolean"/>
+        <attr name="needBackground" format="boolean" />
+        <!--left-left图片-->
+        <attr name="left_limg" format="reference"/>
+        <attr name="left_limg_width" format="integer"/>
+        <attr name="left_limg_height" format="integer"/>
+        <attr name="left_limg_leftMargin" format="integer"/>
+        <attr name="left_limg_rightMargin" format="integer"/>
+        <attr name="left_limg_topMargin" format="integer"/>
+        <attr name="left_limg_bottomMargin" format="integer"/>
+        <attr name="noLeftImageL" format="boolean"/>
+        <!--left文字-->
+        <attr name="left_text" format="string"/>
+        <attr name="left_text_color" format="color"/>
+        <attr name="left_text_size" format="integer"/>
+        <attr name="left_drawable_padding" format="integer"/>
+        <attr name="left_text_rightMargin" format="integer"/>
+        <attr name="left_text_leftMargin" format="integer"/>
+        <attr name="left_text_topMargin" format="integer"/>
+        <attr name="left_text_bottomMargin" format="integer"/>
+        <attr name="left_text_bold" format="boolean"/>
+        <attr name="noLeftText" format="boolean"/>
+        <!--left-right图片-->
+        <attr name="left_rimg" format="reference"/>
+        <attr name="left_rimg_width" format="integer"/>
+        <attr name="left_rimg_height" format="integer"/>
+        <!--right-left图片-->
+        <attr name="right_rimg" format="reference"/>
+        <attr name="right_limg_width" format="integer"/>
+        <attr name="right_limg_height" format="integer"/>
+        <attr name="right_limg_leftMargin" format="integer"/>
+        <attr name="right_limg_rightMargin" format="integer"/>
+        <attr name="right_limg_topMargin" format="integer"/>
+        <attr name="right_limg_bottomMargin" format="integer"/>
+        <attr name="noRightImgL" format="boolean"/>
+        <!--right文字-->
+        <attr name="right_text" format="string"/>
+        <attr name="right_text_color" format="color"/>
+        <attr name="right_text_size" format="integer"/>
+        <attr name="right_drawable_padding" format="integer"/>
+        <attr name="right_text_rightMargin" format="integer"/>
+        <attr name="right_text_leftMargin" format="integer"/>
+        <attr name="right_text_topMargin" format="integer"/>
+        <attr name="right_text_bottomMargin" format="integer"/>
+        <attr name="noRightText" format="boolean"/>
+        <!--right-right图片-->
+        <attr name="right_limg" format="reference"/>
+        <attr name="right_rimg_width" format="integer"/>
+        <attr name="right_rimg_height" format="integer"/>
+        <attr name="isArrow" format="boolean"/>
+        <attr name="noRightImgR" format="boolean"/>
+        <!--CheckBox-->
+        <attr name="isCheckBox" format="boolean"/>
+        <attr name="checkBox_width" format="boolean"/>
+        <attr name="checkBox_height" format="boolean"/>
+        <attr name="checkBox_leftMargin" format="boolean"/>
+        <attr name="checkBox_topMargin" format="integer"/>
+        <attr name="checkBox_rightMargin" format="integer"/>
+        <attr name="checkBox_bottomMargin" format="integer"/>
+        <!--switch-->
+        <attr name="isSwitch" format="boolean"/>
+        <!--top-->
+        <attr name="top_gravity" format="string"/>
+        <attr name="top_topMargin" format="integer"/>
+        <attr name="top_leftMargin" format="integer"/>
+        <attr name="top_rightMargin" format="integer"/>
+        <attr name="top_bottomMargin" format="integer"/>
+        <attr name="noTop" format="boolean"/>
+        <attr name="isTopBetween" format="boolean"/>
+        <!--top-left文字-->
+        <attr name="top_left_text" format="string"/>
+        <attr name="top_left_textSize" format="integer"/>
+        <attr name="top_left_textColor" format="color|reference"/>
+        <attr name="top_left_leftMargin" format="integer"/>
+        <attr name="top_left_topMargin" format="integer"/>
+        <attr name="top_left_rightMargin" format="integer"/>
+        <attr name="top_left_bottomMargin" format="integer"/>
+        <!--top-right文字-->
+        <attr name="top_right_text" format="string"/>
+        <attr name="top_right_textSize" format="integer"/>
+        <attr name="top_right_textColor" format="color|reference"/>
+        <attr name="top_right_leftMargin" format="integer"/>
+        <attr name="top_right_topMargin" format="integer"/>
+        <attr name="top_right_rightMargin" format="integer"/>
+        <attr name="top_right_bottomMargin" format="integer"/>
+        <!--bottom-->
+        <attr name="bottom_gravity" format="string"/>
+        <attr name="bottom_topMargin" format="integer"/>
+        <attr name="bottom_leftMargin" format="integer"/>
+        <attr name="bottom_rightMargin" format="integer"/>
+        <attr name="bottom_bottomMargin" format="integer"/>
+        <attr name="noBottom" format="boolean"/>
+        <attr name="isBottomBetween" format="boolean"/>
+        <!--bottom-left文字-->
+        <attr name="bottom_left_text" format="string"/>
+        <attr name="bottom_left_textSize" format="integer"/>
+        <attr name="bottom_left_textColor" format="color|reference"/>
+        <attr name="bottom_left_leftMargin" format="integer"/>
+        <attr name="bottom_left_topMargin" format="integer"/>
+        <attr name="bottom_left_rightMargin" format="integer"/>
+        <attr name="bottom_left_bottomMargin" format="integer"/>
+        <!--bottom-right文字-->
+        <attr name="bottom_right_text" format="string"/>
+        <attr name="bottom_right_textSize" format="integer"/>
+        <attr name="bottom_right_textColor" format="color"/>
+        <attr name="bottom_right_leftMargin" format="integer"/>
+        <attr name="bottom_right_topMargin" format="integer"/>
+        <attr name="bottom_right_rightMargin" format="integer"/>
+        <attr name="bottom_right_bottomMargin" format="integer"/>
+
+    </declare-styleable>
+</resources>

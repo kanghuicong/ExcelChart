@@ -1,0 +1,61 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/qb_px_32">
+
+        <RelativeLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_36">
+
+            <ImageButton
+                android:id="@+id/title_img"
+                android:layout_width="@dimen/qb_px_32"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:layout_marginStart="@dimen/qb_px_8"/>
+
+
+            <TextView
+                android:id="@+id/title_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:singleLine="true"
+                android:textColor="#4a4a4a"
+                android:textSize="18sp" />
+
+
+            <ImageButton
+                android:id="@+id/title_iv_right"
+                android:layout_width="@dimen/qb_px_32"
+                android:layout_height="@dimen/qb_px_32"
+                android:layout_alignParentEnd="true"
+                android:background="@null" />
+
+            <TextView
+                android:id="@+id/title_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:paddingEnd="@dimen/qb_px_20"
+                android:paddingStart="@dimen/qb_px_10"
+                android:singleLine="true"
+                android:textColor="#4a4a4a"
+                android:textSize="14sp"
+                android:gravity="center" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/title_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_1" />
+    </LinearLayout>
+</merge>

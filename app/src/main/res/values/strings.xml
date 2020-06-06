@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">ExcelChart</string>
+
+    <string name="loading">加载中</string>
+    <string name="error">发生错误</string>
+    <string name="error_network">网络错误</string>
+    <string name="no_data">暂无内容</string>
+
+    <string name="add_line_bottom">下方插入一行</string>
+    <string name="add_line_right">右边插入一列</string>
+    <string name="merge_cell">合并单元格</string>
+    <string name="add_line_left">左边插入一列</string>
+    <string name="add_line_top">上方插入一行</string>
+    <string name="delete_line">删除一行</string>
+    <string name="delete_column">删除一列</string>
+</resources>
