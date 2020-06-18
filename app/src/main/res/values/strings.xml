@@ -13,4 +13,28 @@
     <string name="add_line_top">上方插入一行</string>
     <string name="delete_line">删除一行</string>
     <string name="delete_column">删除一列</string>
+
+    <string name="addition">加法</string>
+    <string name="subtraction">减法</string>
+    <string name="multiplication">乘法</string>
+    <string name="division">除法</string>
+    <string name="average">平均</string>
+    <string name="maximum">最大</string>
+    <string name="minimum">最小</string>
+    <string name="left">左边</string>
+    <string name="right">右边</string>
+    <string name="top">上边</string>
+    <string name="bottom">下边</string>
+    <string name="up_left">左上</string>
+    <string name="all">所有</string>
+    <string name="integer">取整</string>
+    <string name="one">1位</string>
+    <string name="two">2位</string>
+    <string name="three">3位</string>
+    <string name="four">4位</string>
+    <string name="five">5位</string>
+    <string name="six">6位</string>
+    <string name="no_partition">不隔断</string>
+    <string name="partition">隔断</string>
+    <string name="apply">应用</string>
 </resources>

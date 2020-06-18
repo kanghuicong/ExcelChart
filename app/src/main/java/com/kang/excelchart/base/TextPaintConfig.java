@@ -1,23 +1,26 @@
 package com.kang.excelchart.base;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.text.TextPaint;
+
+import androidx.core.content.ContextCompat;
+
+import com.kang.excelchart.R;
+import com.kang.excelchart.bean.TextColorBean;
+import com.vondear.rxtool.RxImageTool;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 类描述：
  */
 public class TextPaintConfig {
+    public static final int defaultBackgroundColor = 0xFFFFFFFF;//默认背景
+    public static final int defaultTextColor = 0xFF4A4A4A;//默认字体颜色
 
-    public enum TextStyle{
-         BOLD_STYLE,
-         SKEW_X_STYLE,
-         UNDERlINE_STYLE,
-         STRIKE_THRU_STYLE
-    }
-
-    public TextPaintConfig() { }
-
-    public TextPaint getTextPaint() {
+    public static TextPaint getTextPaint() {
         TextPaint textPaint = new TextPaint();
         textPaint.setFakeBoldText(false);//粗体
         textPaint.setTextSkewX(0f);//右斜
@@ -26,44 +29,33 @@ public class TextPaintConfig {
 
         textPaint.setStyle(Paint.Style.FILL);
         textPaint.setStrokeWidth(8);
-        textPaint.setTextSize(50);
+        textPaint.setTextSize(RxImageTool.sp2px(14));
         textPaint.setTextAlign(Paint.Align.CENTER);
-
+        textPaint.setColor(defaultTextColor);
         return textPaint;
     }
 
+    public static List<TextColorBean> getTextColorList(int color) {
+        List<TextColorBean> list = new ArrayList<>();
+        final int[] colors = {defaultTextColor, 0xFFF12C20, 0xFF00C0D9, 0xFF00D3BD};
+        for (int i = 0; i < colors.length; i++) {
+            TextColorBean textColorBean = new TextColorBean();
+            textColorBean.setColor(colors[i]);
+            textColorBean.setClick(color == colors[i]);
+            list.add(textColorBean);
+        }
+        return list;
+    }
 
-//    public void setTextPaint() {
-//        textPaint = new TextPaint();
-//        textPaint.setFakeBoldText(isBold);//粗体
-//        if (isSkewX) textPaint.setTextSkewX(-0.5f);//右斜
-//        else textPaint.setTextSkewX(0f);
-//        textPaint.setUnderlineText(isUnder);//下划线
-//        textPaint.setStrikeThruText(isStrikeThru);//删除线
-//
-//        textPaint.setStyle(Paint.Style.FILL);
-//        textPaint.setStrokeWidth(8);
-//        textPaint.setTextSize(50);
-//        textPaint.setTextAlign(Paint.Align.CENTER);
-//    }
-//
-//    //设置粗体
-//    public void setFakeBoldText(boolean isBold) {
-//        this.isBold = isBold;
-//    }
-//
-//    //设置右斜
-//    public void setTextSkewX(boolean isSkewX) {
-//        this.isSkewX = isSkewX;
-//    }
-//
-//    //设置下划线
-//    public void setUnderlineText(boolean isUnder) {
-//        this.isUnder = isUnder;
-//    }
-//
-//    //设置删除线
-//    public void setStrikeThru(boolean isStrikeThru) {
-//        this.isStrikeThru = isStrikeThru;
-//    }
+    public static List<TextColorBean> getBackgroundColorList(int color) {
+        List<TextColorBean> list = new ArrayList<>();
+        final int[] colors = {TextPaintConfig.defaultBackgroundColor, 0xFFF12C20, 0xFF00C0D9, 0xFF00D3BD};
+        for (int i = 0; i < colors.length; i++) {
+            TextColorBean textColorBean = new TextColorBean();
+            textColorBean.setColor(colors[i]);
+            textColorBean.setClick(color == colors[i]);
+            list.add(textColorBean);
+        }
+        return list;
+    }
 }

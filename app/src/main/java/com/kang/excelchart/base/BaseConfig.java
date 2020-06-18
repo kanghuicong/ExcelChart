@@ -1,7 +1,13 @@
 package com.kang.excelchart.base;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.View;
+
+import com.kang.excelchart.R;
+import com.vondear.rxtool.RxDeviceTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,4 +46,15 @@ public class BaseConfig {
         return list;
     }
 
+    public static int getCount(Context context) {
+        final View v = View.inflate(context, R.layout.item_txt_color, null);
+        //制定测量规则 参数表示size + mode
+        int width = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int height = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        //调用measure方法之后就可以获取宽高
+        v.measure(width, height);
+        int count = RxDeviceTool.getScreenWidth(context) / v.getMeasuredWidth();
+
+        return count;
+    }
 }

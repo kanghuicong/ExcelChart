@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.kang.excelchart.ChartView;
+import com.kang.excelchart.MainActivity;
 import com.kang.excelchart.http.HttpUtils;
 import com.kang.excelchart.utils.RefreshUtil;
 
@@ -21,6 +23,7 @@ public abstract class BaseFragment extends Fragment {
     private View view;
     public RefreshUtil refreshUtil;
     public HttpUtils httpUtils;
+    public ChartView chartView;
 
     protected abstract int initLayout(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState);
 
@@ -36,6 +39,7 @@ public abstract class BaseFragment extends Fragment {
             initView(view);
 
             httpUtils = new HttpUtils(activity);
+            chartView = ((MainActivity) activity).chartView;
             init(inflater,container,savedInstanceState);
         } else {
             ViewGroup parent = (ViewGroup) view.getParent();

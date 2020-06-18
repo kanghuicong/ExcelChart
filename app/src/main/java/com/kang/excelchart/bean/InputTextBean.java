@@ -11,12 +11,22 @@ public class InputTextBean {
     private int inputY;
     private String content;
     private TextPaint textPaint;
+    private int backgroundColor;
 
-    public InputTextBean(int inputX,int inputY,TextPaint textPaint,String content) {
+    public InputTextBean(int inputX,int inputY,TextPaint textPaint,int backgroundColor,String content) {
         this.inputX = inputX;
         this.inputY = inputY;
         this.textPaint = textPaint;
         this.content = content;
+        this.backgroundColor = backgroundColor;
+    }
+
+    public int getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(int backgroundColor) {
+        this.backgroundColor = backgroundColor;
     }
 
     public TextPaint getTextPaint() {

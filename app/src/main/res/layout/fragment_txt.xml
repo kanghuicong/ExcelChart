@@ -247,8 +247,8 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_color_1"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_8"
@@ -257,23 +257,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_4" />
 
-    <LinearLayout
-        android:id="@+id/ll_color_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_8"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_4" />
 
-    <LinearLayout
-        android:id="@+id/ll_color_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_8"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_4" />
 </androidx.constraintlayout.widget.ConstraintLayout>

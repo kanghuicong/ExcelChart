@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_item"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/qb_px_8"
+    android:gravity="center"
+    android:layout_marginBottom="@dimen/qb_px_10">
+
+    <TextView
+        android:id="@+id/tv_color"
+        android:layout_width="@dimen/qb_px_18"
+        android:layout_height="@dimen/qb_px_18"
+        android:background="@color/black4A"/>
+
+</LinearLayout>

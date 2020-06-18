@@ -31,6 +31,9 @@ import com.kang.excelchart.fragment.OtherFragment;
 import com.kang.excelchart.fragment.TxtFragment;
 import com.kang.excelchart.utils.SoftKeyBoardListener;
 import com.vondear.rxtool.RxKeyboardTool;
+import com.vondear.rxtool.RxLogTool;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +57,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ImageButton ivOther;
     private ImageButton ivNewline;
     private XViewPager viewPager;
+    private int selectPostion = 0;
 
     @Override
     public int initLayout() {
@@ -100,6 +104,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 chartView.setBarHeight(titleView.getHeight()); // 获取高度
             }
         });
+
+        keyBoardListener();
+        initViewPager();
+
         //HVScrollView
         scrollView.setFlingEnabled(false);
 
@@ -109,16 +117,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         chartView.setISelectChart(new ChartView.ISelectChart() {
             @Override
             public void selectChart(InputTextBean inputTextBean) {
-                layout.setVisibility(View.VISIBLE);
-                RxKeyboardTool.showSoftInput(activity, etContent);
+
+                if (layout.getVisibility() !=View.VISIBLE){
+                    layout.setVisibility(View.VISIBLE);
+                    RxKeyboardTool.showSoftInput(activity, etContent);
+                }
+
                 etContent.setText(inputTextBean.getContent());
                 etContent.setSelection(inputTextBean.getContent().length());
+
+
+                if (viewPager.getCurrentItem() == 0)
+                    EventBus.getDefault().postSticky(inputTextBean);
+
             }
         });
 
-
-        keyBoardListener();
-        initViewPager();
 
     }
 
@@ -139,6 +153,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager(), fragmentList, null);
         viewPager.setPagingEnabled(false);//禁止左右滑动
         viewPager.setAdapter(adapter);
+
+        viewPager.setCurrentItem(0, true);
     }
 
 

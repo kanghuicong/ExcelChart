@@ -10,21 +10,28 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
 
+import androidx.core.content.ContextCompat;
+
 import com.kang.excelchart.base.BaseConfig;
 import com.kang.excelchart.base.PaintConfig;
 import com.kang.excelchart.base.TextPaintConfig;
 import com.kang.excelchart.bean.InputTextBean;
 import com.vondear.rxtool.RxBarTool;
+import com.vondear.rxtool.RxImageTool;
 import com.vondear.rxtool.RxLogTool;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 类描述：
@@ -59,6 +66,9 @@ public class ChartView extends View {
     private int[] bitmapY = {0, 0};
 
     private int[] greenLine = {0, 0};//绿线
+
+    public int[] selectCell = {-1, -1};//选中框左上角，非坐标而是个数
+    private List<InputTextBean> inputTextList = new ArrayList<>();//输入的文字集合，包括左上角和内容
 
     public ChartView(Context context) {
         this(context, null);
@@ -215,6 +225,19 @@ public class ChartView extends View {
 //
 //            }
             /*------------------------*/
+            //单元格背景
+            //不是默认的背景色才进行绘制
+            if (inputTextBean.getBackgroundColor() != TextPaintConfig.defaultBackgroundColor) {
+                float startXbg = pointX[inputTextBean.getInputX()];
+                float endXbg = pointX[inputTextBean.getInputX() + 1];
+                float startYbg = pointY[inputTextBean.getInputY()];
+                float endYbg = pointY[inputTextBean.getInputY() + 1];
+
+                Paint p = new Paint();
+                p.setColor(inputTextBean.getBackgroundColor());
+                canvas.drawRect(startXbg + PaintConfig.lineWidth / 2, startYbg + PaintConfig.lineWidth / 2, endXbg - PaintConfig.lineWidth / 2, endYbg - PaintConfig.lineWidth / 2, p);
+            }
+
             // 单行绘制 （先计算出基线和到文字中间的距离,mPaint不是TextPaint）
             float offset = Math.abs(inputTextBean.getTextPaint().ascent() + inputTextBean.getTextPaint().descent()) / 2;
             char[] textChars = inputTextBean.getContent().toCharArray();
@@ -224,18 +247,34 @@ public class ChartView extends View {
             Paint.FontMetricsInt textFm = inputTextBean.getTextPaint().getFontMetricsInt();
             int singleLineHeight = Math.abs(textFm.top - textFm.bottom);
             //绘制起点
-            float startL = pointX[inputTextBean.getInputX()] + (pointX[inputTextBean.getInputX() + 1] - pointX[inputTextBean.getInputX()]) / 2;
+            float startL;
             float startT = pointY[inputTextBean.getInputY()] + singleLineHeight / 2 + offset;
+            //文字的TextAlign会影响起点X坐标
+            switch (inputTextBean.getTextPaint().getTextAlign()) {
+                case RIGHT:
+                    startL = pointX[inputTextBean.getInputX() + 1];
+                    break;
+                case LEFT:
+                    startL = pointX[inputTextBean.getInputX()];
+                    break;
+                default:
+                    startL = pointX[inputTextBean.getInputX()] + (pointX[inputTextBean.getInputX() + 1] - pointX[inputTextBean.getInputX()]) / 2;
+                    break;
+            }
 
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < textChars.length; i++) {
                 float v = inputTextBean.getTextPaint().measureText(textChars[i] + "");
                 if (ww + v < width.get(inputTextBean.getInputX())) {
+                    //未满一行
                     sb.append(textChars[i]);
                     ww += v;
                 } else {
+                    //满一行
                     canvas.drawText(sb.toString(), startL, startT, inputTextBean.getTextPaint());
+                    //新的一行起始点startT递增
                     startT += singleLineHeight + 0.0f;
+                    //重新加入新一行的文字
                     sb = new StringBuilder();
                     ww = 0.0f;
                     ww += v;
@@ -257,7 +296,6 @@ public class ChartView extends View {
         }
     }
 
-    private float[] measuredWidth = new float[1];
     public int[] downPoint = {0, 0};//选中的坐标点
     public int downType = 0;
     public int moveX = 0;
@@ -320,7 +358,7 @@ public class ChartView extends View {
                     init();
                     invalidate();
                 } else {
-                    //确定点击和抬起时同一个位置，即这是点击操作，增加一点容错率 +-5
+                    //确定点击和抬起时同一个位置，即这是点击操作，增加一点容错率 ±5
                     if ((x <= downPoint[0] + 5 || x >= downPoint[0] - 5) && (y <= downPoint[1] + 5 || y >= downPoint[1] - 5))
                         selectCell(x, y);
                 }
@@ -332,7 +370,6 @@ public class ChartView extends View {
         return super.onTouchEvent(event);
     }
 
-    public int[] selectCell = {-1, -1};//选中框左上角，非坐标而是个数
 
     //点击单元格时
     private void selectCell(int x, int y) {
@@ -360,6 +397,7 @@ public class ChartView extends View {
         }
         invalidate();
 
+        //已编辑的单元格
         for (InputTextBean inputTextBean : inputTextList) {
             if (inputTextBean.getInputX() == selectCell[0] && inputTextBean.getInputY() == selectCell[1]) {
                 if (iSelectChart != null) {
@@ -367,12 +405,9 @@ public class ChartView extends View {
                 }
                 return;
             }
-//            else if (iSelectChart != null)
-//                iSelectChart.selectChart(new InputTextBean(selectCell[0], selectCell[1], ""));
         }
-
-
-        iSelectChart.selectChart(new InputTextBean(selectCell[0], selectCell[1], paintConfig.textPaint, ""));
+        //新的单元格
+        iSelectChart.selectChart(new InputTextBean(selectCell[0], selectCell[1], TextPaintConfig.getTextPaint(), TextPaintConfig.defaultBackgroundColor, ""));
     }
 
     //用于获取滑动的距离
@@ -385,12 +420,9 @@ public class ChartView extends View {
         this.barHeight = barHeight;
     }
 
-    private List<InputTextBean> inputTextList = new ArrayList<>();//输入的文字集合，包括左上角和内容
-
     //绘制文字
     public void setTextContent(EditText et, String content) {
 
-        //如果文字长度超出单元格长度，加长单元格
         if (selectCell[0] == -1 && selectCell[1] == -1) return;
 
         boolean isSelect = false;
@@ -401,7 +433,7 @@ public class ChartView extends View {
             if (inputTextList.get(i).getInputX() == selectCell[0] && inputTextList.get(i).getInputY() == selectCell[1]) {
                 paint = inputTextList.get(i).getTextPaint();
                 //更换该单元格内容
-                inputTextList.set(i, new InputTextBean(selectCell[0], selectCell[1], inputTextList.get(i).getTextPaint(), content));
+                inputTextList.set(i, new InputTextBean(selectCell[0], selectCell[1], inputTextList.get(i).getTextPaint(), inputTextList.get(i).getBackgroundColor(), content));
                 isSelect = true;
                 break;
             }
@@ -409,8 +441,8 @@ public class ChartView extends View {
 
         //选中新的单元格，则新增
         if (!isSelect) {
-            paint = paintConfig.textPaint;
-            inputTextList.add(new InputTextBean(selectCell[0], selectCell[1], paintConfig.textPaint, content));
+            paint = TextPaintConfig.getTextPaint();
+            inputTextList.add(new InputTextBean(selectCell[0], selectCell[1], paint, TextPaintConfig.defaultBackgroundColor, content));
         }
 
         //计算单行文字高度
@@ -448,7 +480,7 @@ public class ChartView extends View {
         }
 
         switch (gravity) {
-            case BaseConfig.ADD_LEFT:
+            case BaseConfig.ADD_LEFT://左边
                 width.add(selectCell[0], width.get(selectCell[0]));
                 for (InputTextBean inputTextBean : inputTextList) {
                     if (inputTextBean.getInputX() >= selectCell[0])
@@ -456,14 +488,14 @@ public class ChartView extends View {
                 }
                 selectCell[0] = selectCell[0] + 1;
                 break;
-            case BaseConfig.ADD_RIGHT:
+            case BaseConfig.ADD_RIGHT://右边
                 width.add(selectCell[0] + 1, width.get(selectCell[0]));
                 for (InputTextBean inputTextBean : inputTextList) {
                     if (inputTextBean.getInputX() > selectCell[0])
                         inputTextBean.setInputX(inputTextBean.getInputX() + 1);
                 }
                 break;
-            case BaseConfig.ADD_TOP:
+            case BaseConfig.ADD_TOP://上边
                 height.add(selectCell[1], height.get(selectCell[1]));
 
                 for (InputTextBean inputTextBean : inputTextList) {
@@ -545,6 +577,8 @@ public class ChartView extends View {
         invalidate();
     }
 
+    /*----------------------------------------------------拉伸相关--------------------------------------------------------*/
+
     //检查是否点击了图标
     public int checkBitmap(int x, int y) {
         //上边
@@ -600,29 +634,260 @@ public class ChartView extends View {
 
     /*----------------------------------------------------文字属性--------------------------------------------------------*/
     //粗体
-    public void setFakeBoldText(boolean isBold) {
-        //选中了单元格
+    public void setFakeBoldText(final boolean isBold) {
+        doTextType(new ITextType() {
+            @Override
+            public void doType(TextPaint textPaint) {
+                textPaint.setFakeBoldText(isBold);
+            }
+        });
+    }
 
+    //斜体
+    public void setTextSkewX(final boolean isSkew) {
+        doTextType(new ITextType() {
+            @Override
+            public void doType(TextPaint textPaint) {
+                textPaint.setTextSkewX(isSkew ? -0.5f : 0f);
+            }
+        });
+    }
+
+    //下划线
+    public void setUnderline(final boolean isUnderline) {
+        doTextType(new ITextType() {
+            @Override
+            public void doType(TextPaint textPaint) {
+                textPaint.setUnderlineText(isUnderline);
+            }
+        });
+    }
+
+    //删除线
+    public void setDeleteLine(final boolean isDeleteLine) {
+        doTextType(new ITextType() {
+            @Override
+            public void doType(TextPaint textPaint) {
+                textPaint.setStrikeThruText(isDeleteLine);
+            }
+        });
+    }
+
+    //设置字体大小
+    public void setTextSize(final int size) {
+        doTextType(new ITextType() {
+            @Override
+            public void doType(TextPaint textPaint) {
+                textPaint.setTextSize(RxImageTool.sp2px(size));
+            }
+        });
+    }
+
+    //设置字体颜色
+    public void setTextColor(final int color) {
+        doTextType(new ITextType() {
+            @Override
+            public void doType(TextPaint textPaint) {
+                textPaint.setColor(color);
+            }
+        });
+    }
+
+    //设置背景颜色
+    public void setBackgroundColor(final int color) {
+        doTextType(new ITextType() {
+            @Override
+            public void doType(TextPaint textPaint) {
+                //选中了单元格
+                if (selectCell[0] != -1 && selectCell[1] != -1) {
+                    for (int i = 0; i < inputTextList.size(); i++) {
+                        InputTextBean inputTextBean = inputTextList.get(i);
+                        //已经在inputTextList里，更新其TextPaint
+                        if (inputTextBean.getInputX() == selectCell[0] && inputTextBean.getInputY() == selectCell[1]) {
+                            inputTextBean.setBackgroundColor(color);
+                            inputTextList.set(i, inputTextBean);
+                            invalidate();
+                            return;
+                        }
+                    }
+                }
+                //新的单元格
+                InputTextBean inputTextBean = new InputTextBean(selectCell[0], selectCell[1], textPaint, color, "");
+                inputTextList.add(inputTextBean);
+                invalidate();
+            }
+        });
+    }
+
+    //设置gravity
+    public void setGravity(final Paint.Align align) {
+        doTextType(new ITextType() {
+            @Override
+            public void doType(TextPaint textPaint) {
+                textPaint.setTextAlign(align);
+            }
+        });
+    }
+
+    private void doTextType(ITextType iTextType) {
+        //选中了单元格
         if (selectCell[0] != -1 && selectCell[1] != -1) {
             for (int i = 0; i < inputTextList.size(); i++) {
+                InputTextBean inputTextBean = inputTextList.get(i);
                 //已经在inputTextList里，更新其TextPaint
-                if (inputTextList.get(i).getInputX() == selectCell[0] && inputTextList.get(i).getInputY() == selectCell[1]) {
-                    TextPaint textPaint = inputTextList.get(i).getTextPaint();
-                    textPaint.setFakeBoldText(isBold);
-                    inputTextList.get(i).setTextPaint(textPaint);
+                if (inputTextBean.getInputX() == selectCell[0] && inputTextBean.getInputY() == selectCell[1]) {
+
+                    TextPaint textPaint = inputTextBean.getTextPaint();
+                    inputTextBean.setTextPaint(textPaint);
+                    iTextType.doType(textPaint);
+                    inputTextList.set(i, inputTextBean);
                     invalidate();
                     return;
                 }
             }
         }
-        TextPaintConfig textPaintConfig = new TextPaintConfig();
-        TextPaint textPaint = textPaintConfig.getTextPaint();
-        textPaint.setFakeBoldText(isBold);
-        inputTextList.add(new InputTextBean(selectCell[0], selectCell[1], textPaint, ""));
+        //新的单元格
+        TextPaint textPaint = TextPaintConfig.getTextPaint();
+        inputTextList.add(new InputTextBean(selectCell[0], selectCell[1], textPaint, TextPaintConfig.defaultBackgroundColor, ""));
+        iTextType.doType(textPaint);
         invalidate();
     }
 
+    /*----------------------------------------------------算法--------------------------------------------------------*/
+    public enum MathType {
+        ADDITION, SUBTRACTION, MULTIPLY, DIVIDE, AVERAGE, MAX, MIN,
+    }
 
+    public enum ScopeType {
+        LEFT, TOP, RIGHT, BOTTOM, UP_LEFT,
+    }
+
+    //算法
+    public String doMath(MathType mathType, ScopeType scopeType, int decimal) {
+        List<String> strList = new ArrayList<>();
+
+        //先获取要计算的内容
+        for (InputTextBean inputTextBean : inputTextList)
+            switch (scopeType) {
+                case LEFT:
+                    if (inputTextBean.getInputY() == selectCell[1] && inputTextBean.getInputX() < selectCell[0]) {
+                        strList.add(inputTextBean.getContent());
+                    }
+                    break;
+                case RIGHT:
+                    if (inputTextBean.getInputY() == selectCell[1] && inputTextBean.getInputX() > selectCell[0]) {
+                        strList.add(inputTextBean.getContent());
+                    }
+                    break;
+                case TOP:
+                    if (inputTextBean.getInputY() < selectCell[1] && inputTextBean.getInputX() == selectCell[0]) {
+                        strList.add(inputTextBean.getContent());
+                    }
+                    break;
+                case BOTTOM:
+                    if (inputTextBean.getInputY() > selectCell[1] && inputTextBean.getInputX() == selectCell[0]) {
+                        strList.add(inputTextBean.getContent());
+                    }
+                    break;
+                case UP_LEFT:
+                    if (inputTextBean.getInputY() < selectCell[1] && inputTextBean.getInputX() < selectCell[0]) {
+                        strList.add(inputTextBean.getContent());
+                    }
+                    break;
+            }
+
+        //筛选出数字
+        List<Float> numList = new ArrayList<>();
+        for (String number : strList) {
+            Pattern pattern = Pattern.compile("[0-9]*");
+            Matcher isNum = pattern.matcher(number);
+            if (isNum.matches()) {
+                numList.add(Float.valueOf(number));
+            }
+        }
+//        ADDITION, SUBTRACTION, MULTIPLY, DIVIDE, AVERAGE, MAX, MIN,
+        String numStr;
+        if (numList.size() > 0) {
+            float num;
+            switch (mathType) {
+                case ADDITION:
+                    num = 0;
+                    for (float number : numList) {
+                        num = num + number;
+                    }
+                    break;
+                case SUBTRACTION:
+                    num = numList.get(0);
+                    for (int i = 0; i < numList.size(); i++) {
+                        num = num - numList.get(i);
+                    }
+                    break;
+                case MULTIPLY:
+                    num = 1;
+                    for (float number : numList) {
+                        num = num * number;
+                    }
+                    break;
+                case DIVIDE:
+                    num = numList.get(0);
+                    for (int i = 1; i < numList.size(); i++) {
+                        num = (float) (num / numList.get(i));
+                    }
+                    break;
+                case AVERAGE:
+                    num = 0;
+                    for (float number : numList) {
+                        num = num + number;
+                    }
+                    num = num / numList.size();
+                    break;
+                case MAX:
+                    num = numList.get(0);
+                    for (int i = 1; i < numList.size(); i++) {
+                        if (num < numList.get(i)) {
+                            num = numList.get(i);
+                        }
+                    }
+                    break;
+                case MIN:
+                    num = numList.get(0);
+                    for (int i = 1; i < numList.size(); i++) {
+                        if (num > numList.get(i)) {
+                            num = numList.get(i);
+                        }
+                    }
+                    break;
+                default:
+                    num = 0;
+                    break;
+            }
+
+            numStr = num + "";
+        } else {
+            numStr = "0";
+        }
+
+        BigDecimal bd = new BigDecimal(numStr);
+        bd = bd.setScale(decimal, BigDecimal.ROUND_HALF_UP);
+        return bd.toString();
+    }
+
+
+    /*----------------------------------------------------get--------------------------------------------------------*/
+    //获取当前选择的单元格InputTextBean
+    public InputTextBean getSelectInputTextBean() {
+        if (selectCell[0] != -1 && selectCell[1] != -1) {
+            for (int i = 0; i < inputTextList.size(); i++) {
+                if (inputTextList.get(i).getInputX() == selectCell[0] &&
+                        inputTextList.get(i).getInputY() == selectCell[1]) {
+                    return inputTextList.get(i);
+                }
+            }
+        }
+        return null;
+    }
+
+    /*----------------------------------------------------回调--------------------------------------------------------*/
     //选择的单元格后回调，目前用来返回单元格的内容
     ISelectChart iSelectChart;
 
@@ -632,5 +897,9 @@ public class ChartView extends View {
 
     public interface ISelectChart {
         void selectChart(InputTextBean inputTextBean);
+    }
+
+    private interface ITextType {
+        void doType(TextPaint textPaint);
     }
 }
