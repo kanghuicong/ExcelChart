@@ -12,6 +12,7 @@ import com.kang.excelchart.MainActivity;
 import com.kang.excelchart.R;
 import com.kang.excelchart.base.BaseConfig;
 import com.kang.excelchart.base.BaseFragment;
+import com.kang.excelchart.bean.InputTextBean;
 import com.kang.excelchart.custom.SuperItemView;
 
 /**
@@ -82,5 +83,10 @@ public class LineFragment extends BaseFragment {
                 chartView.deleteChart(BaseConfig.DELETE_LINE);
             }
         });
+    }
+
+    @Override
+    protected void getInputTextBean(InputTextBean event) {
+
     }
 }

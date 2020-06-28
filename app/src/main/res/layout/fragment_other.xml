@@ -1,18 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:gravity="center"
-        android:text="other"/>
+        android:orientation="vertical"
+        android:padding="@dimen/qb_px_8">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/bulk_insert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/qb_px_1"
+            app:left_text="@string/bulk_insert" />
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/find_and_replace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_1"
+            android:padding="@dimen/qb_px_8"
+            app:left_text="@string/find_and_replace" />
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/unified_wide_high"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_8"
+            android:padding="@dimen/qb_px_8"
+            app:left_text="@string/unified_wide_high" />
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/super_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_1"
+            android:padding="@dimen/qb_px_8"
+            app:left_text="@string/super_set" />
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/insert_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_8"
+            android:padding="@dimen/qb_px_8"
+            app:left_text="@string/insert_date" />
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/insert_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_1"
+            android:padding="@dimen/qb_px_8"
+            app:left_text="@string/insert_time" />
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/how_realize_calculation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_8"
+            android:padding="@dimen/qb_px_8"
+            app:left_text="@string/how_realize_calculation" />
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/how_create_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_1"
+            android:padding="@dimen/qb_px_8"
+            app:left_text="@string/how_create_table" />
+
+        <com.kang.excelchart.custom.SuperItemView
+            android:id="@+id/how_cell_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_1"
+            android:padding="@dimen/qb_px_8"
+            app:left_text="@string/how_cell_size" />
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

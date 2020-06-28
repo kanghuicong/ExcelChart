@@ -16,6 +16,7 @@ import com.kang.excelchart.adapter.ColorAdapter;
 import com.kang.excelchart.base.BaseConfig;
 import com.kang.excelchart.base.BaseFragment;
 import com.kang.excelchart.base.TextPaintConfig;
+import com.kang.excelchart.bean.InputTextBean;
 import com.kang.excelchart.bean.TextColorBean;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public class ColorFragment extends BaseFragment {
         colorAdapter = new ColorAdapter(activity, colorList, new ColorAdapter.ISelectColor() {
             @Override
             public void select(TextColorBean textColorBean) {
-                chartView.setBackgroundColor(textColorBean.getColor());
+                chartView.setBackGroundColor(textColorBean.getColor());
             }
         });
 
@@ -54,5 +55,10 @@ public class ColorFragment extends BaseFragment {
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvColor.setLayoutManager(gridLayoutManager);
         rvColor.setAdapter(colorAdapter);
+    }
+
+    @Override
+    protected void getInputTextBean(InputTextBean event) {
+
     }
 }

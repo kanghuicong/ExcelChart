@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.multidex.MultiDexApplication;
 
-import com.kang.excelchart.utils.FontsUtils;
 import com.lzy.okgo.OkGo;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
@@ -93,7 +92,6 @@ public class BaseApplication extends MultiDexApplication implements Application.
             StrictMode.setVmPolicy(builderX.build());
         }
 
-        FontsUtils.init(this);
     }
 
 

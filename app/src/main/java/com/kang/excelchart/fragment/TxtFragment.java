@@ -1,6 +1,7 @@
 package com.kang.excelchart.fragment;
 
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.view.Gravity;
@@ -35,6 +36,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,9 +67,11 @@ public class TxtFragment extends BaseFragment implements View.OnClickListener {
     private TextView tvStyle3;
     private TextView tvStyle4;
     private RecyclerView rvColor;
-    private InputTextBean selectInputTextBean;//选中单元格的属性
+    //选中单元格的属性
+    private InputTextBean selectInputTextBean;
     private ColorAdapter colorAdapter;
     private List<TextColorBean> colorList;
+
     @Override
     protected int initLayout(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return R.layout.fragment_txt;
@@ -97,7 +101,6 @@ public class TxtFragment extends BaseFragment implements View.OnClickListener {
         tvStyle1 = (TextView) view.findViewById(R.id.tv_style1);
         tvStyle2 = (TextView) view.findViewById(R.id.tv_style2);
         tvStyle3 = (TextView) view.findViewById(R.id.tv_style3);
-        tvStyle4 = (TextView) view.findViewById(R.id.tv_style4);
         rvColor = (RecyclerView) view.findViewById(R.id.rv_color);
 
         tvBold.setOnClickListener(this);
@@ -107,6 +110,10 @@ public class TxtFragment extends BaseFragment implements View.OnClickListener {
         tvLeft.setOnClickListener(this);
         tvCenter.setOnClickListener(this);
         tvRight.setOnClickListener(this);
+        tvStyle1.setOnClickListener(this);
+        tvStyle2.setOnClickListener(this);
+        tvStyle3.setOnClickListener(this);
+
         tv8.setOnClickListener(this);
         tv10.setOnClickListener(this);
         tv12.setOnClickListener(this);
@@ -118,10 +125,8 @@ public class TxtFragment extends BaseFragment implements View.OnClickListener {
     }
 
 
-
     @Override
     protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        EventBus.getDefault().register(this);
 
         colorList = TextPaintConfig.getTextColorList(TextPaintConfig.defaultTextColor);
         colorAdapter = new ColorAdapter(activity, colorList, new ColorAdapter.ISelectColor() {
@@ -136,6 +141,11 @@ public class TxtFragment extends BaseFragment implements View.OnClickListener {
         rvColor.setLayoutManager(gridLayoutManager);
         rvColor.setAdapter(colorAdapter);
 
+    }
+
+    @Override
+    protected void getInputTextBean(InputTextBean event) {
+        setDefaultView(event);
     }
 
     @Override
@@ -161,6 +171,14 @@ public class TxtFragment extends BaseFragment implements View.OnClickListener {
                 boolean isDeleteLine = selectInputTextBean.getTextPaint().isStrikeThruText();
                 chartView.setDeleteLine(!isDeleteLine);
                 isSelectView(tvDeleteLine, !isDeleteLine);
+            case R.id.tv_style1:
+                setTypeface(false, Typeface.SANS_SERIF);
+                break;
+            case R.id.tv_style2:
+                setTypeface(false, Typeface.DEFAULT_BOLD);
+                break;
+            case R.id.tv_style3:
+                setTypeface(false, Typeface.SERIF);
                 break;
             case R.id.tv_8:
                 setTextSizeView(false, 8);
@@ -195,6 +213,9 @@ public class TxtFragment extends BaseFragment implements View.OnClickListener {
             case R.id.tv_center:
                 setTextGravity(false, Paint.Align.CENTER);
                 break;
+            default:
+                break;
+
         }
     }
 
@@ -210,10 +231,13 @@ public class TxtFragment extends BaseFragment implements View.OnClickListener {
         setTextSizeView(true, size);
 
         setTextGravity(true, textPaint.getTextAlign());
+        setTypeface(true, textPaint.getTypeface());
 
-        colorList.clear();
-        colorList.addAll(TextPaintConfig.getTextColorList(textPaint.getColor()));
-        colorAdapter.notifyDataSetChanged();
+        if (colorAdapter != null && colorList != null) {
+            colorList.clear();
+            colorList.addAll(TextPaintConfig.getTextColorList(textPaint.getColor()));
+            colorAdapter.notifyDataSetChanged();
+        }
     }
 
     private void isSelectView(TextView textView, boolean isSelect) {
@@ -221,7 +245,10 @@ public class TxtFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void setTextSizeView(boolean isDefault, int size) {
-        if (!isDefault) chartView.setTextSize(size);
+        //如果不是初始化，在改变界面的同时改变chartView
+        if (!isDefault) {
+            chartView.setTextSize(size);
+        }
 
         isSelectView(tv8, size == 8);
         isSelectView(tv10, size == 10);
@@ -234,21 +261,23 @@ public class TxtFragment extends BaseFragment implements View.OnClickListener {
 
 
     private void setTextGravity(boolean isDefault, Paint.Align align) {
-        if (!isDefault) chartView.setGravity(align);
+        if (!isDefault) {
+            chartView.setGravity(align);
+        }
 
         isSelectView(tvLeft, align == Paint.Align.LEFT);
         isSelectView(tvRight, align == Paint.Align.RIGHT);
         isSelectView(tvCenter, align == Paint.Align.CENTER);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void InputTextBeanEvent(InputTextBean event) {
-        setDefaultView(event);
-    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
+    private void setTypeface(boolean isDefault, Typeface typeface) {
+        if (!isDefault) {
+            chartView.setTypeface(typeface);
+        }
+
+        isSelectView(tvStyle1, typeface == Typeface.SANS_SERIF);
+        isSelectView(tvStyle2, typeface == Typeface.DEFAULT_BOLD);
+        isSelectView(tvStyle3, typeface == Typeface.SERIF);
     }
 }

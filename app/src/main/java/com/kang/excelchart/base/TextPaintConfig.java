@@ -2,6 +2,7 @@ package com.kang.excelchart.base;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.text.TextPaint;
 
 import androidx.core.content.ContextCompat;
@@ -17,15 +18,23 @@ import java.util.List;
  * 类描述：
  */
 public class TextPaintConfig {
-    public static final int defaultBackgroundColor = 0xFFFFFFFF;//默认背景
-    public static final int defaultTextColor = 0xFF4A4A4A;//默认字体颜色
+    //默认背景
+    public static final int defaultBackgroundColor = 0xFFFFFFFF;
+    //默认字体颜色
+    public static final int defaultTextColor = 0xFF4A4A4A;
 
     public static TextPaint getTextPaint() {
         TextPaint textPaint = new TextPaint();
-        textPaint.setFakeBoldText(false);//粗体
-        textPaint.setTextSkewX(0f);//右斜
-        textPaint.setUnderlineText(false);//下划线
-        textPaint.setStrikeThruText(false);//删除线
+        //粗体
+        textPaint.setFakeBoldText(false);
+        //右斜
+        textPaint.setTextSkewX(0f);
+        //下划线
+        textPaint.setUnderlineText(false);
+        //删除线
+        textPaint.setStrikeThruText(false);
+        //常规字体
+        textPaint.setTypeface(Typeface.DEFAULT);
 
         textPaint.setStyle(Paint.Style.FILL);
         textPaint.setStrokeWidth(8);

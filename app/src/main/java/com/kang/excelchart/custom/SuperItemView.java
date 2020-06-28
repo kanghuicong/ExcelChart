@@ -239,7 +239,7 @@ public class SuperItemView extends LinearLayout {
         noLeftImgL = typedArray.getBoolean(R.styleable.SuperItemView_noLeftImageL, false);
         /*left文字*/
         mLeftText = typedArray.getString(R.styleable.SuperItemView_left_text);
-        isLeftTextBold = typedArray.getBoolean(R.styleable.SuperItemView_left_text_bold,false);
+        isLeftTextBold = typedArray.getBoolean(R.styleable.SuperItemView_left_text_bold, false);
         mLeftTextColor = typedArray.getColor(R.styleable.SuperItemView_left_text_color, defaultColor);
         mLeftTextSize = typedArray.getInteger(R.styleable.SuperItemView_left_text_size, defaultSize);
         mLeftDrawablePadding = typedArray.getInteger(R.styleable.SuperItemView_left_drawable_padding, defaultDrawablePadding);
@@ -573,7 +573,7 @@ public class SuperItemView extends LinearLayout {
         if (view.getVisibility() == GONE) view.setVisibility(VISIBLE);
     }
 
-    private <T>void glideImage(ImageView view, T url, boolean isRound) {
+    private <T> void glideImage(ImageView view, T url, boolean isRound) {
         if (isRound)
 //            Glide.with(context).load(url).apply(new RequestOptions()
 //                    .placeholder(defaultRoundHeader)// 正在加载中的图片  
@@ -621,7 +621,7 @@ public class SuperItemView extends LinearLayout {
     /*----------------------------------------------动态修改----------------------------------------*/
     /*-------------------------------------------left-----------------------------------------------*/
     /*left--left图片*/
-    public <T>SuperItemView setLeftImageL(T url, boolean isRound) {
+    public <T> SuperItemView setLeftImageL(T url, boolean isRound) {
         visibleText(leftImageL);
         glideImage(leftImageL, url, isRound);
         return this;
@@ -902,7 +902,7 @@ public class SuperItemView extends LinearLayout {
         rightText.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                iClick.onClick(v);
+                if (iClick != null) iClick.onClick(v);
             }
         });
         return this;

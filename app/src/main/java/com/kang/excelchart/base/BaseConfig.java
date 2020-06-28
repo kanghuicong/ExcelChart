@@ -23,12 +23,32 @@ public class BaseConfig {
     public static final int ADD_RIGHT = 2;
     public static final int ADD_TOP = 3;
     public static final int ADD_BOTTOM = 4;
-    public static final int DELETE_LINE = 5;//删除行
-    public static final int DELETE_COLUMN = 6;//删除列
+    //删除行
+    public static final int DELETE_LINE = 5;
+    //删除列
+    public static final int DELETE_COLUMN = 6;
 
     public static final int TOP_BITMAP  = 7;
     public static final int LEFT_BITMAP  = 8;
 
+    public enum MathType {
+        ADDITION,
+        SUBTRACTION,
+        MULTIPLY,
+        DIVIDE,
+        AVERAGE,
+        MAX,
+        MIN,
+    }
+
+    public enum ScopeType {
+        LEFT,
+        TOP,
+        RIGHT,
+        BOTTOM,
+        UP_LEFT,
+        ALL
+    }
 
     public static List<Integer> getWidthList() {
         List<Integer> list = new ArrayList<>();

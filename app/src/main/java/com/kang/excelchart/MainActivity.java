@@ -22,6 +22,7 @@ import com.kang.excelchart.adapter.TabAdapter;
 import com.kang.excelchart.base.BaseActivity;
 import com.kang.excelchart.base.BaseConfig;
 import com.kang.excelchart.bean.InputTextBean;
+import com.kang.excelchart.custom.KeyBackEditText;
 import com.kang.excelchart.custom.TitleView;
 import com.kang.excelchart.custom.XViewPager;
 import com.kang.excelchart.fragment.ColorFragment;
@@ -45,7 +46,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TitleView titleView;
     private View viewLine;
     private ConstraintLayout layout;
-    private EditText etContent;
+    public KeyBackEditText etContent;
     private TextView btConfirm;
     private ConstraintLayout clItem;
     private LinearLayout llItem;
@@ -55,9 +56,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ImageButton ivLine;
     private ImageButton ivMath;
     private ImageButton ivOther;
-    private ImageButton ivNewline;
+    private ImageButton ivNext;
     private XViewPager viewPager;
-    private int selectPostion = 0;
+    private boolean isShow = false;
+
 
     @Override
     public int initLayout() {
@@ -71,7 +73,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         chartView = (ChartView) findViewById(R.id.chart_view);
         viewLine = (View) findViewById(R.id.view_line);
         layout = (ConstraintLayout) findViewById(R.id.layout);
-        etContent = (EditText) findViewById(R.id.et_content);
+        etContent = (KeyBackEditText) findViewById(R.id.et_content);
         btConfirm = (TextView) findViewById(R.id.bt_confirm);
         clItem = (ConstraintLayout) findViewById(R.id.cl_item);
         llItem = (LinearLayout) findViewById(R.id.ll_item);
@@ -81,7 +83,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         ivLine = (ImageButton) findViewById(R.id.iv_line);
         ivMath = (ImageButton) findViewById(R.id.iv_math);
         ivOther = (ImageButton) findViewById(R.id.iv_other);
-        ivNewline = (ImageButton) findViewById(R.id.iv_newline);
+        ivNext = (ImageButton) findViewById(R.id.iv_next);
         viewPager = (XViewPager) findViewById(R.id.view_pager);
 
         layout.setVisibility(View.GONE);
@@ -92,7 +94,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         ivLine.setOnClickListener(this);
         ivMath.setOnClickListener(this);
         ivOther.setOnClickListener(this);
-        ivNewline.setOnClickListener(this);
+        ivNext.setOnClickListener(this);
         btConfirm.setOnClickListener(this);
     }
 
@@ -118,7 +120,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void selectChart(InputTextBean inputTextBean) {
 
-                if (layout.getVisibility() !=View.VISIBLE){
+                if (layout.getVisibility() != View.VISIBLE) {
                     layout.setVisibility(View.VISIBLE);
                     RxKeyboardTool.showSoftInput(activity, etContent);
                 }
@@ -126,9 +128,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 etContent.setText(inputTextBean.getContent());
                 etContent.setSelection(inputTextBean.getContent().length());
 
-
-                if (viewPager.getCurrentItem() == 0)
-                    EventBus.getDefault().postSticky(inputTextBean);
+                //通知各个fragment，选中框已改变
+                EventBus.getDefault().postSticky(inputTextBean);
 
             }
         });
@@ -151,7 +152,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         fragmentList.add(otherFragment);
 
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager(), fragmentList, null);
-        viewPager.setPagingEnabled(false);//禁止左右滑动
+        //禁止左右滑动
+        viewPager.setPagingEnabled(false);
         viewPager.setAdapter(adapter);
 
         viewPager.setCurrentItem(0, true);
@@ -165,6 +167,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) viewPager.getLayoutParams();
                 lp.height = height + llItem.getHeight();
                 viewPager.setLayoutParams(lp);
+                isShow = true;
             }
 
             @Override
@@ -172,6 +175,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) viewPager.getLayoutParams();
                 lp.height = height;
                 viewPager.setLayoutParams(lp);
+                isShow = false;
             }
         });
 
@@ -188,7 +192,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                chartView.setTextContent(etContent, s.toString());
+                chartView.setTextContent(s.toString());
             }
         });
     }
@@ -224,13 +228,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 RxKeyboardTool.hideSoftInput(this, etContent);
                 viewPager.setCurrentItem(4, true);
                 break;
+            case R.id.iv_next:
+                chartView.selectNexCell();
+                break;
             case R.id.bt_confirm:
-                chartView.setTextContent(etContent, etContent.getText().toString());
+                chartView.setTextContent(etContent.getText().toString());
                 layout.setVisibility(View.GONE);
                 RxKeyboardTool.hideSoftInput(this, etContent);
                 break;
-
+            default:
+                break;
         }
     }
 
+    /**
+     * 当键盘弹起时，返回键优先处理关闭键盘，需要再次点击才会走onBackPressed()
+     * 重写edittext和onBackPressed（）
+     */
+    @Override
+    public void onBackPressed() {
+        if (isShow || layout.getVisibility() == View.VISIBLE) {
+            layout.setVisibility(View.GONE);
+            RxKeyboardTool.hideSoftInput(this, etContent);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

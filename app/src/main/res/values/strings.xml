@@ -37,4 +37,26 @@
     <string name="no_partition">不隔断</string>
     <string name="partition">隔断</string>
     <string name="apply">应用</string>
+
+    <string name="bulk_insert">批量插入</string>
+    <string name="find_and_replace">查找替换</string>
+    <string name="unified_wide_high">统一宽高</string>
+    <string name="unified_wide_high_hint">统一所有宽高</string>
+    <string name="super_set">高级设置</string>
+    <string name="insert_date">插入当前日期</string>
+    <string name="insert_date_hint">插入当前日期，例：2020-12-12</string>
+    <string name="insert_time">插入当前时间</string>
+    <string name="insert_time_hint">插入当前时间，例：15:12:03</string>
+    <string name="how_realize_calculation">如何实现计算？</string>
+    <string name="how_create_table">如何制作表格？</string>
+    <string name="how_cell_size">如何控制单元格大小？</string>
+
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="complete">完成</string>
+    <string name="undo">撤销</string>
+    <string name="find_content">查找内容：</string>
+    <string name="replace">替换为：</string>
+    <string name="click_input">点击输入</string>
+    <string name="unified">已统一宽高</string>
 </resources>

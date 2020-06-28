@@ -60,19 +60,25 @@
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
+        android:background="@color/select_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
 
-        <EditText
+        <com.kang.excelchart.custom.KeyBackEditText
             android:id="@+id/et_content"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/qb_px_40"
+            android:background="@color/white"
+            android:layout_marginStart="@dimen/qb_px_10"
+            android:layout_marginTop="@dimen/qb_px_10"
+            android:paddingStart="@dimen/qb_px_5"
+            android:paddingEnd="@dimen/qb_px_5"
             app:layout_constraintBottom_toTopOf="@+id/cl_item"
             app:layout_constraintEnd_toStartOf="@+id/bt_confirm"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/bt_confirm"
@@ -152,15 +158,9 @@
                     android:background="@null"
                     android:src="@mipmap/setting" />
 
-                <ImageButton
-                    android:id="@+id/iv_newline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_40"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:src="@mipmap/setting" />
 
                 <ImageButton
+                    android:id="@+id/iv_next"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_40"
                     android:layout_weight="1"

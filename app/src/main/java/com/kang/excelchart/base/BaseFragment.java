@@ -11,8 +11,12 @@ import androidx.fragment.app.Fragment;
 
 import com.kang.excelchart.ChartView;
 import com.kang.excelchart.MainActivity;
-import com.kang.excelchart.http.HttpUtils;
-import com.kang.excelchart.utils.RefreshUtil;
+import com.kang.excelchart.bean.InputTextBean;
+import com.kang.excelchart.custom.KeyBackEditText;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * 类描述：基础fragment
@@ -21,15 +25,16 @@ public abstract class BaseFragment extends Fragment {
 
     protected BaseActivity activity;
     private View view;
-    public RefreshUtil refreshUtil;
-    public HttpUtils httpUtils;
     public ChartView chartView;
+    public KeyBackEditText etContent;;
 
     protected abstract int initLayout(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState);
 
     protected abstract void initView(View view);
 
     protected abstract void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
+
+    protected abstract void getInputTextBean(InputTextBean event);
 
     @Nullable
     @Override
@@ -38,9 +43,13 @@ public abstract class BaseFragment extends Fragment {
             view = View.inflate(activity, initLayout(inflater, container, savedInstanceState), null);
             initView(view);
 
-            httpUtils = new HttpUtils(activity);
+            EventBus.getDefault().register(this);
+
             chartView = ((MainActivity) activity).chartView;
+            etContent = ((MainActivity) activity).etContent;
             init(inflater,container,savedInstanceState);
+
+
         } else {
             ViewGroup parent = (ViewGroup) view.getParent();
             if (parent != null) {
@@ -59,9 +68,15 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(refreshUtil!=null)refreshUtil.onDestroy();
-        if (httpUtils != null) httpUtils.detachView();
+
+        EventBus.getDefault().unregister(this);
 
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void InputTextBeanEvent(InputTextBean event) {
+        getInputTextBean(event);
+    }
+
 
 }

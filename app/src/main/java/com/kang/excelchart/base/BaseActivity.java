@@ -7,11 +7,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -19,10 +16,8 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.kang.excelchart.custom.LoadView;
-import com.kang.excelchart.http.HttpUtils;
 import com.kang.excelchart.http.IActivity;
 import com.vondear.rxtool.RxActivityTool;
-import com.vondear.rxtool.view.RxToast;
 
 /**
  * 类描述：基础activity
@@ -38,7 +33,6 @@ public abstract class BaseActivity extends FragmentActivity implements IActivity
     public Activity activity;
     public Context context;
 
-    public HttpUtils httpUtils;
     //加载动画
     private LoadView loadView;
 
@@ -52,7 +46,6 @@ public abstract class BaseActivity extends FragmentActivity implements IActivity
         context = this;
         setContentView(initLayout());
 
-        httpUtils = new HttpUtils(this);
         //是否需要加载动画
         if (needLoad() || needStopView() != null) addLoad();
         initView();
@@ -116,7 +109,6 @@ public abstract class BaseActivity extends FragmentActivity implements IActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (httpUtils != null) httpUtils.detachView();
 
         RxActivityTool.finishActivity(this);
     }

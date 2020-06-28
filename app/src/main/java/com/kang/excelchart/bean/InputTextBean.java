@@ -2,6 +2,9 @@ package com.kang.excelchart.bean;
 
 import android.text.TextPaint;
 
+import com.kang.excelchart.base.BaseConfig;
+import com.kang.excelchart.base.TextPaintConfig;
+
 /**
  * 类描述：
  */
@@ -11,14 +14,41 @@ public class InputTextBean {
     private int inputY;
     private String content;
     private TextPaint textPaint;
-    private int backgroundColor;
+    private int backgroundColor = TextPaintConfig.defaultBackgroundColor;
 
-    public InputTextBean(int inputX,int inputY,TextPaint textPaint,int backgroundColor,String content) {
+    private BaseConfig.MathType mathType = BaseConfig.MathType.ADDITION;
+    private BaseConfig.ScopeType scopeType = BaseConfig.ScopeType.LEFT;
+    private int decimal = 2;
+
+    public InputTextBean(int inputX,int inputY,TextPaint textPaint,String content) {
         this.inputX = inputX;
         this.inputY = inputY;
         this.textPaint = textPaint;
         this.content = content;
-        this.backgroundColor = backgroundColor;
+    }
+
+    public BaseConfig.MathType getMathType() {
+        return mathType;
+    }
+
+    public void setMathType(BaseConfig.MathType mathType) {
+        this.mathType = mathType;
+    }
+
+    public BaseConfig.ScopeType getScopeType() {
+        return scopeType;
+    }
+
+    public void setScopeType(BaseConfig.ScopeType scopeType) {
+        this.scopeType = scopeType;
+    }
+
+    public int getDecimal() {
+        return decimal;
+    }
+
+    public void setDecimal(int decimal) {
+        this.decimal = decimal;
     }
 
     public int getBackgroundColor() {
