@@ -15,7 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 
 import com.gyf.immersionbar.ImmersionBar;
-import com.kang.excelchart.custom.LoadView;
+import com.kang.excelchart.custom.view.LoadView;
 import com.kang.excelchart.http.IActivity;
 import com.vondear.rxtool.RxActivityTool;
 

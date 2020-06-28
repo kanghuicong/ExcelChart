@@ -7,13 +7,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
-import com.kang.excelchart.ChartView;
-import com.kang.excelchart.MainActivity;
+import com.kang.excelchart.custom.view.ChartView;
+import com.kang.excelchart.activity.ChartActivity;
 import com.kang.excelchart.R;
 import com.kang.excelchart.base.BaseConfig;
 import com.kang.excelchart.base.BaseFragment;
 import com.kang.excelchart.bean.InputTextBean;
-import com.kang.excelchart.custom.SuperItemView;
+import com.kang.excelchart.custom.view.SuperItemView;
 
 /**
  * 类描述：
@@ -42,7 +42,7 @@ public class LineFragment extends BaseFragment {
         deleteLine = (SuperItemView) view.findViewById(R.id.delete_line);
         deleteColumn = (SuperItemView) view.findViewById(R.id.delete_column);
 
-        chartView = ((MainActivity) getActivity()).chartView;
+        chartView = ((ChartActivity) getActivity()).chartView;
     }
 
     @Override

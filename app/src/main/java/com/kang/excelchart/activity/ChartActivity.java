@@ -1,30 +1,26 @@
-package com.kang.excelchart;
+package com.kang.excelchart.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.hyb.library.PreventKeyboardBlockUtil;
-import com.kang.excelchart.ChartView;
+import com.kang.excelchart.custom.view.ChartView;
 import com.kang.excelchart.HVScrollView;
 import com.kang.excelchart.R;
 import com.kang.excelchart.adapter.TabAdapter;
 import com.kang.excelchart.base.BaseActivity;
 import com.kang.excelchart.base.BaseConfig;
 import com.kang.excelchart.bean.InputTextBean;
-import com.kang.excelchart.custom.KeyBackEditText;
-import com.kang.excelchart.custom.TitleView;
-import com.kang.excelchart.custom.XViewPager;
+import com.kang.excelchart.custom.view.KeyBackEditText;
+import com.kang.excelchart.custom.view.TitleView;
+import com.kang.excelchart.custom.view.XViewPager;
 import com.kang.excelchart.fragment.ColorFragment;
 import com.kang.excelchart.fragment.LineFragment;
 import com.kang.excelchart.fragment.MathFragment;
@@ -32,14 +28,13 @@ import com.kang.excelchart.fragment.OtherFragment;
 import com.kang.excelchart.fragment.TxtFragment;
 import com.kang.excelchart.utils.SoftKeyBoardListener;
 import com.vondear.rxtool.RxKeyboardTool;
-import com.vondear.rxtool.RxLogTool;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class ChartActivity extends BaseActivity implements View.OnClickListener {
 
     private HVScrollView scrollView;
     public ChartView chartView;

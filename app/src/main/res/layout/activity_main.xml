@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.kang.excelchart.custom.TitleView
+    <com.kang.excelchart.custom.view.TitleView
         android:id="@+id/title_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.kang.excelchart.ChartView
+                <com.kang.excelchart.custom.view.ChartView
                     android:id="@+id/chart_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
 
-        <com.kang.excelchart.custom.KeyBackEditText
+        <com.kang.excelchart.custom.view.KeyBackEditText
             android:id="@+id/et_content"
             android:layout_width="0dp"
             android:layout_height="@dimen/qb_px_40"
@@ -168,7 +168,7 @@
                     android:src="@mipmap/setting" />
             </LinearLayout>
 
-            <com.kang.excelchart.custom.XViewPager
+            <com.kang.excelchart.custom.view.XViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"

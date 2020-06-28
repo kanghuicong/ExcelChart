@@ -10,15 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.kang.excelchart.ChartView;
 import com.kang.excelchart.R;
 import com.kang.excelchart.base.BaseConfig;
 import com.kang.excelchart.base.BaseFragment;
 import com.kang.excelchart.bean.InputTextBean;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import static com.kang.excelchart.base.BaseConfig.MathType.ADDITION;
 

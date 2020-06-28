@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.kang.excelchart.ChartView;
-import com.kang.excelchart.MainActivity;
+import com.kang.excelchart.custom.view.ChartView;
+import com.kang.excelchart.activity.ChartActivity;
 import com.kang.excelchart.bean.InputTextBean;
-import com.kang.excelchart.custom.KeyBackEditText;
+import com.kang.excelchart.custom.view.KeyBackEditText;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -45,8 +45,8 @@ public abstract class BaseFragment extends Fragment {
 
             EventBus.getDefault().register(this);
 
-            chartView = ((MainActivity) activity).chartView;
-            etContent = ((MainActivity) activity).etContent;
+            chartView = ((ChartActivity) activity).chartView;
+            etContent = ((ChartActivity) activity).etContent;
             init(inflater,container,savedInstanceState);
 
 

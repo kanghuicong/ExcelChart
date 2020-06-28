@@ -1,4 +1,4 @@
-package com.kang.excelchart.custom;
+package com.kang.excelchart.custom.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,8 +17,6 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.kang.excelchart.R;
-import com.kang.excelchart.base.BaseApplication;
-import com.kang.excelchart.base.UserConfig;
 import com.vondear.rxtool.RxActivityTool;
 
 public class TitleView extends RelativeLayout {

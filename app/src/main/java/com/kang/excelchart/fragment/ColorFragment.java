@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kang.excelchart.ChartView;
 import com.kang.excelchart.R;
 import com.kang.excelchart.adapter.ColorAdapter;
 import com.kang.excelchart.base.BaseConfig;

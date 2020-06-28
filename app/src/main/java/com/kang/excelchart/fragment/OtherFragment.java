@@ -10,9 +10,8 @@ import androidx.annotation.Nullable;
 import com.kang.excelchart.R;
 import com.kang.excelchart.base.BaseFragment;
 import com.kang.excelchart.bean.InputTextBean;
-import com.kang.excelchart.custom.FindReplaceDialog;
-import com.kang.excelchart.custom.SuperItemView;
-import com.vondear.rxtool.RxDataTool;
+import com.kang.excelchart.custom.dialog.FindReplaceDialog;
+import com.kang.excelchart.custom.view.SuperItemView;
 import com.vondear.rxtool.RxTimeTool;
 import com.vondear.rxtool.view.RxToast;
 
@@ -135,6 +134,7 @@ public class OtherFragment extends BaseFragment implements View.OnClickListener 
 
                 break;
             default:
+
                 break;
         }
     }

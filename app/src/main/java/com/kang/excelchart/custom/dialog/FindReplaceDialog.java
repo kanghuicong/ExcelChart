@@ -1,4 +1,4 @@
-package com.kang.excelchart.custom;
+package com.kang.excelchart.custom.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

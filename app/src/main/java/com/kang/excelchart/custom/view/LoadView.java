@@ -1,4 +1,4 @@
-package com.kang.excelchart.custom;
+package com.kang.excelchart.custom.view;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;

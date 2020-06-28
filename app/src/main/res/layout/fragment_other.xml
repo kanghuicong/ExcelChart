@@ -11,14 +11,14 @@
         android:orientation="vertical"
         android:padding="@dimen/qb_px_8">
 
-        <com.kang.excelchart.custom.SuperItemView
+        <com.kang.excelchart.custom.view.SuperItemView
             android:id="@+id/bulk_insert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/qb_px_1"
             app:left_text="@string/bulk_insert" />
 
-        <com.kang.excelchart.custom.SuperItemView
+        <com.kang.excelchart.custom.view.SuperItemView
             android:id="@+id/find_and_replace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             android:padding="@dimen/qb_px_8"
             app:left_text="@string/find_and_replace" />
 
-        <com.kang.excelchart.custom.SuperItemView
+        <com.kang.excelchart.custom.view.SuperItemView
             android:id="@+id/unified_wide_high"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             android:padding="@dimen/qb_px_8"
             app:left_text="@string/unified_wide_high" />
 
-        <com.kang.excelchart.custom.SuperItemView
+        <com.kang.excelchart.custom.view.SuperItemView
             android:id="@+id/super_set"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
             android:padding="@dimen/qb_px_8"
             app:left_text="@string/super_set" />
 
-        <com.kang.excelchart.custom.SuperItemView
+        <com.kang.excelchart.custom.view.SuperItemView
             android:id="@+id/insert_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             android:padding="@dimen/qb_px_8"
             app:left_text="@string/insert_date" />
 
-        <com.kang.excelchart.custom.SuperItemView
+        <com.kang.excelchart.custom.view.SuperItemView
             android:id="@+id/insert_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:padding="@dimen/qb_px_8"
             app:left_text="@string/insert_time" />
 
-        <com.kang.excelchart.custom.SuperItemView
+        <com.kang.excelchart.custom.view.SuperItemView
             android:id="@+id/how_realize_calculation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
             android:padding="@dimen/qb_px_8"
             app:left_text="@string/how_realize_calculation" />
 
-        <com.kang.excelchart.custom.SuperItemView
+        <com.kang.excelchart.custom.view.SuperItemView
             android:id="@+id/how_create_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             android:padding="@dimen/qb_px_8"
             app:left_text="@string/how_create_table" />
 
-        <com.kang.excelchart.custom.SuperItemView
+        <com.kang.excelchart.custom.view.SuperItemView
             android:id="@+id/how_cell_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.kang.excelchart;
+package com.kang.excelchart.custom.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -20,6 +20,8 @@ import android.widget.EditText;
 
 import androidx.core.content.ContextCompat;
 
+import com.kang.excelchart.HVScrollView;
+import com.kang.excelchart.R;
 import com.kang.excelchart.base.BaseConfig;
 import com.kang.excelchart.base.PaintConfig;
 import com.kang.excelchart.base.TextPaintConfig;
