@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kang.excelchart.custom.view.ChartView;
-import com.kang.excelchart.HVScrollView;
+import com.kang.excelchart.custom.view.HVScrollView;
 import com.kang.excelchart.R;
 import com.kang.excelchart.adapter.TabAdapter;
 import com.kang.excelchart.base.BaseActivity;
@@ -21,11 +21,11 @@ import com.kang.excelchart.bean.InputTextBean;
 import com.kang.excelchart.custom.view.KeyBackEditText;
 import com.kang.excelchart.custom.view.TitleView;
 import com.kang.excelchart.custom.view.XViewPager;
-import com.kang.excelchart.fragment.ColorFragment;
-import com.kang.excelchart.fragment.LineFragment;
-import com.kang.excelchart.fragment.MathFragment;
-import com.kang.excelchart.fragment.OtherFragment;
-import com.kang.excelchart.fragment.TxtFragment;
+import com.kang.excelchart.fragment.chart.ColorChartFragment;
+import com.kang.excelchart.fragment.chart.LineChartFragment;
+import com.kang.excelchart.fragment.chart.MathChartFragment;
+import com.kang.excelchart.fragment.chart.OtherChartFragment;
+import com.kang.excelchart.fragment.chart.TxtChartFragment;
 import com.kang.excelchart.utils.SoftKeyBoardListener;
 import com.vondear.rxtool.RxKeyboardTool;
 
@@ -135,15 +135,15 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
     private List<Fragment> fragmentList = new ArrayList<>();
 
     private void initViewPager() {
-        TxtFragment txtFragment = new TxtFragment();
+        TxtChartFragment txtFragment = new TxtChartFragment();
         fragmentList.add(txtFragment);
-        ColorFragment colorFragment = new ColorFragment();
+        ColorChartFragment colorFragment = new ColorChartFragment();
         fragmentList.add(colorFragment);
-        LineFragment lineFragment = new LineFragment();
+        LineChartFragment lineFragment = new LineChartFragment();
         fragmentList.add(lineFragment);
-        MathFragment mathFragment = new MathFragment();
+        MathChartFragment mathFragment = new MathChartFragment();
         fragmentList.add(mathFragment);
-        OtherFragment otherFragment = new OtherFragment();
+        OtherChartFragment otherFragment = new OtherChartFragment();
         fragmentList.add(otherFragment);
 
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager(), fragmentList, null);

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.kang.excelchart.custom.view.TitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/account"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/backgroundColor">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/qb_px_8"
+            android:layout_marginBottom="@dimen/qb_px_8">
+
+            <com.kang.excelchart.custom.view.SuperItemView
+                android:id="@+id/super_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="@string/account"
+                app:isArrow="true"
+                app:isPadding="false"/>
+
+            <com.kang.excelchart.custom.view.SuperItemView
+                android:id="@+id/super_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="@string/change_password"
+                android:layout_marginTop="0.5dp"
+                app:isArrow="true"
+                app:isPadding="true"/>
+
+            <com.kang.excelchart.custom.view.SuperItemView
+                android:id="@+id/super_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="@string/bind_email"
+                android:layout_marginTop="0.5dp"
+                app:isArrow="true"
+                app:isPadding="true"/>
+
+            <com.kang.excelchart.custom.view.SuperItemView
+                android:id="@+id/super_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="@string/super_user"
+                android:layout_marginTop="@dimen/qb_px_8"
+                app:isArrow="true"
+                app:isPadding="true"/>
+
+            <com.kang.excelchart.custom.view.SuperItemView
+                android:id="@+id/super_re_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_8"
+                app:left_text="@string/re_login"
+                app:isArrow="true"
+                app:isPadding="true"/>
+
+            <com.kang.excelchart.custom.view.SuperItemView
+                android:id="@+id/super_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_8"
+                app:left_text="@string/logout"
+                app:isArrow="true"
+                app:isPadding="true"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

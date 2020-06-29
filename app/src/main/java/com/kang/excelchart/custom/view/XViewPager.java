@@ -15,6 +15,7 @@ public class XViewPager extends ViewPager {
     public XViewPager(Context context) {
         super(context);
     }
+
     public XViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }

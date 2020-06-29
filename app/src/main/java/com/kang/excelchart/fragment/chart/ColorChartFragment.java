@@ -1,4 +1,4 @@
-package com.kang.excelchart.fragment;
+package com.kang.excelchart.fragment.chart;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kang.excelchart.R;
 import com.kang.excelchart.adapter.ColorAdapter;
 import com.kang.excelchart.base.BaseConfig;
-import com.kang.excelchart.base.BaseFragment;
+import com.kang.excelchart.base.BaseChartFragment;
 import com.kang.excelchart.base.TextPaintConfig;
 import com.kang.excelchart.bean.InputTextBean;
 import com.kang.excelchart.bean.TextColorBean;
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * 类描述：
  */
-public class ColorFragment extends BaseFragment {
+public class ColorChartFragment extends BaseChartFragment {
 
     private RecyclerView rvColor;
     private List<TextColorBean> colorList;

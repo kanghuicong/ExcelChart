@@ -59,4 +59,23 @@
     <string name="replace">替换为：</string>
     <string name="click_input">点击输入</string>
     <string name="unified">已统一宽高</string>
+
+    <!--mine-->
+    <string name="mine">我的</string>
+    <string name="account">账号</string>
+    <string name="super_user">高级用户</string>
+    <string name="video_course">视频教程</string>
+    <string name="tip">小技巧</string>
+    <string name="recycle_bin">回收站</string>
+    <string name="active_sync">主动同步</string>
+    <string name="about_us">关于我们</string>
+    <string name="privacy_policy">隐私条款</string>
+    <string name="feedback">反馈</string>
+    <string name="how_to_use_chart">如何玩转图表？</string>
+
+    <!--account-->
+    <string name="change_password">修改密码</string>
+    <string name="bind_email">绑定邮箱</string>
+    <string name="re_login">重新登录</string>
+    <string name="logout">退出登录</string>
 </resources>

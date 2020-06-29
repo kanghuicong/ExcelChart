@@ -1,4 +1,4 @@
-package com.kang.excelchart.fragment;
+package com.kang.excelchart.fragment.chart;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 
 import com.kang.excelchart.R;
-import com.kang.excelchart.base.BaseFragment;
+import com.kang.excelchart.base.BaseChartFragment;
 import com.kang.excelchart.bean.InputTextBean;
 import com.kang.excelchart.custom.dialog.FindReplaceDialog;
 import com.kang.excelchart.custom.view.SuperItemView;
@@ -21,7 +21,7 @@ import java.util.Locale;
 /**
  * 类描述：
  */
-public class OtherFragment extends BaseFragment implements View.OnClickListener {
+public class OtherChartFragment extends BaseChartFragment implements View.OnClickListener {
     private SuperItemView bulkInsert;
     private SuperItemView findAndReplace;
     private SuperItemView unifiedWideHigh;

@@ -1,4 +1,4 @@
-package com.kang.excelchart.fragment;
+package com.kang.excelchart.fragment.chart;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,14 +11,14 @@ import com.kang.excelchart.custom.view.ChartView;
 import com.kang.excelchart.activity.ChartActivity;
 import com.kang.excelchart.R;
 import com.kang.excelchart.base.BaseConfig;
-import com.kang.excelchart.base.BaseFragment;
+import com.kang.excelchart.base.BaseChartFragment;
 import com.kang.excelchart.bean.InputTextBean;
 import com.kang.excelchart.custom.view.SuperItemView;
 
 /**
  * 类描述：
  */
-public class LineFragment extends BaseFragment {
+public class LineChartFragment extends BaseChartFragment {
     private SuperItemView addBottom;
     private SuperItemView addRight;
     private SuperItemView mergeCell;

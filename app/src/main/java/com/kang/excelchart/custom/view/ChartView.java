@@ -6,29 +6,19 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.text.Layout;
-import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 
 
-import androidx.core.content.ContextCompat;
-
-import com.kang.excelchart.HVScrollView;
 import com.kang.excelchart.R;
 import com.kang.excelchart.base.BaseConfig;
 import com.kang.excelchart.base.PaintConfig;
 import com.kang.excelchart.base.TextPaintConfig;
 import com.kang.excelchart.bean.InputTextBean;
-import com.vondear.rxtool.RxBarTool;
 import com.vondear.rxtool.RxImageTool;
-import com.vondear.rxtool.RxLogTool;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

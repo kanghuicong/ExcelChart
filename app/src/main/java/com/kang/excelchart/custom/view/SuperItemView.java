@@ -31,9 +31,9 @@ import com.vondear.rxtool.RxImageTool;
  * Created by KangHuiCong on 2017/12/19.
  * <p>
  * ———————————————————————————————-top↓
- * ———————————————————————————<TextView1><TextView2>
+ * ————————————————————————————————————————<TextView1><TextView2>
  * —————————————left→ <ImgView><TextView>                         <TextView><ImgView> ←right
- * ——————————————————————————<TextView3><TextView4>
+ * ————————————————————————————————————————<TextView3><TextView4>
  * —————————————————————————————bottom↑
  * left的ImgView →设置图片setLeftImageL
  * left的TextView →设置文字内容setLeftText，设置文字大小setLeftTextSize,设置文字颜色setLeftTextColor
@@ -342,8 +342,8 @@ public class SuperItemView extends LinearLayout {
 
     private void init() {
         if (isPadding) {
-            int padding = fitSize(15);
-            this.setPadding(fitSize(20), padding, fitSize(20), padding);
+
+            this.setPadding(fitSize(16), fitSize(10), fitSize(16), fitSize(10));
         } else
             this.setPadding(this.getPaddingLeft(), this.getPaddingTop(), this.getPaddingRight(), this.getPaddingBottom());
         this.setOrientation(HORIZONTAL);

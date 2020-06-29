@@ -22,7 +22,7 @@
         app:layout_constraintTop_toBottomOf="@+id/title_view">
 
 
-        <com.kang.excelchart.HVScrollView
+        <com.kang.excelchart.custom.view.HVScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -53,7 +53,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </com.kang.excelchart.HVScrollView>
+        </com.kang.excelchart.custom.view.HVScrollView>
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
