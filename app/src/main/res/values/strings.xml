@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">ExcelChart</string>
 
+    <string name="home">首页</string>
+    <string name="recently">最近</string>
+    <string name="collect">收藏</string>
+
     <string name="loading">加载中</string>
     <string name="error">发生错误</string>
     <string name="error_network">网络错误</string>

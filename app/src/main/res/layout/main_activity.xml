@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/fl_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/rl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/lineColor"
+        app:layout_constraintBottom_toTopOf="@+id/rl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/rb1"
+                style="@style/radioButtonStyle"
+                android:drawableTop="@mipmap/folder_open_select"
+                android:text="@string/home"
+                android:textColor="@color/green00D3BD" />
+
+            <TextView
+                android:id="@+id/rb2"
+                style="@style/radioButtonStyle"
+                android:drawableTop="@mipmap/time_circle"
+                android:text="@string/recently"
+                android:textColor="@color/blackA6_00" />
+
+            <TextView
+                style="@style/radioButtonStyle" />
+
+            <TextView
+                android:id="@+id/rb4"
+                style="@style/radioButtonStyle"
+                android:drawableTop="@mipmap/crown"
+                android:text="@string/collect"
+                android:textColor="@color/blackA6_00" />
+            <TextView
+                android:id="@+id/rb5"
+                style="@style/radioButtonStyle"
+                android:drawableTop="@mipmap/setting"
+                android:text="@string/mine"
+                android:textColor="@color/blackA6_00" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_add"
+        android:layout_width="@dimen/qb_px_64"
+        android:layout_height="@dimen/qb_px_64"
+        android:background="@mipmap/plus_last"
+        app:layout_constraintBottom_toBottomOf="@+id/rl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

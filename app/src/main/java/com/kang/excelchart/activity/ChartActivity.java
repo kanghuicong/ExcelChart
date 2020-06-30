@@ -58,7 +58,7 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public int initLayout() {
-        return R.layout.activity_main;
+        return R.layout.chart_activity;
     }
 
     @Override
