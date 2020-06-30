@@ -83,6 +83,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         switch (view.getId()) {
             case R.id.rb1:
+                setSelect(1);
                 if (homeFragment == null) {
                     transaction.add(R.id.fl_main, homeFragment = new HomeFragment());
                 } else {
@@ -91,6 +92,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 transaction.commitAllowingStateLoss();
                 break;
             case R.id.rb2:
+                setSelect(2);
                 if (recentFragment == null) {
                     transaction.add(R.id.fl_main, recentFragment = new RecentFragment());
                 } else {
@@ -101,7 +103,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.iv_add:
                 break;
             case R.id.rb4:
-
+                setSelect(4);
                 if (collectFragment == null) {
                     transaction.add(R.id.fl_main, collectFragment = new CollectFragment());
                 } else {
@@ -110,6 +112,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 transaction.commitAllowingStateLoss();
                 break;
             case R.id.rb5:
+                setSelect(5);
                 if (mineFragment == null) {
                     transaction.add(R.id.fl_main, mineFragment = new MineFragment());
                 } else {
@@ -127,5 +130,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         drawable1.setBounds(0, 0, drawable1.getMinimumWidth(), drawable1.getMinimumHeight());
         rb1.setCompoundDrawables(null, drawable1, null, null);
         rb1.setTextColor(ContextCompat.getColor(this, position == 1 ? R.color.green00D3BD : R.color.blackA6_00));
+
+        Drawable drawable2 = ContextCompat.getDrawable(this, position == 2 ? R.mipmap.time_circle_select : R.mipmap.time_circle);
+        drawable2.setBounds(0, 0, drawable2.getMinimumWidth(), drawable1.getMinimumHeight());
+        rb2.setCompoundDrawables(null, drawable2, null, null);
+        rb2.setTextColor(ContextCompat.getColor(this, position == 2 ? R.color.green00D3BD : R.color.blackA6_00));
+
+        Drawable drawable4 = ContextCompat.getDrawable(this, position == 4 ? R.mipmap.crown_select : R.mipmap.crown);
+        drawable4.setBounds(0, 0, drawable4.getMinimumWidth(), drawable1.getMinimumHeight());
+        rb4.setCompoundDrawables(null, drawable4, null, null);
+        rb4.setTextColor(ContextCompat.getColor(this, position == 4 ? R.color.green00D3BD : R.color.blackA6_00));
+
+        Drawable drawable5 = ContextCompat.getDrawable(this, position == 5 ? R.mipmap.setting_select : R.mipmap.setting);
+        drawable5.setBounds(0, 0, drawable5.getMinimumWidth(), drawable1.getMinimumHeight());
+        rb5.setCompoundDrawables(null, drawable5, null, null);
+        rb5.setTextColor(ContextCompat.getColor(this, position == 5 ? R.color.green00D3BD : R.color.blackA6_00));
     }
 }

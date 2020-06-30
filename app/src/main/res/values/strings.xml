@@ -82,4 +82,12 @@
     <string name="bind_email">绑定邮箱</string>
     <string name="re_login">重新登录</string>
     <string name="logout">退出登录</string>
+
+    <!--dialog-->
+    <string name="operation">操作</string>
+    <string name="delete_file">删除该文件</string>
+    <string name="copy">复制</string>
+    <string name="move">移动到</string>
+    <string name="rename">重命名</string>
+    <string name="send_file">发送文件</string>
 </resources>

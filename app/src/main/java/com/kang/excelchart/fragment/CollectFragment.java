@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kang.excelchart.R;
 import com.kang.excelchart.base.BaseFragment;
 
 import androidx.annotation.Nullable;
@@ -12,7 +13,7 @@ import androidx.annotation.Nullable;
 public class CollectFragment extends BaseFragment {
     @Override
     protected int initLayout(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return 0;
+        return R.layout.list_fragment;
     }
 
     @Override

@@ -14,6 +14,7 @@ import android.util.DisplayMetrics;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.multidex.MultiDexApplication;
+import cn.bmob.v3.Bmob;
 
 import com.lzy.okgo.OkGo;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -91,6 +92,8 @@ public class BaseApplication extends MultiDexApplication implements Application.
             StrictMode.VmPolicy.Builder builderX = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builderX.build());
         }
+
+        Bmob.initialize(this, "80c24431e79606ad4cac39e4b50d0ec9");
 
     }
 
