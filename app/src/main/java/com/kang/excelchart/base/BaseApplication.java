@@ -84,8 +84,6 @@ public class BaseApplication extends MultiDexApplication implements Application.
         RxTool.init(this);
 
         initLanguage();
-        //配置okgo
-        OkGo.getInstance().init(this);
 
         //高版本手机文件路径file：//----->content：//
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

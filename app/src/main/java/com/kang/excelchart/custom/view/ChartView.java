@@ -45,12 +45,16 @@ public class ChartView extends View {
     private int[] pointX;//x坐标
     private int[] pointY;//y坐标
 
-    public int[] startPoint = {80, 80};//起点
-    public final int minCellX = 200;//单元格最小宽度
-    public final int minCellY = 80;//单元格最小高度
+    //起点
+    public final int[] startPoint = {80, 80};
+    //单元格最小宽度
+    public final int minCellX = 200;
+    //单元格最小高度
+    public final int minCellY = 80;
 
     private HVScrollView scrollView;
-    private PaintConfig paintConfig;//画笔
+    //画笔
+    private PaintConfig paintConfig;
     private Bitmap arrowBitmap;
     private int bitmapHeight;
     private int bitmapWidth;
@@ -65,7 +69,7 @@ public class ChartView extends View {
     private List<InputTextBean> inputTextList = new ArrayList<>();
 
     //判断一个字符串为数字(正负、小数)
-    Pattern pattern = Pattern.compile("-?[0-9]+.*[0-9]*");
+    private Pattern pattern = Pattern.compile("-?[0-9]+.*[0-9]*");
 
     public ChartView(Context context) {
         this(context, null);
@@ -335,8 +339,8 @@ public class ChartView extends View {
 //                }else {
 //                    return true;
 //                }
-                return true;
 //                break;
+                return true;
             case MotionEvent.ACTION_MOVE:
                 moveX = x;
                 moveY = y;
@@ -361,6 +365,8 @@ public class ChartView extends View {
                             break;
                         case BaseConfig.LEFT_BITMAP:
                             stretchCell(0, y - downPoint[1]);
+                            break;
+                        default:
                             break;
                     }
                     init();
@@ -623,6 +629,8 @@ public class ChartView extends View {
                         inputTextList.remove(inputTextBean);
                     }
                 }
+                break;
+            default:
                 break;
         }
         selectCell[0] = -1;
