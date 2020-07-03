@@ -90,4 +90,13 @@
     <string name="move">移动到</string>
     <string name="rename">重命名</string>
     <string name="send_file">发送文件</string>
+
+    <!--login-->
+    <string name="error_account_password">账号密码错误</string>
+    <string name="error_account">请输入账号</string>
+    <string name="error_password">请输入密码</string>
+    <string name="phone">手机号码</string>
+    <string name="password">密码</string>
+
+
 </resources>

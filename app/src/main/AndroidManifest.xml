@@ -44,6 +44,8 @@
 <!--            android:name=".activity.login.LoginActivity"-->
 <!--            android:screenOrientation="portrait" />-->
 
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
