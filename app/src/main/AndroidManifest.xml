@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.login.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,10 +40,14 @@
         <activity
             android:name=".activity.mine.MineAccountActivity"
             android:screenOrientation="portrait" />
+<!--        <activity-->
+<!--            android:name=".activity.login.LoginActivity"-->
+<!--            android:screenOrientation="portrait" />-->
+
 
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
-            android:authorities="com.kang.excelchart.BmobContentProvider"></provider>
+            android:authorities="com.kang.excelchart.BmobContentProvider"/>
 
     </application>
 
