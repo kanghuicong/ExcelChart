@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.gyf.immersionbar.ImmersionBar;
 import com.kang.excelchart.custom.view.LoadView;
 import com.kang.excelchart.http.IActivity;
+import com.kang.excelchart.utils.HttpUtils;
 import com.vondear.rxtool.RxActivityTool;
 
 /**
@@ -32,6 +33,7 @@ public abstract class BaseActivity extends FragmentActivity implements IActivity
 
     public Activity activity;
     public Context context;
+    public HttpUtils httpUtils;
 
     //加载动画
     private LoadView loadView;
@@ -44,6 +46,7 @@ public abstract class BaseActivity extends FragmentActivity implements IActivity
         initStatusBarStyle();
         activity = this;
         context = this;
+        httpUtils = new HttpUtils(this);
         setContentView(initLayout());
 
         //是否需要加载动画
@@ -93,7 +96,7 @@ public abstract class BaseActivity extends FragmentActivity implements IActivity
 
     //状态栏浸入式
     public void initStatusBarStyle() {
-        ImmersionBar.with(this).transparentStatusBar().statusBarDarkFont(true).init();
+        ImmersionBar.with(this).transparentStatusBar().statusBarDarkFont(false).init();
     }
 
     //语言切换

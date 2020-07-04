@@ -14,9 +14,9 @@ import android.view.View;
 
 
 import com.kang.excelchart.R;
-import com.kang.excelchart.base.BaseConfig;
-import com.kang.excelchart.base.PaintConfig;
-import com.kang.excelchart.base.TextPaintConfig;
+import com.kang.excelchart.config.BaseConfig;
+import com.kang.excelchart.config.PaintConfig;
+import com.kang.excelchart.config.TextPaintConfig;
 import com.kang.excelchart.bean.InputTextBean;
 import com.vondear.rxtool.RxImageTool;
 

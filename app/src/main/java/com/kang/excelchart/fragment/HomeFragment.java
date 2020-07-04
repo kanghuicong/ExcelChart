@@ -2,27 +2,42 @@ package com.kang.excelchart.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.kang.excelchart.R;
-import com.kang.excelchart.base.BaseFragment;
+import com.kang.excelchart.bean.Tables;
+import com.kang.excelchart.bean._User;
+import com.kang.excelchart.config.UserConfig;
+import com.vondear.rxtool.RxTimeTool;
 
-import androidx.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class HomeFragment extends BaseFragment {
+import cn.bmob.v3.BmobQuery;
+
+/**
+ * 类描述：
+ * author:kanghuicong
+ */
+public class HomeFragment extends BaseListFragment {
     @Override
-    protected int initLayout(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return R.layout.list_fragment;
+    public BmobQuery<Tables> query() {
+        BmobQuery<Tables> eq1 = new BmobQuery<>();
+        eq1.addWhereEqualTo("objectId", UserConfig.getUserId(activity));
+        BmobQuery<Tables> eq2 = new BmobQuery<>();
+        eq2.addWhereLessThanOrEqualTo("taCreateTime", RxTimeTool.getCurTimeMills());
+        List<BmobQuery<Tables>> andQuerys = new ArrayList<>();
+        andQuerys.add(eq1);
+        andQuerys.add(eq2);
+        BmobQuery<Tables> query = new BmobQuery<>();
+        query.and(andQuerys);
+        return query;
     }
 
     @Override
-    protected void initView(View view) {
+    public void _init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-    }
-
-    @Override
-    protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        titleView.setTitle(getString(R.string.home));
 
     }
 }

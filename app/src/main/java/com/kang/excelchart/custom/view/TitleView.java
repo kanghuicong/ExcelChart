@@ -9,8 +9,10 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,9 +20,11 @@ import androidx.core.content.ContextCompat;
 
 import com.kang.excelchart.R;
 import com.vondear.rxtool.RxActivityTool;
+import com.vondear.rxtool.RxBarTool;
 
 public class TitleView extends RelativeLayout {
     RelativeLayout rlTitle;
+    LinearLayout layout;
     ImageButton ivBack;
     ImageButton ivRight;
     private Context context;
@@ -44,6 +48,7 @@ public class TitleView extends RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.view_title, this, true);
 
 
+        layout = findViewById(R.id.layout);
         rlTitle = findViewById(R.id.title_layout);
         tvTitle = findViewById(R.id.title_txt);
 
@@ -51,30 +56,30 @@ public class TitleView extends RelativeLayout {
         ivRight = findViewById(R.id.title_iv_right);
         line = findViewById(R.id.title_line);
 
-
         ivBack = findViewById(R.id.title_img);
 
-//        BarUtils.addMarginTopEqualStatusBarHeight(rlTitle);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TitleView);
+        layout.setPadding(0, RxBarTool.getStatusBarHeight(activity), 0, 0);
 
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TitleView);
 
         /*背景颜色*/
         Drawable backgroundDrawable = typedArray.getDrawable(R.styleable.TitleView_background_drawable);
         if (backgroundDrawable == null) {
-            int backgroundColor = typedArray.getColor(R.styleable.TitleView_background_color, 0xFFFFFFFF);
+            int backgroundColor = typedArray.getColor(R.styleable.TitleView_background_color, 0xFF2e8b57);
             this.setBackgroundColor(backgroundColor);
-        } else this.setBackground(backgroundDrawable);
+        } else {
+            this.setBackground(backgroundDrawable);
+        }
         /*标题*/
         String title = typedArray.getString(R.styleable.TitleView_title);
         tvTitle.setText(title);
         /*标题颜色*/
-        int titleColor = typedArray.getInt(R.styleable.TitleView_title_color, 0xFF4A4A4A);
+        int titleColor = typedArray.getInt(R.styleable.TitleView_title_color, 0xFFFFFFFF);
         tvTitle.setTextColor(titleColor);
         /*标题粗体*/
         boolean isBold = typedArray.getBoolean(R.styleable.TitleView_isbold, true);
         TextPaint tp = tvTitle.getPaint();
-        if (isBold) tp.setFakeBoldText(true);
-        else tp.setFakeBoldText(false);
+        tp.setFakeBoldText(isBold);
 
         final boolean needLine = typedArray.getBoolean(R.styleable.TitleView_needLine, false);
         line.setVisibility(needLine ? VISIBLE : GONE);
@@ -87,8 +92,9 @@ public class TitleView extends RelativeLayout {
             ivBack.setVisibility(View.VISIBLE);
         } else {
             Drawable drawable = typedArray.getDrawable(R.styleable.TitleView_title_iv_left);
-            if (drawable == null) ivBack.setVisibility(View.GONE);
-            else {
+            if (drawable == null) {
+                ivBack.setVisibility(View.GONE);
+            } else {
                 ivBack.setVisibility(View.VISIBLE);
                 ivBack.setImageDrawable(drawable);
             }
@@ -96,8 +102,11 @@ public class TitleView extends RelativeLayout {
         ivBack.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (iBack == null) RxActivityTool.finishActivity(activity);
-                else iBack.back(view);
+                if (iBack == null) {
+                    RxActivityTool.finishActivity(activity);
+                } else {
+                    iBack.back(view);
+                }
             }
         });
 
@@ -109,7 +118,9 @@ public class TitleView extends RelativeLayout {
         tvRight.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (iClickRightTitle != null) iClickRightTitle.click(view);
+                if (iClickRightTitle != null) {
+                    iClickRightTitle.click(view);
+                }
             }
         });
 
@@ -121,7 +132,9 @@ public class TitleView extends RelativeLayout {
             ivRight.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (iClickRightImg != null) iClickRightImg.click(v);
+                    if (iClickRightImg != null) {
+                        iClickRightImg.click(v);
+                    }
                 }
             });
         } else {

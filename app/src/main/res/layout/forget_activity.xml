@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.kang.excelchart.custom.view.TitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/forget_password"/>
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_32"
+        android:layout_marginEnd="@dimen/qb_px_32"
+        android:layout_marginTop="@dimen/dp_32"
+        android:text="@string/forget_password_content"
+        android:lineSpacingExtra="@dimen/qb_px_5"
+        android:textColor="@color/black4A"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/tv_qq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_gravity="end"
+        android:paddingTop="@dimen/qb_px_5"
+        android:paddingBottom="@dimen/qb_px_5"
+        android:layout_marginStart="@dimen/qb_px_32"
+        android:layout_marginEnd="@dimen/qb_px_32"
+        android:layout_marginTop="@dimen/dp_32"
+        android:text="@string/service_qq"
+        android:lineSpacingExtra="@dimen/qb_px_5"
+        android:textColor="@color/black4A"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom|center"
+        android:layout_marginStart="@dimen/qb_px_32"
+        android:layout_marginEnd="@dimen/qb_px_32"
+        android:layout_marginTop="@dimen/dp_32"
+        android:text="@string/copy_email_qq"
+        android:paddingBottom="@dimen/qb_px_18"
+        android:lineSpacingExtra="@dimen/qb_px_5"
+        android:textColor="@color/black4A"
+        android:textSize="16sp"/>
+
+</LinearLayout>

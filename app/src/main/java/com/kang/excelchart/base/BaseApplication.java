@@ -14,9 +14,10 @@ import android.util.DisplayMetrics;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.multidex.MultiDexApplication;
+
 import cn.bmob.v3.Bmob;
 
-import com.lzy.okgo.OkGo;
+import com.kang.excelchart.config.UserConfig;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -39,14 +40,22 @@ public class BaseApplication extends MultiDexApplication implements Application.
     public static BaseApplication application;
 
     public static String LANGUAGE = "LANGUAGE";
-    public static final String EN = "en";//英语
-    public static final String ZH = "zh";//简体中文
-    public static final String TW = "tw";//繁体中文
-    public static final String KO = "ko";//韩文
-    public static final String TH = "th";//泰文
-    public static final String JA = "ja";//日文
-    public static final String AR = "ar";//阿拉伯文
-    public static final String DE = "de";//德文
+    //英语
+    public static final String EN = "en";
+    //简体中文
+    public static final String ZH = "zh";
+    //繁体中文
+    public static final String TW = "tw";
+    //韩文
+    public static final String KO = "ko";
+    //泰文
+    public static final String TH = "th";
+    //日文
+    public static final String JA = "ja";
+    //阿拉伯文
+    public static final String AR = "ar";
+    //德文
+    public static final String DE = "de";
 
 
     public static BaseApplication getApplication() {
@@ -145,19 +154,25 @@ public class BaseApplication extends MultiDexApplication implements Application.
         }
     }
 
-    //如果是第一次启动系统，保存系统语言设置
+    /**
+     * 如果是第一次启动系统，保存系统语言设置
+     */
     public static Context setLanguage(Context activity) {
         String language = UserConfig.getLanguage(activity);
         //第一次启动app
         if (language.equals("") || language == null) {
-            String localeSetting = Locale.getDefault().getLanguage();//获取系统语言
+            //获取系统语言
+            String localeSetting = Locale.getDefault().getLanguage();
             //中文
             if (localeSetting.equals(ZH)) {
                 //繁体中文
-                if (Locale.getDefault().getCountry().equals(TW))
+                if (Locale.getDefault().getCountry().equals(TW)) {
                     UserConfig.setLanguage(activity, TW);
-                    //简体中文
-                else UserConfig.setLanguage(activity, ZH);
+                }
+                //简体中文
+                else {
+                    UserConfig.setLanguage(activity, ZH);
+                }
             } else if (checkLanguage(localeSetting)) {
                 UserConfig.setLanguage(activity, localeSetting);
             } else {//没有我们所翻译的语言，设置为简体中文
@@ -198,9 +213,10 @@ public class BaseApplication extends MultiDexApplication implements Application.
                 language.equals(TH) ||
                 language.equals(JA) ||
                 language.equals(AR) ||
-                language.equals(EN)||
+                language.equals(EN) ||
                 language.equals(DE);
     }
+
     /**
      * 7.0及以上的修改app语言的方法
      */

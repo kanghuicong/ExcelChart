@@ -44,7 +44,7 @@
                 style="@style/radioButtonStyle"
                 android:drawableTop="@mipmap/folder_open_select"
                 android:text="@string/home"
-                android:textColor="@color/green00D3BD" />
+                android:textColor="@color/main_color" />
 
             <TextView
                 android:id="@+id/rb2"
@@ -74,8 +74,8 @@
 
     <ImageView
         android:id="@+id/iv_add"
-        android:layout_width="@dimen/qb_px_64"
-        android:layout_height="@dimen/qb_px_64"
+        android:layout_width="@dimen/qb_px_54"
+        android:layout_height="@dimen/qb_px_54"
         android:background="@mipmap/plus_last"
         app:layout_constraintBottom_toBottomOf="@+id/rl"
         app:layout_constraintEnd_toEndOf="parent"

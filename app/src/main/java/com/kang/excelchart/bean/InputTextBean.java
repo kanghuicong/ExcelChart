@@ -2,8 +2,8 @@ package com.kang.excelchart.bean;
 
 import android.text.TextPaint;
 
-import com.kang.excelchart.base.BaseConfig;
-import com.kang.excelchart.base.TextPaintConfig;
+import com.kang.excelchart.config.BaseConfig;
+import com.kang.excelchart.config.TextPaintConfig;
 
 /**
  * 类描述：

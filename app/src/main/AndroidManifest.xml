@@ -23,8 +23,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+        <provider
+            android:name="cn.bmob.v3.util.BmobContentProvider"
+            android:authorities="com.kang.excelchart.BmobContentProvider" />
+
         <activity
-            android:name=".activity.login.LoginActivity"
+            android:name=".activity.login.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,22 +40,25 @@
         </activity>
 
         <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+
+        <!--login-->
+        <activity
+            android:name=".activity.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.ForgetActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".activity.ChartActivity"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.mine.MineAccountActivity"
             android:screenOrientation="portrait" />
-<!--        <activity-->
-<!--            android:name=".activity.login.LoginActivity"-->
-<!--            android:screenOrientation="portrait" />-->
 
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
-
-        <provider
-            android:name="cn.bmob.v3.util.BmobContentProvider"
-            android:authorities="com.kang.excelchart.BmobContentProvider"/>
 
     </application>
 

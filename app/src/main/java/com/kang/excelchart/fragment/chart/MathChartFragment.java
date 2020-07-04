@@ -11,11 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.kang.excelchart.R;
-import com.kang.excelchart.base.BaseConfig;
+import com.kang.excelchart.config.BaseConfig;
 import com.kang.excelchart.base.BaseChartFragment;
 import com.kang.excelchart.bean.InputTextBean;
 
-import static com.kang.excelchart.base.BaseConfig.MathType.ADDITION;
+import static com.kang.excelchart.config.BaseConfig.MathType.ADDITION;
 
 /**
  * 类描述：计算页面

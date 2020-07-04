@@ -1,11 +1,9 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColor">@color/black4A</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="BaseDialogStyle" parent="@android:style/Theme.Dialog">
@@ -37,9 +35,9 @@
         <!--        <item name="android:paddingBottom">@dimen/qb_px_5</item>-->
         <item name="android:paddingTop">@dimen/qb_px_5</item>
         <item name="android:paddingBottom">@dimen/qb_px_5</item>
-        <item name="android:drawablePadding">@dimen/qb_px_5</item>
         <item name="android:textSize">12sp</item>
     </style>
+
     <style name="lineStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/qb_px_1</item>

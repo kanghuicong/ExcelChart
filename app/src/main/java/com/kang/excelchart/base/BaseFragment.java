@@ -10,6 +10,7 @@ import com.kang.excelchart.activity.ChartActivity;
 import com.kang.excelchart.bean.InputTextBean;
 import com.kang.excelchart.custom.view.ChartView;
 import com.kang.excelchart.custom.view.KeyBackEditText;
+import com.kang.excelchart.utils.HttpUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -25,7 +26,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected BaseActivity activity;
     private View view;
-
+    public HttpUtils httpUtils;
     protected abstract int initLayout(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState);
 
     protected abstract void initView(View view);
@@ -38,6 +39,8 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (view == null) {
             view = View.inflate(activity, initLayout(inflater, container, savedInstanceState), null);
+
+            httpUtils = new HttpUtils(activity);
             initView(view);
 
             init(inflater,container,savedInstanceState);

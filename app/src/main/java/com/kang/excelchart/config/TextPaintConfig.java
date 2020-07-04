@@ -1,13 +1,9 @@
-package com.kang.excelchart.base;
+package com.kang.excelchart.config;
 
-import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.text.TextPaint;
 
-import androidx.core.content.ContextCompat;
-
-import com.kang.excelchart.R;
 import com.kang.excelchart.bean.TextColorBean;
 import com.vondear.rxtool.RxImageTool;
 

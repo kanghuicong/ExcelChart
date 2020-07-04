@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import com.kang.excelchart.custom.view.ChartView;
 import com.kang.excelchart.activity.ChartActivity;
 import com.kang.excelchart.R;
-import com.kang.excelchart.base.BaseConfig;
+import com.kang.excelchart.config.BaseConfig;
 import com.kang.excelchart.base.BaseChartFragment;
 import com.kang.excelchart.bean.InputTextBean;
 import com.kang.excelchart.custom.view.SuperItemView;

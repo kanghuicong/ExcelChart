@@ -1,10 +1,12 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="@dimen/qb_px_32">
+        android:paddingTop="@dimen/qb_px_28"
+        android:background="@color/main_color">
 
         <RelativeLayout
             android:id="@+id/title_layout"
@@ -17,6 +19,7 @@
                 android:layout_height="@dimen/qb_px_32"
                 android:layout_centerVertical="true"
                 android:background="@null"
+                android:src="@mipmap/fanhui"
                 android:layout_marginStart="@dimen/qb_px_8"/>
 
 

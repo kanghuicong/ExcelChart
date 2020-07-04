@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="main_color">#09ACC4</color>
+    <color name="main_color">#2e8b57</color>
+    <color name="main_color_80">#802e8b57</color>
     <color name="white">#FFFFFFFF</color>
     <color name="whiteA6">#A6FFFFFF</color>
     <color name="whiteF4F5F6">#F4F5F6</color>
@@ -60,7 +61,6 @@
     <color name="SkeletonShimmerColor">#F8F8F8</color>
     <color name="backgroundColor">#F4F5F6</color>
     <color name="loading_color">#737373</color>
-    <color name="mainColor">#10C0D9</color>
     <color name="orangeFDB735">#FDB735</color>
     <color name="orangeFAAD14">#FAAD14</color>
     <color name="black697886">#697886</color>
