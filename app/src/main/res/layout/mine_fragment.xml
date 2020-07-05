@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <com.kang.excelchart.custom.view.TitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/mine"
-        app:isBack="false"/>
+        app:isBack="false"
+        app:title="@string/mine" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -28,95 +28,97 @@
                 android:id="@+id/super_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:isArrow="true"
                 app:isPadding="true"
-                app:left_text="@string/account"
-                app:isArrow="true"/>
+                app:left_text="@string/account" />
 
             <com.kang.excelchart.custom.view.SuperItemView
                 android:id="@+id/super_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="0.5dp"
+                android:layout_marginTop="@dimen/qb_px_1"
+                app:isArrow="true"
                 app:isPadding="true"
-                app:left_text="@string/super_user"
-                app:isArrow="true"/>
+                app:left_text="@string/super_user" />
 
             <com.kang.excelchart.custom.view.SuperItemView
                 android:id="@+id/super_video"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/qb_px_8"
+                android:layout_marginTop="@dimen/qb_px_12"
+                app:isArrow="true"
                 app:isPadding="true"
-                app:left_text="@string/video_course"
-                app:isArrow="true"/>
+                app:left_text="@string/video_course" />
 
             <com.kang.excelchart.custom.view.SuperItemView
                 android:id="@+id/super_tip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="0.5dp"
+                android:layout_marginTop="@dimen/qb_px_1"
+                app:isArrow="true"
                 app:isPadding="true"
                 app:left_text="@string/tip"
-                app:right_text="@string/how_to_use_chart"
-                app:isArrow="true"/>
+                app:right_text="@string/how_to_use_chart" />
 
             <com.kang.excelchart.custom.view.SuperItemView
                 android:id="@+id/super_setting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/qb_px_8"
+                android:layout_marginTop="@dimen/qb_px_12"
+                app:isArrow="true"
                 app:isPadding="true"
-                app:left_text="@string/super_set"
-                app:isArrow="true"/>
+                app:left_text="@string/super_set" />
 
             <com.kang.excelchart.custom.view.SuperItemView
                 android:id="@+id/super_bin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="0.5dp"
+                android:layout_marginTop="@dimen/qb_px_1"
+                app:isArrow="true"
                 app:isPadding="true"
-                app:left_text="@string/recycle_bin"
-                app:isArrow="true"/>
+                app:left_text="@string/recycle_bin" />
 
             <com.kang.excelchart.custom.view.SuperItemView
                 android:id="@+id/super_sync"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/qb_px_8"
+                android:layout_marginTop="@dimen/qb_px_12"
+                app:isArrow="true"
                 app:isPadding="true"
-                app:left_text="@string/active_sync"
-                app:isArrow="true"/>
+                app:left_text="@string/active_sync" />
 
             <com.kang.excelchart.custom.view.SuperItemView
                 android:id="@+id/super_about_us"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/qb_px_8"
+                android:layout_marginTop="@dimen/qb_px_12"
+                app:isArrow="true"
                 app:isPadding="true"
-                app:left_text="@string/about_us"
-                app:isArrow="true"/>
+                app:left_text="@string/about_us" />
 
             <com.kang.excelchart.custom.view.SuperItemView
                 android:id="@+id/super_privacy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/qb_px_8"
+                android:layout_marginTop="@dimen/qb_px_12"
+                app:isArrow="true"
                 app:isPadding="true"
-                app:left_text="@string/privacy_policy"
-                app:isArrow="true"/>
+                app:left_text="@string/privacy_policy" />
 
 
             <com.kang.excelchart.custom.view.SuperItemView
                 android:id="@+id/super_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="0.5dp"
+                android:layout_marginTop="@dimen/qb_px_1"
+                app:isArrow="true"
                 app:isPadding="true"
-                app:left_text="@string/feedback"
-                app:isArrow="true"/>
+                app:left_text="@string/feedback" />
         </LinearLayout>
 
 
     </androidx.core.widget.NestedScrollView>
+
+
 
 </LinearLayout>

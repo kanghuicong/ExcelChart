@@ -113,6 +113,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                         UserConfig.setUserAccount(activity, account);
                                         UserConfig.setUserPwd(activity, password);
                                         UserConfig.setUserId(activity, object.get(0).getObjectId());
+                                        UserConfig.setVip(activity, object.get(0).isVip());
+                                        UserConfig.setEmail(activity, object.get(0).getEmail());
 
                                         RxActivityTool.skipActivity(activity, MainActivity.class);
                                     } else {

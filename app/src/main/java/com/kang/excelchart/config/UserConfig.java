@@ -14,6 +14,8 @@ public class UserConfig {
     public static String USER_ACCOUNT = "USER_ACCOUNT";
     public static String USER_PWD = "USER_PWD";
     public static String USER_ID= "USER_ID";
+    public static String USER_VIP= "USER_VIP";
+    public static String USER_EMAIL= "USER_EMAIL";
 
     //语言
     public static void setLanguage(Context context, String Language) {
@@ -57,5 +59,23 @@ public class UserConfig {
 
     public static String getUserId(Context context) {
         return RxSPTool.getString(context, UserConfig.USER_ID);
+    }
+
+    //VIP
+    public static void setVip(Context context, boolean isVip) {
+        RxSPTool.putBoolean(context, UserConfig.USER_VIP, isVip);
+    }
+
+    public static boolean isVip(Context context) {
+        return RxSPTool.getBoolean(context, UserConfig.USER_VIP);
+    }
+
+    //email
+    public static void setEmail(Context context, String email) {
+        RxSPTool.putString(context, UserConfig.USER_EMAIL, email);
+    }
+
+    public static String getEmail(Context context) {
+        return RxSPTool.getString(context, UserConfig.USER_EMAIL);
     }
 }

@@ -921,6 +921,10 @@ public class SuperItemView extends LinearLayout {
         return rightText;
     }
 
+    public ImageView getRightImgView() {
+        return rightImageL;
+    }
+
     public TextView getLeftTextView() {
         return leftText;
     }

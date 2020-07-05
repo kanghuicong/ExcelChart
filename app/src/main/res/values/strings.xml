@@ -78,10 +78,21 @@
     <string name="privacy_policy">隐私条款</string>
     <string name="feedback">反馈</string>
     <string name="how_to_use_chart">如何玩转图表？</string>
+    <string name="vip_forever">永久会员</string>
+    <string name="not_available">未开通</string>
+    <string name="not_bind">未绑定</string>
+    <string name="you_was_vip">你已经开通高级会员~</string>
+
 
     <!--account-->
     <string name="change_password">修改密码</string>
+    <string name="input_old_pwd">输入旧密码</string>
+    <string name="input_new_pwd">输入新密码</string>
+
     <string name="bind_email">绑定邮箱</string>
+    <string name="email">邮箱</string>
+    <string name="input_email">输入邮箱</string>
+
     <string name="re_login">重新登录</string>
     <string name="logout">退出登录</string>
 
@@ -106,9 +117,18 @@
     <string name="forget_password_content">请发送邮件到xiaochengkejis@foxmail.com 邮件内容必须包含您的账号(手机号码)，如果能够提供更多的信息，比如大概的注册时间，最近一次创建文件的时间等更好~或者联系客服QQ</string>
     <string name="our_email">xiaochengkejis@foxmail.com</string>
     <string name="service_qq">客服QQ 183051883</string>
+    <string name="service_email">反馈邮件 xiaochengkejis@foxmail.com</string>
     <string name="our_qq">183051883</string>
     <string name="copy_email_qq">长按文本复制邮箱和QQ</string>
-    <string name="copy_success">复制成功</string>
+    <string name="copy_email_success">反馈邮件复制成功</string>
+    <string name="copy_qq_success">客服QQ复制成功</string>
     <string name="splash_hint">Quickly make table charts</string>
 
+    <!--feedback-->
+    <string name="hint_feedback">请填写反馈</string>
+    <string name="contact">联系方式</string>
+    <string name="send_feedback">发送反馈</string>
+    <string name="or">或者</string>
+    <string name="click_to_copy">点击可复制</string>
+    <string name="success_send">提交成功</string>
 </resources>

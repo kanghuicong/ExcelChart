@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_120"
+        android:layout_marginStart="@dimen/qb_px_32"
+        android:layout_marginTop="@dimen/qb_px_24"
+        android:layout_marginEnd="@dimen/qb_px_32"
+        android:background="@drawable/bg_empty_grey_3"
+        android:gravity="top|start"
+        android:hint="@string/hint_feedback"
+        android:maxLength="200"
+        android:padding="@dimen/qb_px_15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_view" />
+
+    <EditText
+        android:id="@+id/et_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_32"
+        android:layout_marginTop="@dimen/qb_px_24"
+        android:layout_marginEnd="@dimen/qb_px_32"
+        android:background="@drawable/bg_empty_grey_3"
+        android:gravity="top|start"
+        android:hint="@string/contact"
+        android:padding="@dimen/qb_px_15"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_content" />
+
+    <TextView
+        android:id="@+id/bt_send"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_40"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:background="@drawable/bt_main_5_press"
+        android:gravity="center"
+        android:text="@string/send_feedback"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/et_phone"
+        app:layout_constraintStart_toStartOf="@id/et_phone"
+        app:layout_constraintTop_toBottomOf="@+id/et_phone" />
+
+    <TextView
+        android:id="@+id/hint_copy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/qb_px_10"
+        android:text="@string/click_to_copy"
+        android:textColor="@color/black73_00"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/qb_px_5"
+        android:padding="@dimen/qb_px_5"
+        android:text="@string/service_email"
+        android:textColor="@color/main_color"
+        app:layout_constraintBottom_toTopOf="@+id/hint_copy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_qq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/qb_px_5"
+        android:text="@string/service_qq"
+        android:textColor="@color/main_color"
+        app:layout_constraintBottom_toTopOf="@+id/tv_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/line"
+        style="@style/lineStyle"
+        android:layout_marginStart="@dimen/qb_px_32"
+        android:layout_marginEnd="@dimen/qb_px_32"
+        android:layout_marginBottom="@dimen/qb_px_28"
+        app:layout_constraintBottom_toTopOf="@+id/tv_qq"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/qb_px_8"
+        android:text="@string/or"
+        android:textColor="@color/black73_00"
+        app:layout_constraintBottom_toBottomOf="@+id/line"
+        app:layout_constraintEnd_toEndOf="@+id/line"
+        app:layout_constraintStart_toStartOf="@+id/line"
+        app:layout_constraintTop_toTopOf="@+id/line" />
+
+    <com.kang.excelchart.custom.view.TitleView
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/feedback" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

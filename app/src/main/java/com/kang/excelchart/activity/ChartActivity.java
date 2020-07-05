@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -248,5 +249,10 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean needCloseKeyword() {
+        return false;
     }
 }

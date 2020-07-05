@@ -32,24 +32,18 @@ public class ForgetActivity extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
-        tvEmail.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                RxClipboardTool.copyText(activity, getString(R.string.our_email));
-                RxToast.success(getString(R.string.copy_success));
-                return true;
-            }
-        });
+        tvEmail.setOnLongClickListener((view->{
+            RxClipboardTool.copyText(activity, getString(R.string.our_email));
+            RxToast.success(getString(R.string.copy_email_success));
+            return true;
+        }));
 
 
-        tvQq.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                RxClipboardTool.copyText(activity, getString(R.string.our_qq));
-                RxToast.success(getString(R.string.copy_success));
-                return true;
-            }
-        });
+        tvQq.setOnLongClickListener((view->{
+            RxClipboardTool.copyText(activity, getString(R.string.our_qq));
+            RxToast.success(getString(R.string.copy_qq_success));
+            return true;
+        }));
     }
 
     @Override

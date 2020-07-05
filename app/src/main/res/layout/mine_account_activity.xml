@@ -8,7 +8,8 @@
     <com.kang.excelchart.custom.view.TitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/account"/>
+        app:title="@string/account">
+    </com.kang.excelchart.custom.view.TitleView>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -20,23 +21,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="@dimen/qb_px_8"
-            android:layout_marginBottom="@dimen/qb_px_8">
+            android:layout_marginTop="@dimen/qb_px_12"
+            android:layout_marginBottom="@dimen/qb_px_12">
 
             <com.kang.excelchart.custom.view.SuperItemView
                 android:id="@+id/super_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="@string/account"
-                app:isArrow="true"
-                app:isPadding="false"/>
+                app:isArrow="false"
+                app:isPadding="true"/>
 
             <com.kang.excelchart.custom.view.SuperItemView
                 android:id="@+id/super_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="@string/change_password"
-                android:layout_marginTop="0.5dp"
+                app:right_text="******"
+                android:layout_marginTop="@dimen/qb_px_1"
                 app:isArrow="true"
                 app:isPadding="true"/>
 
@@ -45,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="@string/bind_email"
-                android:layout_marginTop="0.5dp"
+                android:layout_marginTop="@dimen/qb_px_1"
                 app:isArrow="true"
                 app:isPadding="true"/>
 
@@ -54,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="@string/super_user"
-                android:layout_marginTop="@dimen/qb_px_8"
+                android:layout_marginTop="@dimen/qb_px_12"
                 app:isArrow="true"
                 app:isPadding="true"/>
 
@@ -62,7 +64,7 @@
                 android:id="@+id/super_re_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/qb_px_8"
+                android:layout_marginTop="@dimen/qb_px_12"
                 app:left_text="@string/re_login"
                 app:isArrow="true"
                 app:isPadding="true"/>
@@ -71,7 +73,7 @@
                 android:id="@+id/super_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/qb_px_8"
+                android:layout_marginTop="@dimen/qb_px_12"
                 app:left_text="@string/logout"
                 app:isArrow="true"
                 app:isPadding="true"/>
