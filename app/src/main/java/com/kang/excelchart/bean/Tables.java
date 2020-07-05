@@ -8,7 +8,7 @@ import cn.bmob.v3.BmobObject;
  */
 public class Tables extends BmobObject {
     private String wordStr;
-    private String type;
+    private int type;
     private long taUpdateTime;
     private long taCreateTime;
     private String name;
@@ -25,11 +25,11 @@ public class Tables extends BmobObject {
         this.wordStr = wordStr;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

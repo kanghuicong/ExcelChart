@@ -92,6 +92,8 @@
     <string name="move">移动到</string>
     <string name="rename">重命名</string>
     <string name="send_file">发送文件</string>
+    <string name="create">创建</string>
+    <string name="update">更新</string>
 
     <!--login-->
     <string name="login">登录</string>

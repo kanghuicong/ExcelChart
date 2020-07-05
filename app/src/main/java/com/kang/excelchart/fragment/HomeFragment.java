@@ -8,12 +8,16 @@ import com.kang.excelchart.R;
 import com.kang.excelchart.bean.Tables;
 import com.kang.excelchart.bean._User;
 import com.kang.excelchart.config.UserConfig;
+import com.vondear.rxtool.RxLogTool;
 import com.vondear.rxtool.RxTimeTool;
+import com.vondear.rxtool.view.RxToast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * 类描述：
@@ -22,15 +26,12 @@ import cn.bmob.v3.BmobQuery;
 public class HomeFragment extends BaseListFragment {
     @Override
     public BmobQuery<Tables> query() {
-        BmobQuery<Tables> eq1 = new BmobQuery<>();
-        eq1.addWhereEqualTo("objectId", UserConfig.getUserId(activity));
-        BmobQuery<Tables> eq2 = new BmobQuery<>();
-        eq2.addWhereLessThanOrEqualTo("taCreateTime", RxTimeTool.getCurTimeMills());
-        List<BmobQuery<Tables>> andQuerys = new ArrayList<>();
-        andQuerys.add(eq1);
-        andQuerys.add(eq2);
-        BmobQuery<Tables> query = new BmobQuery<>();
-        query.and(andQuerys);
+        //按创建时间倒序排列
+        BmobQuery<Tables> query = new BmobQuery<Tables>();
+        _User user = new _User();
+        user.setObjectId(UserConfig.getUserId(activity));
+        query.addWhereRelatedTo("tables",new BmobPointer(user));
+        query.order("-taCreateTime");
         return query;
     }
 
@@ -39,5 +40,10 @@ public class HomeFragment extends BaseListFragment {
 
         titleView.setTitle(getString(R.string.home));
 
+    }
+
+    @Override
+    public int initFrom() {
+        return 0;
     }
 }

@@ -41,9 +41,9 @@ public class HttpUtils {
                     RxToast.error(activity.getString(R.string.error_network));
                     break;
                 default:
-                    RxLogTool.e(e.toString());
                     break;
             }
+            RxLogTool.e(e.toString());
             iHttpResult.failure();
         }
 

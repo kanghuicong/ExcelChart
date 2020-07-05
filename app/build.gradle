@@ -61,6 +61,7 @@ dependencies {
     implementation 'com.yanzhenjie.permission:support:2.0.1'
     //have to use because methods count is more than 65535
     implementation 'androidx.multidex:multidex:2.0.1'
+
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     implementation 'com.github.yoyoyaobin:PreventKeyboardBlockUtil:1.0.8'
