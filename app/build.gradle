@@ -81,5 +81,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.14.1'
     implementation 'com.squareup.okio:okio:2.2.2'
     implementation 'com.google.code.gson:gson:2.8.6'
-
+    //通用 popup
+    implementation "com.github.razerdp:BasePopup:2.2.2.2"
 }

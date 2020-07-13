@@ -8,6 +8,7 @@
     <string name="loading">加载中</string>
     <string name="error">发生错误</string>
     <string name="error_network">网络错误</string>
+    <string name="error_login">用户请先登录，或者用户登录已过期需要重新登录</string>
     <string name="no_data">暂无内容</string>
     <string name="no_collect_data">没有收藏内容</string>
     <string name="refresh">下拉刷新</string>
@@ -88,10 +89,15 @@
     <string name="change_password">修改密码</string>
     <string name="input_old_pwd">输入旧密码</string>
     <string name="input_new_pwd">输入新密码</string>
+    <string name="error_input_old_pwd">旧密码输入错误</string>
+    <string name="success_change_pwd">密码修改成功</string>
+    <string name="error_change_pwd">密码修改失败</string>
 
     <string name="bind_email">绑定邮箱</string>
     <string name="email">邮箱</string>
     <string name="input_email">输入邮箱</string>
+    <string name="success_change_email">邮箱修改成功</string>
+    <string name="error_change_email">邮箱修改失败</string>
 
     <string name="re_login">重新登录</string>
     <string name="logout">退出登录</string>

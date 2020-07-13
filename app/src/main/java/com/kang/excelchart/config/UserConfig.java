@@ -52,7 +52,7 @@ public class UserConfig {
     public static String getUserPwd(Context context) {
         return RxSPTool.getString(context, UserConfig.USER_PWD);
     }
-    //用户账号
+    //用户id
     public static void setUserId(Context context, String id) {
         RxSPTool.putString(context, UserConfig.USER_ID, id);
     }

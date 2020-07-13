@@ -63,11 +63,15 @@ public class VerifyDialog extends Dialog {
         iv1 = (ImageButton) findViewById(R.id.iv_1);
         iv2 = (ImageButton) findViewById(R.id.iv_2);
 
+        tvTitle.setText(title);
+        tvHint1.setText(hint1);
 
         if (hint2 == null) {
             tvHint2.setVisibility(View.GONE);
             ll2.setVisibility(View.GONE);
             line2.setVisibility(View.GONE);
+        } else {
+            tvHint2.setText(hint2);
         }
 
         if (title.equals(context.getString(R.string.change_password))) {

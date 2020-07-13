@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kang.excelchart.R;
+import com.kang.excelchart.activity.ChartActivity;
 import com.kang.excelchart.bean.Tables;
 import com.kang.excelchart.custom.dialog.SettingDialog;
 import com.vondear.rxtool.RxConstants;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +31,7 @@ public class ChartAdapter extends RecyclerView.Adapter {
     public Context context;
     public int from;
 
-    public ChartAdapter(Context context,int from,List<Tables> list) {
+    public ChartAdapter(Context context, int from, List<Tables> list) {
         this.context = context;
         this.list = list;
         this.from = from;
@@ -48,14 +50,14 @@ public class ChartAdapter extends RecyclerView.Adapter {
         Tables table = list.get(position);
         vh.tvTitle.setText(table.getName());
 
-        String time ;
+        String time;
         switch (from) {
             case 0:
             case 2:
-                time = table.getCreatedAt()+" "+context.getString(R.string.create);
+                time = table.getCreatedAt() + " " + context.getString(R.string.create);
                 break;
             case 1:
-                time = table.getUpdatedAt()+" "+context.getString(R.string.update);
+                time = table.getUpdatedAt() + " " + context.getString(R.string.update);
                 break;
             default:
                 time = table.getUpdatedAt();
@@ -86,10 +88,14 @@ public class ChartAdapter extends RecyclerView.Adapter {
                 break;
         }
 
-        vh.ivSetting.setOnClickListener((view->{
+        vh.ivSetting.setOnClickListener((view -> {
             SettingDialog dialog = new SettingDialog(context);
+            dialog.showDialog();
         }));
 
+        vh.llItem.setOnClickListener((view -> {
+            ChartActivity.doIntent(context, ChartActivity.ADAPTER_FROM, table.getSourceData());
+        }));
     }
 
     @Override
@@ -103,10 +109,12 @@ public class ChartAdapter extends RecyclerView.Adapter {
         private TextView tvTime;
         private ImageView ivWarn;
         private ImageView ivSetting;
+        private ConstraintLayout llItem;
 
         public ViewHolder(@NonNull View rootView) {
             super(rootView);
 
+            llItem = (ConstraintLayout) rootView.findViewById(R.id.ll_item);
             ivIcon = (ImageView) rootView.findViewById(R.id.iv_icon);
             tvTitle = (TextView) rootView.findViewById(R.id.tv_title);
             tvTime = (TextView) rootView.findViewById(R.id.tv_time);

@@ -3,6 +3,7 @@ package com.kang.excelchart.activity.mine;
 import android.os.Bundle;
 import android.view.View;
 
+import com.kang.excelchart.R;
 import com.kang.excelchart.base.BaseActivity;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public class MineVipActivity extends BaseActivity {
     @Override
     public int initLayout() {
-        return 0;
+        return R.layout.activity_vip;
     }
 
     @Override

@@ -57,7 +57,7 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout"
+        android:id="@+id/ll_chart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/select_color"

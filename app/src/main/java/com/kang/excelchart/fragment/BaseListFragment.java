@@ -66,14 +66,14 @@ public abstract class BaseListFragment extends BaseFragment {
     protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         _init(inflater, container, savedInstanceState);
 
-        adapter = new ChartAdapter(activity,initFrom(),list);
+        adapter = new ChartAdapter(activity, initFrom(), list);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setAdapter(adapter);
 
         refreshLayout.autoRefresh();//自动刷新
         //刷新
         refreshLayout.setOnRefreshListener((refreshlayout) -> {
-            if (query()!=null) {
+            if (query() != null) {
                 query().setLimit(1).setSkip(0)
                         .findObjects(new FindListener<Tables>() {
                             @Override
@@ -109,32 +109,31 @@ public abstract class BaseListFragment extends BaseFragment {
 
         //加载
         refreshLayout.setOnLoadMoreListener((refreshlayout) -> {
-            if (query()!=null)
-            query().setLimit(1).setSkip(page)
-                    .findObjects(new FindListener<Tables>() {
-                        @Override
-                        public void done(List<Tables> object, BmobException e) {
-                            RxLogTool.i("列表加载：" + object.size() + "-----" + object.get(0).toString());
-                            httpUtils.doHttpResult(e, new HttpUtils.IHttpResult() {
-                                @Override
-                                public void success() {
-                                    if (object.size() == 0) {
-                                        refreshLayout.finishLoadMoreWithNoMoreData();
-                                    } else {
-                                        page++;
-                                        list.addAll(object);
-                                        adapter.notifyDataSetChanged();
-                                        refreshLayout.finishLoadMore(0);
+            if (query() != null)
+                query().setLimit(1).setSkip(page)
+                        .findObjects(new FindListener<Tables>() {
+                            @Override
+                            public void done(List<Tables> object, BmobException e) {
+                                httpUtils.doHttpResult(e, new HttpUtils.IHttpResult() {
+                                    @Override
+                                    public void success() {
+                                        if (object.size() == 0) {
+                                            refreshLayout.finishLoadMoreWithNoMoreData();
+                                        } else {
+                                            page++;
+                                            list.addAll(object);
+                                            adapter.notifyDataSetChanged();
+                                            refreshLayout.finishLoadMore(0);
+                                        }
                                     }
-                                }
 
-                                @Override
-                                public void failure() {
-                                    refreshLayout.finishLoadMore(false);
-                                }
-                            });
-                        }
-                    });
+                                    @Override
+                                    public void failure() {
+                                        refreshLayout.finishLoadMore(false);
+                                    }
+                                });
+                            }
+                        });
         });
     }
 

@@ -1,5 +1,9 @@
 package com.kang.excelchart.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
+import java.util.List;
+
 /**
  * 类描述：
  */
@@ -23,37 +27,53 @@ public class ChartBean {
      * isFill : true
      * isTopBorder : false
      */
+    @JSONField(name = "if")
+    private boolean isFx;//是否计算
+    @JSONField(name = "b")
+    private boolean isBottomBorder;//下边框
+    @JSONField(name = "fx")
+    private String fxStr;//计算公式
+    @JSONField(name = "l")
+    private boolean isLeftBorder;//左边框
+    @JSONField(name = "o")
+    private int chartOrientation;//图表对齐方式
+    @JSONField(name = "ic")
+    private int chart;//是否图表
+    @JSONField(name = "s")
+    private String tdSizeStr;//单元格size,没合并的都是1.1
+    @JSONField(name = "tx")
+    private String tdText;//单元格文字
+    @JSONField(name = "r")
+    private boolean isRightBorder;//右边框
+    @JSONField(name = "boc")
+    private String tdBorderColorStr;//边框颜色
+    @JSONField(name = "k")
+    private int chartTheme;//图标主题
+    @JSONField(name = "j")
+    private String chartTitle;//图标标题
+    @JSONField(name = "bc")
+    private String tdBackgroundColorStr;//背景颜色
+    @JSONField(name = "m")
+    private List<TdTextAttributeModelBean> tdTextAttributeModel;
+    @JSONField(name = "f")
+    private boolean isFill;//是否填满
+    @JSONField(name = "t")
+    private boolean isTopBorder;//上边框
 
-    private boolean isFx;
-    private boolean isBottomBorder;
-    private String fxStr;
-    private boolean isLeftBorder;
-    private int chartOrientation;
-    private int chart;
-    private String tdSizeStr;
-    private String tdText;
-    private boolean isRightBorder;
-    private String tdBorderColorStr;
-    private int chartTheme;
-    private String tdBackgroundColorStr;
-    private TdTextAttributeModelBean tdTextAttributeModel;
-    private boolean isFill;
-    private boolean isTopBorder;
-
-    public boolean isIsFx() {
+    public boolean isFx() {
         return isFx;
     }
 
-    public void setIsFx(boolean isFx) {
-        this.isFx = isFx;
+    public void setFx(boolean fx) {
+        isFx = fx;
     }
 
-    public boolean isIsBottomBorder() {
+    public boolean isBottomBorder() {
         return isBottomBorder;
     }
 
-    public void setIsBottomBorder(boolean isBottomBorder) {
-        this.isBottomBorder = isBottomBorder;
+    public void setBottomBorder(boolean bottomBorder) {
+        isBottomBorder = bottomBorder;
     }
 
     public String getFxStr() {
@@ -64,12 +84,12 @@ public class ChartBean {
         this.fxStr = fxStr;
     }
 
-    public boolean isIsLeftBorder() {
+    public boolean isLeftBorder() {
         return isLeftBorder;
     }
 
-    public void setIsLeftBorder(boolean isLeftBorder) {
-        this.isLeftBorder = isLeftBorder;
+    public void setLeftBorder(boolean leftBorder) {
+        isLeftBorder = leftBorder;
     }
 
     public int getChartOrientation() {
@@ -104,12 +124,12 @@ public class ChartBean {
         this.tdText = tdText;
     }
 
-    public boolean isIsRightBorder() {
+    public boolean isRightBorder() {
         return isRightBorder;
     }
 
-    public void setIsRightBorder(boolean isRightBorder) {
-        this.isRightBorder = isRightBorder;
+    public void setRightBorder(boolean rightBorder) {
+        isRightBorder = rightBorder;
     }
 
     public String getTdBorderColorStr() {
@@ -128,6 +148,14 @@ public class ChartBean {
         this.chartTheme = chartTheme;
     }
 
+    public String getChartTitle() {
+        return chartTitle;
+    }
+
+    public void setChartTitle(String chartTitle) {
+        this.chartTitle = chartTitle;
+    }
+
     public String getTdBackgroundColorStr() {
         return tdBackgroundColorStr;
     }
@@ -136,28 +164,28 @@ public class ChartBean {
         this.tdBackgroundColorStr = tdBackgroundColorStr;
     }
 
-    public TdTextAttributeModelBean getTdTextAttributeModel() {
+    public List<TdTextAttributeModelBean> getTdTextAttributeModel() {
         return tdTextAttributeModel;
     }
 
-    public void setTdTextAttributeModel(TdTextAttributeModelBean tdTextAttributeModel) {
+    public void setTdTextAttributeModel(List<TdTextAttributeModelBean> tdTextAttributeModel) {
         this.tdTextAttributeModel = tdTextAttributeModel;
     }
 
-    public boolean isIsFill() {
+    public boolean isFill() {
         return isFill;
     }
 
-    public void setIsFill(boolean isFill) {
-        this.isFill = isFill;
+    public void setFill(boolean fill) {
+        isFill = fill;
     }
 
-    public boolean isIsTopBorder() {
+    public boolean isTopBorder() {
         return isTopBorder;
     }
 
-    public void setIsTopBorder(boolean isTopBorder) {
-        this.isTopBorder = isTopBorder;
+    public void setTopBorder(boolean topBorder) {
+        isTopBorder = topBorder;
     }
 
     public static class TdTextAttributeModelBean {
@@ -171,15 +199,20 @@ public class ChartBean {
          * isCenter : false
          * isUnder : false
          */
-
-        private String fontName;
-        private boolean isBold;
-        private boolean isTilt;
-        private String colorStr;
-        private int textAlignment;
-        private int pointSize;
-        private boolean isCenter;
-        private boolean isUnder;
+        @JSONField(name = "f")
+        private String fontName;//字体名称
+        @JSONField(name = "b")
+        private boolean isBold;//是否加粗
+        @JSONField(name = "t")
+        private boolean isTilt;//是否倾斜
+        @JSONField(name = "c")
+        private String colorStr;//字体颜色
+        @JSONField(name = "a")
+        private int textAlignment;//对齐方式
+        @JSONField(name = "p")
+        private int pointSize;//文字大小
+        @JSONField(name = "u")
+        private boolean isUnder;//是否底部下划线
 
         public String getFontName() {
             return fontName;
@@ -189,20 +222,20 @@ public class ChartBean {
             this.fontName = fontName;
         }
 
-        public boolean isIsBold() {
+        public boolean isBold() {
             return isBold;
         }
 
-        public void setIsBold(boolean isBold) {
-            this.isBold = isBold;
+        public void setBold(boolean bold) {
+            isBold = bold;
         }
 
-        public boolean isIsTilt() {
+        public boolean isTilt() {
             return isTilt;
         }
 
-        public void setIsTilt(boolean isTilt) {
-            this.isTilt = isTilt;
+        public void setTilt(boolean tilt) {
+            isTilt = tilt;
         }
 
         public String getColorStr() {
@@ -229,20 +262,34 @@ public class ChartBean {
             this.pointSize = pointSize;
         }
 
-        public boolean isIsCenter() {
-            return isCenter;
-        }
-
-        public void setIsCenter(boolean isCenter) {
-            this.isCenter = isCenter;
-        }
-
-        public boolean isIsUnder() {
+        public boolean isUnder() {
             return isUnder;
         }
 
-        public void setIsUnder(boolean isUnder) {
-            this.isUnder = isUnder;
+        public void setUnder(boolean under) {
+            isUnder = under;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "ChartBean{" +
+                "isFx=" + isFx +
+                ", isBottomBorder=" + isBottomBorder +
+                ", fxStr='" + fxStr + '\'' +
+                ", isLeftBorder=" + isLeftBorder +
+                ", chartOrientation=" + chartOrientation +
+                ", chart=" + chart +
+                ", tdSizeStr='" + tdSizeStr + '\'' +
+                ", tdText='" + tdText + '\'' +
+                ", isRightBorder=" + isRightBorder +
+                ", tdBorderColorStr='" + tdBorderColorStr + '\'' +
+                ", chartTheme=" + chartTheme +
+                ", chartTitle='" + chartTitle + '\'' +
+                ", tdBackgroundColorStr='" + tdBackgroundColorStr + '\'' +
+                ", tdTextAttributeModel=" + tdTextAttributeModel +
+                ", isFill=" + isFill +
+                ", isTopBorder=" + isTopBorder +
+                '}';
     }
 }

@@ -35,7 +35,7 @@ public class ChartView extends View {
     private List<Integer> height = new ArrayList<>();
     private List<Integer> width = new ArrayList<>();
 
-    private int multiple = 1; //放大倍数
+    private int multiple = 2; //放大倍数
     private int heightNum;//行数
     private int widthNum;//列数
 

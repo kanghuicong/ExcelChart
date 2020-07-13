@@ -15,7 +15,15 @@ public class Tables extends BmobObject {
     private String isColl;
     private String fileId;
     private String updateUserToken;
+    private String sourceData;
 
+    public String getSourceData() {
+        return sourceData;
+    }
+
+    public void setSourceData(String sourceData) {
+        this.sourceData = sourceData;
+    }
 
     public String getWordStr() {
         return wordStr;

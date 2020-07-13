@@ -3,6 +3,8 @@ package com.kang.excelchart.activity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +14,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.kang.excelchart.bean.ChartBean;
+import com.kang.excelchart.bean.ChartInfoBean;
 import com.kang.excelchart.custom.view.ChartView;
 import com.kang.excelchart.custom.view.HVScrollView;
 import com.kang.excelchart.R;
@@ -28,7 +37,9 @@ import com.kang.excelchart.fragment.chart.MathChartFragment;
 import com.kang.excelchart.fragment.chart.OtherChartFragment;
 import com.kang.excelchart.fragment.chart.TxtChartFragment;
 import com.kang.excelchart.utils.SoftKeyBoardListener;
+import com.vondear.rxtool.RxActivityTool;
 import com.vondear.rxtool.RxKeyboardTool;
+import com.vondear.rxtool.RxLogTool;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -41,7 +52,7 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
     public ChartView chartView;
     private TitleView titleView;
     private View viewLine;
-    private ConstraintLayout layout;
+    private ConstraintLayout llChart;
     public KeyBackEditText etContent;
     private TextView btConfirm;
     private ConstraintLayout clItem;
@@ -56,6 +67,15 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
     private XViewPager viewPager;
     private boolean isShow = false;
 
+    public static final int NORMAL_FROM = 0;
+    public static final int ADAPTER_FROM = 1;
+
+    public static void doIntent(Context context, int from, String date) {
+        Bundle bundle = new Bundle();
+        bundle.putString("date", date);
+        bundle.putInt("from", from);
+        RxActivityTool.skipActivity(context, ChartActivity.class, bundle);
+    }
 
     @Override
     public int initLayout() {
@@ -68,7 +88,7 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
         scrollView = (HVScrollView) findViewById(R.id.scrollView);
         chartView = (ChartView) findViewById(R.id.chart_view);
         viewLine = (View) findViewById(R.id.view_line);
-        layout = (ConstraintLayout) findViewById(R.id.layout);
+        llChart = (ConstraintLayout) findViewById(R.id.ll_chart);
         etContent = (KeyBackEditText) findViewById(R.id.et_content);
         btConfirm = (TextView) findViewById(R.id.bt_confirm);
         clItem = (ConstraintLayout) findViewById(R.id.cl_item);
@@ -82,7 +102,7 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
         ivNext = (ImageButton) findViewById(R.id.iv_next);
         viewPager = (XViewPager) findViewById(R.id.view_pager);
 
-        layout.setVisibility(View.GONE);
+        llChart.setVisibility(View.GONE);
 
         ivKeyboard.setOnClickListener(this);
         ivTxt.setOnClickListener(this);
@@ -96,28 +116,54 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void init(Bundle savedInstanceState) {
-        titleView.post(new Runnable() {
-            @Override
-            public void run() {
-                chartView.setBarHeight(titleView.getHeight()); // 获取高度
-            }
-        });
+        int from = getIntent().getExtras().getInt("from", NORMAL_FROM);
+
+
+        switch (from) {
+            case ADAPTER_FROM:
+                String date = getIntent().getExtras().getString("date");
+                ChartInfoBean chartInfoBean = JSON.parseObject(date, ChartInfoBean.class);
+                RxLogTool.d("chartBean:-----------:" + chartInfoBean.getChart_list());
+                chartView.setChartData(chartInfoBean.getWidth_list(), chartInfoBean.getHeight_list());
+
+                Gson gson = new Gson();
+                JsonParser parser = new JsonParser();
+                JsonArray Jarray = parser.parse(chartInfoBean.getChart_list()).getAsJsonArray();
+                ArrayList<ChartBean> lcs = new ArrayList<ChartBean>();
+
+                int i = 0;
+                for (JsonElement obj : Jarray) {
+                    ChartBean cse = gson.fromJson(obj, ChartBean.class);
+                    lcs.add(cse);
+
+                    RxLogTool.d("chart:-------" + i + "----" + cse.toString());
+                    i++;
+                }
+
+                break;
+            default:
+                chartView.setChartData(BaseConfig.getWidthList(), BaseConfig.getHeightList());
+                break;
+        }
+
+        titleView.post((() -> {
+            chartView.setBarHeight(titleView.getHeight()); // 获取高度
+        }));
 
         keyBoardListener();
         initViewPager();
 
         //HVScrollView
         scrollView.setFlingEnabled(false);
-
         //ChartView
         chartView.setScrollView(scrollView);
-        chartView.setChartData(BaseConfig.getWidthList(), BaseConfig.getHeightList());
+
         chartView.setISelectChart(new ChartView.ISelectChart() {
             @Override
             public void selectChart(InputTextBean inputTextBean) {
 
-                if (layout.getVisibility() != View.VISIBLE) {
-                    layout.setVisibility(View.VISIBLE);
+                if (llChart.getVisibility() != View.VISIBLE) {
+                    llChart.setVisibility(View.VISIBLE);
                     RxKeyboardTool.showSoftInput(activity, etContent);
                 }
 
@@ -229,7 +275,7 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.bt_confirm:
                 chartView.setTextContent(etContent.getText().toString());
-                layout.setVisibility(View.GONE);
+                llChart.setVisibility(View.GONE);
                 RxKeyboardTool.hideSoftInput(this, etContent);
                 break;
             default:
@@ -243,8 +289,8 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
      */
     @Override
     public void onBackPressed() {
-        if (isShow || layout.getVisibility() == View.VISIBLE) {
-            layout.setVisibility(View.GONE);
+        if (isShow || llChart.getVisibility() == View.VISIBLE) {
+            llChart.setVisibility(View.GONE);
             RxKeyboardTool.hideSoftInput(this, etContent);
         } else {
             super.onBackPressed();
