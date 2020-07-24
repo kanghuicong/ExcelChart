@@ -2,11 +2,15 @@ package com.kang.excelchart.config;
 
 import android.graphics.Paint;
 
+import com.kang.excelchart.utils.TextPaintUtils;
+
 /**
  * 类描述：
  */
 public class PaintConfig {
     public Paint linePaint;//默认线条画笔
+    public static final String defaultLineColor = "#FF8F8F8F";
+
     public Paint selectPaint;//选中线条画笔
     public Paint greenPaint;//拉伸线条画笔
 
@@ -23,7 +27,7 @@ public class PaintConfig {
         // 基本线条画笔
         linePaint = new Paint();
         // 设置颜色
-        linePaint.setColor(0xFF8F8F8F);
+        linePaint.setColor(TextPaintUtils.hexToColor(defaultLineColor));
         // 设置抗锯齿
         linePaint.setAntiAlias(true);
         // 设置线宽

@@ -2,27 +2,25 @@ package com.kang.excelchart.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.kang.excelchart.R;
-import com.kang.excelchart.base.BaseFragment;
-import com.kang.excelchart.bean.Tables;
+import com.kang.excelchart.bean.Tables_1;
 import com.kang.excelchart.bean._User;
+import com.kang.excelchart.config.BaseConfig;
 import com.kang.excelchart.config.UserConfig;
 
-import androidx.annotation.Nullable;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobPointer;
 
 public class RecentFragment extends BaseListFragment {
     @Override
-    public BmobQuery<Tables> query() {
+    public BmobQuery query() {
         //按更新时间倒序排列
-        BmobQuery<Tables> query = new BmobQuery<Tables>();
+        BmobQuery<Tables_1> query = new BmobQuery<Tables_1>();
         _User user = new _User();
         user.setObjectId(UserConfig.getUserId(activity));
-        query.addWhereRelatedTo("tables",new BmobPointer(user));
+        query.addWhereRelatedTo(BaseConfig.getTableName(activity),new BmobPointer(user));
         query.order("-taUpdateTime");
         return query;
     }

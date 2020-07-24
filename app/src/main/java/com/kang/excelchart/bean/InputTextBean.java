@@ -12,19 +12,29 @@ public class InputTextBean {
 
     private int inputX;
     private int inputY;
-    private String content;
+    //    private String content;
     private TextPaint textPaint;
-    private int backgroundColor = TextPaintConfig.defaultBackgroundColor;
+//    private int backgroundColor = TextPaintConfig.defaultBackgroundColor;
+    private ChartBean chartBean;
 
     private BaseConfig.MathType mathType = BaseConfig.MathType.ADDITION;
     private BaseConfig.ScopeType scopeType = BaseConfig.ScopeType.LEFT;
     private int decimal = 2;
 
-    public InputTextBean(int inputX,int inputY,TextPaint textPaint,String content) {
+    public InputTextBean(int inputX, int inputY, ChartBean chartBean,TextPaint textPaint) {
         this.inputX = inputX;
         this.inputY = inputY;
+        this.chartBean = chartBean;
         this.textPaint = textPaint;
-        this.content = content;
+//        this.content = content;
+    }
+
+    public ChartBean getChartBean() {
+        return chartBean;
+    }
+
+    public void setChartBean(ChartBean chartBean) {
+        this.chartBean = chartBean;
     }
 
     public BaseConfig.MathType getMathType() {
@@ -51,21 +61,6 @@ public class InputTextBean {
         this.decimal = decimal;
     }
 
-    public int getBackgroundColor() {
-        return backgroundColor;
-    }
-
-    public void setBackgroundColor(int backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
-
-    public TextPaint getTextPaint() {
-        return textPaint;
-    }
-
-    public void setTextPaint(TextPaint textPaint) {
-        this.textPaint = textPaint;
-    }
 
     public int getInputX() {
         return inputX;
@@ -83,11 +78,40 @@ public class InputTextBean {
         this.inputY = inputY;
     }
 
-    public String getContent() {
-        return content;
+//    public String getContent() {
+//        return content;
+//    }
+//
+//    public void setContent(String content) {
+//        this.content = content;
+//    }
+//
+//    public int getBackgroundColor() {
+//        return backgroundColor;
+//    }
+//
+//    public void setBackgroundColor(int backgroundColor) {
+//        this.backgroundColor = backgroundColor;
+//    }
+//
+    public TextPaint getTextPaint() {
+        return textPaint;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setTextPaint(TextPaint textPaint) {
+        this.textPaint = textPaint;
+    }
+
+    @Override
+    public String toString() {
+        return "InputTextBean{" +
+                "inputX=" + inputX +
+                ", inputY=" + inputY +
+                ", textPaint=" + textPaint +
+                ", chartBean=" + chartBean +
+                ", mathType=" + mathType +
+                ", scopeType=" + scopeType +
+                ", decimal=" + decimal +
+                '}';
     }
 }

@@ -5,35 +5,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kang.excelchart.R;
 import com.kang.excelchart.activity.ChartActivity;
 import com.kang.excelchart.bean.Tables;
+import com.kang.excelchart.bean.Tables_1;
 import com.kang.excelchart.custom.dialog.SettingDialog;
-import com.vondear.rxtool.RxConstants;
-import com.vondear.rxtool.RxTimeTool;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ChartAdapter extends RecyclerView.Adapter {
+import cn.bmob.v3.BmobObject;
 
-    public List<Tables> list = new ArrayList<>();
+public class ChartAdapter<T> extends RecyclerView.Adapter {
+
+    public List<T> list = new ArrayList<>();
     public Context context;
     public int from;
+    public long createAt;
 
-    public ChartAdapter(Context context, int from, List<Tables> list) {
+    public ChartAdapter(Context context, int createAt, int from, List<T> list) {
         this.context = context;
         this.list = list;
+        this.createAt = createAt;
         this.from = from;
     }
 
@@ -47,7 +47,14 @@ public class ChartAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder vh = (ViewHolder) holder;
-        Tables table = list.get(position);
+
+        Tables table;
+        if (createAt == 0) {
+            table = (Tables) list.get(position);
+        } else {
+            table = (Tables_1) list.get(position);
+        }
+
         vh.tvTitle.setText(table.getName());
 
         String time;

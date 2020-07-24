@@ -12,16 +12,19 @@ import com.kang.excelchart.MainActivity;
 import com.kang.excelchart.R;
 import com.kang.excelchart.base.BaseActivity;
 import com.kang.excelchart.bean._User;
+import com.kang.excelchart.config.BaseConfig;
 import com.kang.excelchart.config.UserConfig;
 import com.kang.excelchart.custom.view.TitleView;
 import com.kang.excelchart.utils.HttpUtils;
 import com.vondear.rxtool.RxActivityTool;
 import com.vondear.rxtool.RxLogTool;
+import com.vondear.rxtool.RxTimeTool;
 import com.vondear.rxtool.view.RxToast;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -36,6 +39,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private EditText etPassword;
     private TextView btLogin;
     private TextView btForget;
+    public int userCreateAt;
 
     @Override
     public int initLayout() {
@@ -116,6 +120,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                         UserConfig.setVip(activity, object.get(0).isVip());
                                         UserConfig.setEmail(activity, object.get(0).getEmail());
 
+                                        if (RxTimeTool.string2Milliseconds(object.get(0).getCreatedAt()) / 1000 < 1594300372) {
+                                            userCreateAt = 0;
+                                        } else {
+                                            userCreateAt = 1;
+                                        }
+                                        UserConfig.setCreateAt(activity, userCreateAt);
+
+
+                                        RxLogTool.d("user_data:" + object.toString());
                                         RxActivityTool.skipActivity(activity, MainActivity.class);
                                     } else {
                                         RxToast.error(getString(R.string.error_account_password));

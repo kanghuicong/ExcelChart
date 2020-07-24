@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kang.excelchart.R;
 import com.kang.excelchart.bean.TextColorBean;
+import com.kang.excelchart.utils.TextPaintUtils;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class ColorAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder vh = (ViewHolder) holder;
         final TextColorBean textColorBean = colorList.get(position);
-        vh.tvColor.setBackgroundColor(textColorBean.getColor());
+        vh.tvColor.setBackgroundColor(TextPaintUtils.hexToColor(textColorBean.getColorStr()));
         if (textColorBean.isClick) {
             vh.itemLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.select_color));
         } else {

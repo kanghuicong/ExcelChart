@@ -16,6 +16,7 @@ public class UserConfig {
     public static String USER_ID= "USER_ID";
     public static String USER_VIP= "USER_VIP";
     public static String USER_EMAIL= "USER_EMAIL";
+    public static String USER_CREATE= "USER_CREATE";
 
     //语言
     public static void setLanguage(Context context, String Language) {
@@ -77,5 +78,14 @@ public class UserConfig {
 
     public static String getEmail(Context context) {
         return RxSPTool.getString(context, UserConfig.USER_EMAIL);
+    }
+
+    //email
+    public static void setCreateAt(Context context, int createAt) {
+        RxSPTool.putInt(context, UserConfig.USER_CREATE, createAt);
+    }
+
+    public static int getCreateAt(Context context) {
+        return RxSPTool.getInt(context, UserConfig.USER_CREATE);
     }
 }

@@ -23,6 +23,7 @@ import com.kang.excelchart.base.BaseChartFragment;
 import com.kang.excelchart.config.TextPaintConfig;
 import com.kang.excelchart.bean.InputTextBean;
 import com.kang.excelchart.bean.TextColorBean;
+import com.kang.excelchart.utils.TextPaintUtils;
 import com.vondear.rxtool.RxImageTool;
 
 import java.util.List;
@@ -116,11 +117,11 @@ public class TxtChartFragment extends BaseChartFragment implements View.OnClickL
     @Override
     protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        colorList = TextPaintConfig.getTextColorList(TextPaintConfig.defaultTextColor);
+        colorList = TextPaintConfig.getTextColorList(TextPaintConfig.defaultTextColorStr);
         colorAdapter = new ColorAdapter(activity, colorList, new ColorAdapter.ISelectColor() {
             @Override
             public void select(TextColorBean textColorBean) {
-                chartView.setTextColor(textColorBean.getColor());
+                chartView.setTextColor(TextPaintUtils.hexToColor(textColorBean.getColorStr()));
             }
         });
 
@@ -223,7 +224,7 @@ public class TxtChartFragment extends BaseChartFragment implements View.OnClickL
 
         if (colorAdapter != null && colorList != null) {
             colorList.clear();
-            colorList.addAll(TextPaintConfig.getTextColorList(textPaint.getColor()));
+            colorList.addAll(TextPaintConfig.getTextColorList(TextPaintUtils.colorToHex(textPaint.getColor())));
             colorAdapter.notifyDataSetChanged();
         }
     }

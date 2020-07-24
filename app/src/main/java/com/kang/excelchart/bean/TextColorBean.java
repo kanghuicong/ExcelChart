@@ -4,15 +4,15 @@ package com.kang.excelchart.bean;
  * 类描述：
  */
 public class TextColorBean {
-    public int color;
+    public String colorStr;
     public boolean isClick;
 
-    public int getColor() {
-        return color;
+    public String getColorStr() {
+        return colorStr;
     }
 
-    public void setColor(int color) {
-        this.color = color;
+    public void setColorStr(String colorStr) {
+        this.colorStr = colorStr;
     }
 
     public boolean isClick() {

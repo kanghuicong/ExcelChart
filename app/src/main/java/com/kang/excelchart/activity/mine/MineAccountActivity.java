@@ -176,10 +176,10 @@ public class MineAccountActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.super_logout:
                 UserConfig.setLogin(activity, false);
-                UserConfig.setUserAccount(activity, "");
-                UserConfig.setUserPwd(activity, "");
                 UserConfig.setUserId(activity, "");
                 UserConfig.setVip(activity, false);
+                UserConfig.setEmail(activity, "");
+                UserConfig.setCreateAt(activity, 0);
 
                 RxActivityTool.skipActivity(activity, LoginActivity.class);
 

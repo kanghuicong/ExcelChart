@@ -4,23 +4,25 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextPaint;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.kang.excelchart.bean.ChartBean;
 import com.kang.excelchart.bean.ChartInfoBean;
+import com.kang.excelchart.config.TextPaintConfig;
 import com.kang.excelchart.custom.view.ChartView;
 import com.kang.excelchart.custom.view.HVScrollView;
 import com.kang.excelchart.R;
@@ -36,8 +38,10 @@ import com.kang.excelchart.fragment.chart.LineChartFragment;
 import com.kang.excelchart.fragment.chart.MathChartFragment;
 import com.kang.excelchart.fragment.chart.OtherChartFragment;
 import com.kang.excelchart.fragment.chart.TxtChartFragment;
+import com.kang.excelchart.utils.TextPaintUtils;
 import com.kang.excelchart.utils.SoftKeyBoardListener;
 import com.vondear.rxtool.RxActivityTool;
+import com.vondear.rxtool.RxImageTool;
 import com.vondear.rxtool.RxKeyboardTool;
 import com.vondear.rxtool.RxLogTool;
 
@@ -118,31 +122,67 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
     public void init(Bundle savedInstanceState) {
         int from = getIntent().getExtras().getInt("from", NORMAL_FROM);
 
-
+        List<InputTextBean> lcs = new ArrayList<>();
         switch (from) {
             case ADAPTER_FROM:
                 String date = getIntent().getExtras().getString("date");
+                RxLogTool.d("表格总数据：" + date);
+
                 ChartInfoBean chartInfoBean = JSON.parseObject(date, ChartInfoBean.class);
-                RxLogTool.d("chartBean:-----------:" + chartInfoBean.getChart_list());
-                chartView.setChartData(chartInfoBean.getWidth_list(), chartInfoBean.getHeight_list());
 
-                Gson gson = new Gson();
-                JsonParser parser = new JsonParser();
-                JsonArray Jarray = parser.parse(chartInfoBean.getChart_list()).getAsJsonArray();
-                ArrayList<ChartBean> lcs = new ArrayList<ChartBean>();
+//                Gson gson = new Gson();
+//                JsonParser parser = new JsonParser();
+//                JsonArray Jarray = parser.parse(chartInfoBean.getChart_list()).getAsJsonArray();
+                List<ChartBean> chartBeanList = JSON.parseObject(chartInfoBean.getChart_list(), new TypeReference<List<ChartBean>>() {
+                });
+                int y = 0;
+                for (int i = 0; i < chartBeanList.size(); i++) {
+//                    JsonElement obj = Jarray.get(i);
+//                    ChartBean chartBean = gson.fromJson(obj, ChartBean.class);
+//                    ChartBean.TdTextAttributeModelBean tdTextAttributeModelBean = gson.fromJson(chartBean.getTdTextAttributeModel(), ChartBean.TdTextAttributeModelBean.class);
 
-                int i = 0;
-                for (JsonElement obj : Jarray) {
-                    ChartBean cse = gson.fromJson(obj, ChartBean.class);
-                    lcs.add(cse);
+                    ChartBean chartBean = chartBeanList.get(i);
+                    ChartBean.TdTextAttributeModelBean tdTextAttributeModelBean = JSON.parseObject(chartBean.getTdTextAttributeModel(), ChartBean.TdTextAttributeModelBean.class);
+                    TextPaint textPaint;
+                    if (tdTextAttributeModelBean != null) {
+                        textPaint = new TextPaint();
+                        //粗体
+                        textPaint.setFakeBoldText(tdTextAttributeModelBean.isBold());
+                        //右斜
+                        textPaint.setTextSkewX(TextPaintUtils.getTextSkewX(tdTextAttributeModelBean.isTilt()));
+                        //下划线
+                        textPaint.setUnderlineText(tdTextAttributeModelBean.isUnder());
+                        //删除线
+                        textPaint.setStrikeThruText(tdTextAttributeModelBean.isDeleteLine());
+                        //常规字体
+                        textPaint.setTypeface(Typeface.DEFAULT);
 
-                    RxLogTool.d("chart:-------" + i + "----" + cse.toString());
-                    i++;
+                        textPaint.setStyle(TextPaintUtils.getFill(chartBean.isFill()));
+                        textPaint.setStrokeWidth(8);
+                        textPaint.setTextSize(RxImageTool.sp2px(tdTextAttributeModelBean.getPointSize()));
+                        textPaint.setTextAlign(TextPaintUtils.getAlign(tdTextAttributeModelBean.getTextAlignment()));
+                        textPaint.setColor(TextPaintUtils.hexToColor(tdTextAttributeModelBean.getColorStr()));
+                    } else {
+                        textPaint = TextPaintConfig.getTextPaint();
+                    }
+
+
+                    int x = i / chartInfoBean.getHeight_list().size();
+                    InputTextBean inputTextBean = new InputTextBean(x, y, chartBean, textPaint);
+                    if (y < chartInfoBean.getHeight_list().size() - 1) {
+                        y++;
+                    } else y = 0;
+
+                    lcs.add(inputTextBean);
+
+                    RxLogTool.d("chart:-------" + i + "----" + chartBean.toString());
                 }
+
+                chartView.setChartData(chartInfoBean.getWidth_list(), chartInfoBean.getHeight_list(), lcs);
 
                 break;
             default:
-                chartView.setChartData(BaseConfig.getWidthList(), BaseConfig.getHeightList());
+                chartView.setChartData(BaseConfig.getWidthList(), BaseConfig.getHeightList(), lcs);
                 break;
         }
 
@@ -167,8 +207,8 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
                     RxKeyboardTool.showSoftInput(activity, etContent);
                 }
 
-                etContent.setText(inputTextBean.getContent());
-                etContent.setSelection(inputTextBean.getContent().length());
+                etContent.setText(inputTextBean.getChartBean().getTdText());
+                etContent.setSelection(inputTextBean.getChartBean().getTdText().length());
 
                 //通知各个fragment，选中框已改变
                 EventBus.getDefault().postSticky(inputTextBean);

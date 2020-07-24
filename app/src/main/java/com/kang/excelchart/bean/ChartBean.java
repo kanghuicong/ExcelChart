@@ -1,14 +1,19 @@
 package com.kang.excelchart.bean;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.kang.excelchart.config.BaseConfig;
+import com.kang.excelchart.config.PaintConfig;
+import com.kang.excelchart.config.TextPaintConfig;
+import com.kang.excelchart.utils.TextPaintUtils;
 
 import java.util.List;
+
+import static com.kang.excelchart.config.PaintConfig.defaultLineColor;
 
 /**
  * 类描述：
  */
 public class ChartBean {
-
 
     /**
      * isFx : false
@@ -28,37 +33,37 @@ public class ChartBean {
      * isTopBorder : false
      */
     @JSONField(name = "if")
-    private boolean isFx;//是否计算
+    private boolean isFx = false;//是否计算
     @JSONField(name = "b")
-    private boolean isBottomBorder;//下边框
+    private boolean isBottomBorder = false;//下边框
     @JSONField(name = "fx")
-    private String fxStr;//计算公式
+    private String fxStr = "js";//计算公式
     @JSONField(name = "l")
-    private boolean isLeftBorder;//左边框
+    private boolean isLeftBorder = false;//左边框
     @JSONField(name = "o")
-    private int chartOrientation;//图表对齐方式
+    private int chartOrientation = 1;//图表对齐方式
     @JSONField(name = "ic")
-    private int chart;//是否图表
+    private int chart = 1;//是否图表
     @JSONField(name = "s")
-    private String tdSizeStr;//单元格size,没合并的都是1.1
+    private String tdSizeStr = "{1,1}";//单元格size,没合并的都是1.1
     @JSONField(name = "tx")
-    private String tdText;//单元格文字
+    private String tdText = "";//单元格文字
     @JSONField(name = "r")
-    private boolean isRightBorder;//右边框
+    private boolean isRightBorder = false;//右边框
     @JSONField(name = "boc")
-    private String tdBorderColorStr;//边框颜色
+    private String tdBorderColorStr = PaintConfig.defaultLineColor;//边框颜色
     @JSONField(name = "k")
-    private int chartTheme;//图标主题
+    private int chartTheme = 1;//图标主题
     @JSONField(name = "j")
-    private String chartTitle;//图标标题
+    private String chartTitle = "";//图标标题
     @JSONField(name = "bc")
-    private String tdBackgroundColorStr;//背景颜色
+    private String tdBackgroundColorStr = TextPaintConfig.defaultBackgroundColorStr;//背景颜色
     @JSONField(name = "m")
-    private List<TdTextAttributeModelBean> tdTextAttributeModel;
+    private String tdTextAttributeModel;
     @JSONField(name = "f")
-    private boolean isFill;//是否填满
+    private boolean isFill = false;//是否填满
     @JSONField(name = "t")
-    private boolean isTopBorder;//上边框
+    private boolean isTopBorder = false;//上边框
 
     public boolean isFx() {
         return isFx;
@@ -164,11 +169,11 @@ public class ChartBean {
         this.tdBackgroundColorStr = tdBackgroundColorStr;
     }
 
-    public List<TdTextAttributeModelBean> getTdTextAttributeModel() {
+    public String getTdTextAttributeModel() {
         return tdTextAttributeModel;
     }
 
-    public void setTdTextAttributeModel(List<TdTextAttributeModelBean> tdTextAttributeModel) {
+    public void setTdTextAttributeModel(String tdTextAttributeModel) {
         this.tdTextAttributeModel = tdTextAttributeModel;
     }
 
@@ -200,19 +205,29 @@ public class ChartBean {
          * isUnder : false
          */
         @JSONField(name = "f")
-        private String fontName;//字体名称
+        private String fontName = "";//字体名称
         @JSONField(name = "b")
-        private boolean isBold;//是否加粗
+        private boolean isBold = false;//是否加粗
         @JSONField(name = "t")
-        private boolean isTilt;//是否倾斜
+        private boolean isTilt = false;//是否倾斜
         @JSONField(name = "c")
-        private String colorStr;//字体颜色
+        private String colorStr = TextPaintConfig.defaultTextColorStr;//字体颜色
         @JSONField(name = "a")
-        private int textAlignment;//对齐方式
+        private int textAlignment = 1;//对齐方式
         @JSONField(name = "p")
-        private int pointSize;//文字大小
+        private int pointSize = 14;//文字大小
         @JSONField(name = "u")
-        private boolean isUnder;//是否底部下划线
+        private boolean isUnder = false;//是否底部下划线
+        @JSONField(name = "s")
+        private boolean isDeleteLine = false;//是否删除线
+
+        public boolean isDeleteLine() {
+            return isDeleteLine;
+        }
+
+        public void setDeleteLine(boolean deleteLine) {
+            isDeleteLine = deleteLine;
+        }
 
         public String getFontName() {
             return fontName;

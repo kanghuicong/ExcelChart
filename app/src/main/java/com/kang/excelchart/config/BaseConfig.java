@@ -50,6 +50,11 @@ public class BaseConfig {
         ALL
     }
 
+    public enum UserCreateAt {
+        FIRST,
+        SECOND,
+    }
+
     public static List<Integer> getWidthList() {
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
@@ -76,5 +81,15 @@ public class BaseConfig {
         int count = RxDeviceTool.getScreenWidth(context) / v.getMeasuredWidth();
 
         return count;
+    }
+
+    public static String getTableName(Context context) {
+        switch (UserConfig.getCreateAt(context)) {
+            case 1:
+                return "tables_1";
+            case 0:
+            default:
+                return "tables";
+        }
     }
 }
