@@ -11,6 +11,7 @@ import com.kang.excelchart.R;
 import com.kang.excelchart.activity.ChartActivity;
 import com.kang.excelchart.bean.Tables;
 import com.kang.excelchart.bean.Tables_1;
+import com.kang.excelchart.config.BaseConfig;
 import com.kang.excelchart.custom.dialog.SettingDialog;
 
 import java.util.ArrayList;
@@ -28,12 +29,11 @@ public class ChartAdapter<T> extends RecyclerView.Adapter {
     public List<T> list = new ArrayList<>();
     public Context context;
     public int from;
-    public long createAt;
 
-    public ChartAdapter(Context context, int createAt, int from, List<T> list) {
+
+    public ChartAdapter(Context context, int from, List<T> list) {
         this.context = context;
         this.list = list;
-        this.createAt = createAt;
         this.from = from;
     }
 
@@ -48,12 +48,7 @@ public class ChartAdapter<T> extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder vh = (ViewHolder) holder;
 
-        Tables table;
-        if (createAt == 0) {
-            table = (Tables) list.get(position);
-        } else {
-            table = (Tables_1) list.get(position);
-        }
+        Tables table = BaseConfig.getTableClass(context,list.get(position));
 
         vh.tvTitle.setText(table.getName());
 
@@ -101,7 +96,7 @@ public class ChartAdapter<T> extends RecyclerView.Adapter {
         }));
 
         vh.llItem.setOnClickListener((view -> {
-            ChartActivity.doIntent(context, ChartActivity.ADAPTER_FROM, table.getSourceData());
+            ChartActivity.doIntent(context, ChartActivity.ADAPTER_FROM, table);
         }));
     }
 

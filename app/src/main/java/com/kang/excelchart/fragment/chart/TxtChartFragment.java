@@ -121,7 +121,7 @@ public class TxtChartFragment extends BaseChartFragment implements View.OnClickL
         colorAdapter = new ColorAdapter(activity, colorList, new ColorAdapter.ISelectColor() {
             @Override
             public void select(TextColorBean textColorBean) {
-                chartView.setTextColor(TextPaintUtils.hexToColor(textColorBean.getColorStr()));
+                chartView.setTextColor(textColorBean.getColorStr());
             }
         });
 

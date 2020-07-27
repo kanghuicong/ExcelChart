@@ -20,9 +20,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.kang.excelchart.BuildConfig;
 import com.kang.excelchart.bean.ChartBean;
 import com.kang.excelchart.bean.ChartInfoBean;
+import com.kang.excelchart.bean.Tables;
 import com.kang.excelchart.config.TextPaintConfig;
+import com.kang.excelchart.config.UserConfig;
 import com.kang.excelchart.custom.view.ChartView;
 import com.kang.excelchart.custom.view.HVScrollView;
 import com.kang.excelchart.R;
@@ -50,6 +53,9 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
+
 public class ChartActivity extends BaseActivity implements View.OnClickListener {
 
     private HVScrollView scrollView;
@@ -73,10 +79,10 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
 
     public static final int NORMAL_FROM = 0;
     public static final int ADAPTER_FROM = 1;
-
-    public static void doIntent(Context context, int from, String date) {
+    private Tables table;
+    public static void doIntent(Context context, int from, Tables tables) {
         Bundle bundle = new Bundle();
-        bundle.putString("date", date);
+        bundle.putSerializable("tables", tables);
         bundle.putInt("from", from);
         RxActivityTool.skipActivity(context, ChartActivity.class, bundle);
     }
@@ -125,21 +131,17 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
         List<InputTextBean> lcs = new ArrayList<>();
         switch (from) {
             case ADAPTER_FROM:
-                String date = getIntent().getExtras().getString("date");
+                table = (Tables) getIntent().getExtras().getSerializable("tables");
+
+                String date = table.getWordStr();
                 RxLogTool.d("表格总数据：" + date);
 
                 ChartInfoBean chartInfoBean = JSON.parseObject(date, ChartInfoBean.class);
 
-//                Gson gson = new Gson();
-//                JsonParser parser = new JsonParser();
-//                JsonArray Jarray = parser.parse(chartInfoBean.getChart_list()).getAsJsonArray();
                 List<ChartBean> chartBeanList = JSON.parseObject(chartInfoBean.getChart_list(), new TypeReference<List<ChartBean>>() {
                 });
                 int y = 0;
                 for (int i = 0; i < chartBeanList.size(); i++) {
-//                    JsonElement obj = Jarray.get(i);
-//                    ChartBean chartBean = gson.fromJson(obj, ChartBean.class);
-//                    ChartBean.TdTextAttributeModelBean tdTextAttributeModelBean = gson.fromJson(chartBean.getTdTextAttributeModel(), ChartBean.TdTextAttributeModelBean.class);
 
                     ChartBean chartBean = chartBeanList.get(i);
                     ChartBean.TdTextAttributeModelBean tdTextAttributeModelBean = JSON.parseObject(chartBean.getTdTextAttributeModel(), ChartBean.TdTextAttributeModelBean.class);
@@ -168,7 +170,7 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
 
 
                     int x = i / chartInfoBean.getHeight_list().size();
-                    InputTextBean inputTextBean = new InputTextBean(x, y, chartBean, textPaint);
+                    InputTextBean inputTextBean = new InputTextBean(x, y, chartBean, textPaint,tdTextAttributeModelBean);
                     if (y < chartInfoBean.getHeight_list().size() - 1) {
                         y++;
                     } else y = 0;
@@ -333,6 +335,29 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
             llChart.setVisibility(View.GONE);
             RxKeyboardTool.hideSoftInput(this, etContent);
         } else {
+            //已存在的表格——>更新
+            if (table!=null) {
+                String table = BaseConfig.getTableName(this);
+
+                Tables p2 = new Tables();
+                p2.setWordStr();
+                p2.update(this.table.getObjectId(), new UpdateListener() {
+
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null) {
+
+                        } else {
+
+                        }
+                    }
+
+                });
+                //新表格——>新增
+            }else {
+
+            }
+
             super.onBackPressed();
         }
     }

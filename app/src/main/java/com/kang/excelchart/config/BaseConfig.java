@@ -7,6 +7,10 @@ import android.graphics.BitmapFactory;
 import android.view.View;
 
 import com.kang.excelchart.R;
+import com.kang.excelchart.bean.ChartBean;
+import com.kang.excelchart.bean.InputTextBean;
+import com.kang.excelchart.bean.Tables;
+import com.kang.excelchart.bean.Tables_1;
 import com.vondear.rxtool.RxDeviceTool;
 
 import java.util.ArrayList;
@@ -28,8 +32,8 @@ public class BaseConfig {
     //删除列
     public static final int DELETE_COLUMN = 6;
 
-    public static final int TOP_BITMAP  = 7;
-    public static final int LEFT_BITMAP  = 8;
+    public static final int TOP_BITMAP = 7;
+    public static final int LEFT_BITMAP = 8;
 
     public enum MathType {
         ADDITION,
@@ -90,6 +94,22 @@ public class BaseConfig {
             case 0:
             default:
                 return "tables";
+        }
+    }
+
+    public static <T> Tables getTableClass(Context context, T table) {
+        if (table == null) {
+            if (UserConfig.getCreateAt(context) == 0) {
+                return new Tables();
+            } else {
+                return new Tables_1();
+            }
+        } else {
+            if (UserConfig.getCreateAt(context) == 0) {
+                return (Tables) table;
+            } else {
+                return (Tables_1) table;
+            }
         }
     }
 }

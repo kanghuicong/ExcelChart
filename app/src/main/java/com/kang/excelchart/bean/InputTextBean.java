@@ -16,17 +16,27 @@ public class InputTextBean {
     private TextPaint textPaint;
 //    private int backgroundColor = TextPaintConfig.defaultBackgroundColor;
     private ChartBean chartBean;
+    private ChartBean.TdTextAttributeModelBean tdTextAttributeModelBean;
 
     private BaseConfig.MathType mathType = BaseConfig.MathType.ADDITION;
     private BaseConfig.ScopeType scopeType = BaseConfig.ScopeType.LEFT;
     private int decimal = 2;
 
-    public InputTextBean(int inputX, int inputY, ChartBean chartBean,TextPaint textPaint) {
+    public InputTextBean(int inputX, int inputY, ChartBean chartBean, TextPaint textPaint, ChartBean.TdTextAttributeModelBean tdTextAttributeModelBean) {
         this.inputX = inputX;
         this.inputY = inputY;
         this.chartBean = chartBean;
         this.textPaint = textPaint;
+        this.tdTextAttributeModelBean = tdTextAttributeModelBean;
 //        this.content = content;
+    }
+
+    public ChartBean.TdTextAttributeModelBean getTdTextAttributeModelBean() {
+        return tdTextAttributeModelBean;
+    }
+
+    public void setTdTextAttributeModelBean(ChartBean.TdTextAttributeModelBean tdTextAttributeModelBean) {
+        this.tdTextAttributeModelBean = tdTextAttributeModelBean;
     }
 
     public ChartBean getChartBean() {

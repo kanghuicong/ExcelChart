@@ -28,6 +28,7 @@ import java.util.List;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.http.I;
 import cn.bmob.v3.listener.FindListener;
 
 public abstract class BaseListFragment<T> extends BaseFragment {
@@ -68,7 +69,7 @@ public abstract class BaseListFragment<T> extends BaseFragment {
         _init(inflater, container, savedInstanceState);
 
         createAt = UserConfig.getCreateAt(activity);
-        adapter = new ChartAdapter(activity, createAt, initFrom(), list);
+        adapter = new ChartAdapter(activity, initFrom(), list);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setAdapter(adapter);
 
@@ -101,27 +102,27 @@ public abstract class BaseListFragment<T> extends BaseFragment {
 
         //加载
         refreshLayout.setOnLoadMoreListener((refreshlayout) -> {
-            if (query() != null) {
-                BmobQuery query = query().setLimit(1).setSkip(page);
-                switch (createAt) {
-                    case 0:
-                        query.findObjects(new FindListener<Tables>() {
-                            @Override
-                            public void done(List<Tables> object, BmobException e) {
-                                load(object, e);
-                            }
-                        });
-                        break;
-                    case 1:
-                        query.findObjects(new FindListener<Tables_1>() {
-                            @Override
-                            public void done(List<Tables_1> object, BmobException e) {
-                                load(object, e);
-                            }
-                        });
-                        break;
-                }
-            }
+            doLoad((object, e) -> {
+                httpUtils.doHttpResult(e, new HttpUtils.IHttpResult() {
+                    @Override
+                    public void success() {
+                        if (object.size() == 0) {
+                            refreshLayout.finishLoadMoreWithNoMoreData();
+                        } else {
+                            page++;
+                            list.addAll(object);
+                            adapter.notifyDataSetChanged();
+                            refreshLayout.finishLoadMore(0);
+                        }
+                    }
+
+                    @Override
+                    public void failure() {
+                        refreshLayout.finishLoadMore(false);
+                    }
+                });
+
+            });
         });
     }
 
@@ -136,6 +137,8 @@ public abstract class BaseListFragment<T> extends BaseFragment {
 
                 adapter.notifyDataSetChanged();
                 refreshLayout.finishRefresh(0);
+
+                recursiveLoad();
 
                 if (object.size() == 0) {
                     llNoData.setVisibility(View.VISIBLE);
@@ -152,24 +155,49 @@ public abstract class BaseListFragment<T> extends BaseFragment {
         });
     }
 
-    private <T> void load(List<T> object, BmobException e) {
-        httpUtils.doHttpResult(e, new HttpUtils.IHttpResult() {
+
+    void recursiveLoad() {
+        doLoad(new ILoadResult() {
             @Override
-            public void success() {
+            public void done(List object, BmobException e) {
                 if (object.size() == 0) {
-                    refreshLayout.finishLoadMoreWithNoMoreData();
+
                 } else {
                     page++;
                     list.addAll(object);
                     adapter.notifyDataSetChanged();
-                    refreshLayout.finishLoadMore(0);
+                    recursiveLoad();
                 }
             }
-
-            @Override
-            public void failure() {
-                refreshLayout.finishLoadMore(false);
-            }
         });
+    }
+
+
+    private void doLoad(ILoadResult iLoadResult) {
+        if (query() != null) {
+            BmobQuery query = query().setLimit(1).setSkip(page);
+            switch (createAt) {
+                case 0:
+                    query.findObjects(new FindListener<Tables>() {
+                        @Override
+                        public void done(List<Tables> object, BmobException e) {
+                            iLoadResult.done(object, e);
+                        }
+                    });
+                    break;
+                case 1:
+                    query.findObjects(new FindListener<Tables_1>() {
+                        @Override
+                        public void done(List<Tables_1> object, BmobException e) {
+                            iLoadResult.done(object, e);
+                        }
+                    });
+                    break;
+            }
+        }
+    }
+
+    private interface ILoadResult<T> {
+        void done(List<T> object, BmobException e);
     }
 }

@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 
+import com.alibaba.fastjson.JSON;
 import com.kang.excelchart.R;
 import com.kang.excelchart.bean.ChartBean;
 import com.kang.excelchart.config.BaseConfig;
@@ -485,7 +486,7 @@ public class ChartView extends View {
             return;
         }
 
-        boolean isSelect = false;
+//        boolean isSelect = false;
         TextPaint paint = null;
 
         for (int i = 0; i < inputTextList.size(); i++) {
@@ -496,9 +497,9 @@ public class ChartView extends View {
                 ChartBean chartBean = inputTextList.get(i).getChartBean();
                 chartBean.setTdText(content);
                 chartBean.setTdBackgroundColorStr(inputTextList.get(i).getChartBean().getTdBackgroundColorStr());
-                InputTextBean inputTextBean = new InputTextBean(selectCell[0], selectCell[1], chartBean, inputTextList.get(i).getTextPaint());
+                InputTextBean inputTextBean = new InputTextBean(selectCell[0], selectCell[1], chartBean, inputTextList.get(i).getTextPaint(), inputTextList.get(i).getTdTextAttributeModelBean());
                 inputTextList.set(i, inputTextBean);
-                isSelect = true;
+//                isSelect = true;
                 break;
             }
         }
@@ -753,63 +754,51 @@ public class ChartView extends View {
     /*----------------------------------------------------文字属性--------------------------------------------------------*/
     //粗体
     public void setFakeBoldText(final boolean isBold) {
-        doTextType(new ITextType() {
-            @Override
-            public void doType(InputTextBean inputTextBean, ChartBean chartBean, TextPaint textPaint) {
-                textPaint.setFakeBoldText(isBold);
-            }
+        doTextType((inputTextBean, tdTextAttributeModelBean, textPaint) -> {
+            textPaint.setFakeBoldText(isBold);
+            tdTextAttributeModelBean.setBold(isBold);
         });
     }
 
     //斜体
     public void setTextSkewX(final boolean isSkew) {
-        doTextType(new ITextType() {
-            @Override
-            public void doType(InputTextBean inputTextBean, ChartBean chartBean, TextPaint textPaint) {
-                textPaint.setTextSkewX(isSkew ? -0.5f : 0f);
-            }
+        doTextType((inputTextBean, tdTextAttributeModelBean, textPaint) -> {
+            textPaint.setTextSkewX(isSkew ? -0.5f : 0f);
+            tdTextAttributeModelBean.setTilt(isSkew);
         });
     }
 
     //下划线
     public void setUnderline(final boolean isUnderline) {
-        doTextType(new ITextType() {
-            @Override
-            public void doType(InputTextBean inputTextBean, ChartBean chartBean, TextPaint textPaint) {
-                textPaint.setUnderlineText(isUnderline);
-            }
+        doTextType((inputTextBean, tdTextAttributeModelBean, textPaint) -> {
+            textPaint.setUnderlineText(isUnderline);
+            tdTextAttributeModelBean.setUnder(isUnderline);
         });
     }
 
     //删除线
     public void setDeleteLine(final boolean isDeleteLine) {
-        doTextType(new ITextType() {
-            @Override
-            public void doType(InputTextBean inputTextBean, ChartBean chartBean, TextPaint textPaint) {
-                textPaint.setStrikeThruText(isDeleteLine);
-            }
+        doTextType((inputTextBean, tdTextAttributeModelBean, textPaint) -> {
+            textPaint.setStrikeThruText(isDeleteLine);
+            tdTextAttributeModelBean.setDeleteLine(isDeleteLine);
         });
     }
 
     //设置字体大小
     public void setTextSize(final int size) {
-        doTextType(new ITextType() {
-            @Override
-            public void doType(InputTextBean inputTextBean, ChartBean chartBean, TextPaint textPaint) {
-                textPaint.setTextSize(RxImageTool.sp2px(size));
-            }
+        doTextType((inputTextBean, tdTextAttributeModelBean, textPaint) -> {
+            textPaint.setTextSize(RxImageTool.sp2px(size));
+            tdTextAttributeModelBean.setPointSize(size);
         });
     }
 
     /**
      * 设置字体颜色
      */
-    public void setTextColor(final int color) {
-        doTextType(new ITextType() {
-            @Override
-            public void doType(InputTextBean inputTextBean, ChartBean chartBean, TextPaint textPaint) {
-                textPaint.setColor(color);
-            }
+    public void setTextColor(final String color) {
+        doTextType((inputTextBean, tdTextAttributeModelBean, textPaint) -> {
+            textPaint.setColor(TextPaintUtils.hexToColor(color));
+            tdTextAttributeModelBean.setColorStr(color);
         });
     }
 
@@ -817,10 +806,15 @@ public class ChartView extends View {
      * 设置字体类型
      */
     public void setTypeface(final Typeface typeface) {
-        doTextType(new ITextType() {
-            @Override
-            public void doType(InputTextBean inputTextBean, ChartBean chartBean, TextPaint textPaint) {
-                textPaint.setTypeface(typeface);
+        doTextType((inputTextBean, tdTextAttributeModelBean, textPaint) -> {
+            textPaint.setTypeface(typeface);
+
+            if (Typeface.SANS_SERIF.equals(typeface)) {
+                tdTextAttributeModelBean.setFontName("PingFangSC-Regular");
+            } else if (Typeface.DEFAULT_BOLD.equals(typeface)) {
+                tdTextAttributeModelBean.setFontName("PingFangSC-Regular");
+            } else if (Typeface.SERIF.equals(typeface)) {
+                tdTextAttributeModelBean.setFontName("PingFangSC-Regular");
             }
         });
     }
@@ -829,41 +823,48 @@ public class ChartView extends View {
      * 设置背景颜色
      */
     public void setBackGroundColor(final String color) {
-        doTextType(new ITextType() {
-            @Override
-            public void doType(InputTextBean xInputTextBean, ChartBean chartBean, TextPaint textPaint) {
-                //选中了单元格
-                if (selectCell[0] != -1 && selectCell[1] != -1) {
-                    for (int i = 0; i < inputTextList.size(); i++) {
-                        InputTextBean inputTextBean = inputTextList.get(i);
-                        //已经在inputTextList里，更新其TextPaint
-                        if (inputTextBean.getInputX() == selectCell[0] && inputTextBean.getInputY() == selectCell[1]) {
-                            ChartBean chartBean1 = inputTextBean.getChartBean();
-                            chartBean1.setTdBackgroundColorStr(color);
-                            inputTextBean.setChartBean(chartBean1);
-                            inputTextList.set(i, inputTextBean);
-                            invalidate();
-                            return;
-                        }
+        doTextType((xInputTextBean, tdTextAttributeModelBean, textPaint) -> {
+            //选中了单元格
+            if (selectCell[0] != -1 && selectCell[1] != -1) {
+                for (int i = 0; i < inputTextList.size(); i++) {
+                    InputTextBean inputTextBean = inputTextList.get(i);
+                    //已经在inputTextList里，更新其TdBackgroundColorStr
+                    if (inputTextBean.getInputX() == selectCell[0] && inputTextBean.getInputY() == selectCell[1]) {
+                        ChartBean chartBean1 = inputTextBean.getChartBean();
+                        chartBean1.setTdBackgroundColorStr(color);
+                        inputTextBean.setChartBean(chartBean1);
+                        inputTextList.set(i, inputTextBean);
+                        invalidate();
+                        return;
                     }
                 }
+            }
 //                //新的单元格
 //                InputTextBean inputTextBean = new InputTextBean(selectCell[0], selectCell[1], textPaint, "");
 //                inputTextBean.getChartBean().setTdBackgroundColorStr(color);
 //                inputTextList.add(inputTextBean);
 //                invalidate();
-            }
         });
+
     }
 
     //设置gravity
     public void setGravity(final Paint.Align align) {
-        doTextType(new ITextType() {
-            @Override
-            public void doType(InputTextBean inputTextBean, ChartBean chartBean, TextPaint textPaint) {
-                textPaint.setTextAlign(align);
+        doTextType((inputTextBean, tdTextAttributeModelBean, textPaint) -> {
+            textPaint.setTextAlign(align);
+            switch (align) {
+                case LEFT:
+                    tdTextAttributeModelBean.setTextAlignment(1);
+                    break;
+                case RIGHT:
+                    tdTextAttributeModelBean.setTextAlignment(3);
+                    break;
+                case CENTER:
+                    tdTextAttributeModelBean.setTextAlignment(2);
+                    break;
             }
         });
+
     }
 
     private void doTextType(ITextType iTextType) {
@@ -873,7 +874,12 @@ public class ChartView extends View {
                 InputTextBean inputTextBean = inputTextList.get(i);
                 //已经在inputTextList里，更新其TextPaint
                 if (inputTextBean.getInputX() == selectCell[0] && inputTextBean.getInputY() == selectCell[1]) {
-                    iTextType.doType(inputTextBean, inputTextBean.getChartBean(), inputTextBean.getTextPaint());
+                    iTextType.doType(inputTextBean, inputTextBean.getTdTextAttributeModelBean(), inputTextBean.getTextPaint());
+
+//                    ChartBean chartBean = inputTextBean.getChartBean();
+//                    TextPaint textPaint = inputTextBean.getTextPaint();
+//                    ChartBean.TdTextAttributeModelBean tdTextAttributeModelBean = new ChartBean.TdTextAttributeModelBean();
+
                     inputTextList.set(i, inputTextBean);
                     invalidate();
                     return;
@@ -893,14 +899,12 @@ public class ChartView extends View {
 
     //算法
     public String doMath(final BaseConfig.MathType mathType, final BaseConfig.ScopeType scopeType, final int decimal) {
-        doTextType(new ITextType() {
-            @Override
-            public void doType(InputTextBean inputTextBean, ChartBean chartBean, TextPaint textPaint) {
+        doTextType((inputTextBean, tdTextAttributeModelBean, textPaint) -> {
                 inputTextBean.setMathType(mathType);
                 inputTextBean.setScopeType(scopeType);
                 inputTextBean.setDecimal(decimal);
             }
-        });
+        );
 
         List<InputTextBean> beanList = new ArrayList<>();
         //先获取要计算的内容
@@ -1181,6 +1185,6 @@ public class ChartView extends View {
     }
 
     private interface ITextType {
-        void doType(InputTextBean inputTextBean, ChartBean chartBean, TextPaint textPaint);
+        void doType(InputTextBean inputTextBean, ChartBean.TdTextAttributeModelBean tdTextAttributeModelBean, TextPaint textPaint);
     }
 }

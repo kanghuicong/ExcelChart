@@ -71,8 +71,9 @@ public class TextPaintConfig {
         return list;
     }
 
+    //获取一个新的InputTextBean（新增行列等）
     public static InputTextBean getInputTextBean(int x, int y) {
-        InputTextBean inputTextBean = new InputTextBean(x, y, null, TextPaintConfig.getTextPaint());
+        InputTextBean inputTextBean = new InputTextBean(x, y, null, TextPaintConfig.getTextPaint(),new ChartBean.TdTextAttributeModelBean());
         ChartBean chartBean = new ChartBean();
         ChartBean.TdTextAttributeModelBean tdTextAttributeModelBean = new ChartBean.TdTextAttributeModelBean();
         String tdTextAttributeModel = JSON.toJSONString(tdTextAttributeModelBean);

@@ -127,7 +127,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                         }
                                         UserConfig.setCreateAt(activity, userCreateAt);
 
-
                                         RxLogTool.d("user_data:" + object.toString());
                                         RxActivityTool.skipActivity(activity, MainActivity.class);
                                     } else {
