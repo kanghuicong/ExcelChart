@@ -7,6 +7,7 @@ import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,14 +34,14 @@ import java.util.List;
  */
 public class TxtChartFragment extends BaseChartFragment implements View.OnClickListener {
     private LinearLayout ll1;
-    private TextView tvBold;
-    private TextView tvItalic;
-    private TextView tvUnderline;
-    private TextView tvDeleteLine;
+    private ImageButton tvBold;
+    private ImageButton tvItalic;
+    private ImageButton tvUnderline;
+    private ImageButton tvDeleteLine;
     private LinearLayout ll2;
-    private TextView tvLeft;
-    private TextView tvCenter;
-    private TextView tvRight;
+    private ImageButton tvLeft;
+    private ImageButton tvCenter;
+    private ImageButton tvRight;
     private LinearLayout ll3;
     private TextView tv8;
     private TextView tv10;
@@ -69,14 +70,14 @@ public class TxtChartFragment extends BaseChartFragment implements View.OnClickL
     @Override
     protected void initView(View view) {
         ll1 = (LinearLayout) view.findViewById(R.id.ll_1);
-        tvBold = (TextView) view.findViewById(R.id.tv_bold);
-        tvItalic = (TextView) view.findViewById(R.id.tv_italic);
-        tvUnderline = (TextView) view.findViewById(R.id.tv_underline);
-        tvDeleteLine = (TextView) view.findViewById(R.id.tv_deleteLine);
+        tvBold = (ImageButton) view.findViewById(R.id.tv_bold);
+        tvItalic = (ImageButton) view.findViewById(R.id.tv_italic);
+        tvUnderline = (ImageButton) view.findViewById(R.id.tv_underline);
+        tvDeleteLine = (ImageButton) view.findViewById(R.id.tv_deleteLine);
         ll2 = (LinearLayout) view.findViewById(R.id.ll_2);
-        tvLeft = (TextView) view.findViewById(R.id.tv_left);
-        tvCenter = (TextView) view.findViewById(R.id.tv_center);
-        tvRight = (TextView) view.findViewById(R.id.tv_right);
+        tvLeft = (ImageButton) view.findViewById(R.id.tv_left);
+        tvCenter = (ImageButton) view.findViewById(R.id.tv_center);
+        tvRight = (ImageButton) view.findViewById(R.id.tv_right);
         ll3 = (LinearLayout) view.findViewById(R.id.ll_3);
         tv8 = (TextView) view.findViewById(R.id.tv_8);
         tv10 = (TextView) view.findViewById(R.id.tv_10);
@@ -229,8 +230,8 @@ public class TxtChartFragment extends BaseChartFragment implements View.OnClickL
         }
     }
 
-    private void isSelectView(TextView textView, boolean isSelect) {
-        textView.setBackground(ContextCompat.getDrawable(activity, isSelect ? R.color.select_color : R.color.transparent));
+    private void isSelectView(View view, boolean isSelect) {
+        view.setBackground(ContextCompat.getDrawable(activity, isSelect ? R.color.select_color : R.color.transparent));
     }
 
     private void setTextSizeView(boolean isDefault, int size) {

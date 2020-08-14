@@ -37,23 +37,22 @@ import java.util.regex.Pattern;
 public class ChartView extends View {
     private Context context;
 
-    private List<Integer> height = new ArrayList<>();//实际高度
-    private List<Integer> defaultHeight = new ArrayList<>();//初始高度
-    private List<Integer> textHeight = new ArrayList<>();//文本高度
-    private List<Integer> width = new ArrayList<>();
-    private List<Integer> defaultWidth = new ArrayList<>();
+    private List<Float> height = new ArrayList<>();//实际高度
+    private List<Float> defaultHeight = new ArrayList<>();//初始高度
+    private List<Float> width = new ArrayList<>();
+    private List<Float> defaultWidth = new ArrayList<>();
 
-    private int multiple = 2; //放大倍数
+    private float multiple = 2.5f; //放大倍数
     private int heightNum;//行数
     private int widthNum;//列数
 
-    public int allHeight = 0;//总高度
-    public int allWidth = 0;//总宽度
+    public float allHeight = 0;//总高度
+    public float allWidth = 0;//总宽度
 
-    private int[] pointX;//x坐标
-    private int[] pointY;//y坐标
+    private float[] pointX;//x坐标
+    private float[] pointY;//y坐标
 
-    private final int chartPadding = 10;
+    private final int chartPadding = 15;//文本内边距
 
     //起点
     public final int[] startPoint = {80, 80};
@@ -65,7 +64,8 @@ public class ChartView extends View {
     private HVScrollView scrollView;
     //画笔
     private PaintConfig paintConfig;
-    private Bitmap arrowBitmap;
+    private Bitmap leftBitmap;
+    private Bitmap topBitmap;
     private int bitmapHeight;
     private int bitmapWidth;
     private int barHeight;
@@ -96,7 +96,7 @@ public class ChartView extends View {
     }
 
 
-    public void setChartData(List<Integer> width, List<Integer> height, List<InputTextBean> inputTextList) {
+    public void setChartData(List<Float> width, List<Float> height, List<InputTextBean> inputTextList) {
         this.width.clear();
         this.height.clear();
         this.inputTextList.clear();
@@ -116,9 +116,10 @@ public class ChartView extends View {
     public void initConfig() {
         paintConfig = new PaintConfig();
 
-        arrowBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.arrow);
-        bitmapHeight = arrowBitmap.getHeight();
-        bitmapWidth = arrowBitmap.getWidth();
+        leftBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.merge_left);
+        topBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.merga);
+        bitmapHeight = topBitmap.getHeight();
+        bitmapWidth = leftBitmap.getWidth();
 
 //        barHeight = RxBarTool.getStatusBarHeight(context);
     }
@@ -129,9 +130,9 @@ public class ChartView extends View {
         heightNum = height.size();
         widthNum = width.size();
         //x坐标
-        pointX = new int[widthNum + 1];
+        pointX = new float[widthNum + 1];
         //y坐标
-        pointY = new int[heightNum + 1];
+        pointY = new float[heightNum + 1];
 
         pointX[0] = startPoint[0];
         pointY[0] = startPoint[1];
@@ -151,8 +152,8 @@ public class ChartView extends View {
         }
 
         //*2 制造出边距
-        this.setMinimumHeight(allHeight + startPoint[1] * 2);
-        this.setMinimumWidth(allWidth + startPoint[0] * 2);
+        this.setMinimumHeight((int) allHeight + startPoint[1] * 2);
+        this.setMinimumWidth((int) allWidth + startPoint[0] * 2);
 
     }
 
@@ -160,7 +161,7 @@ public class ChartView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        int startX = startPoint[0];
+        float startX = startPoint[0];
         //画竖线
         for (int i = 0; i < widthNum + 1; i++) {
             canvas.drawLine(startX, startPoint[1], startX, startPoint[1] + allHeight, paintConfig.linePaint);
@@ -169,7 +170,7 @@ public class ChartView extends View {
             }
         }
         //画横线
-        int startY = startPoint[1];
+        float startY = startPoint[1];
         for (int i = 0; i < heightNum + 1; i++) {
             canvas.drawLine(startPoint[0], startY, startPoint[0] + allWidth, startY, paintConfig.linePaint);
             if (i != heightNum) {
@@ -189,8 +190,8 @@ public class ChartView extends View {
             canvas.drawLine(pointX[selectCell[0] + 1], pointY[selectCell[1]], pointX[selectCell[0] + 1], pointY[selectCell[1] + 1], paintConfig.selectPaint);
 
             //绘制拉伸图标
-            canvas.drawBitmap(arrowBitmap, pointX[selectCell[0] + 1] - (float) 1 / 2 * bitmapWidth, startPoint[1] - bitmapHeight, new Paint());
-            canvas.drawBitmap(arrowBitmap, startPoint[0] - bitmapWidth, pointY[selectCell[1] + 1] - (float) 1 / 2 * bitmapHeight, new Paint());
+            canvas.drawBitmap(topBitmap, pointX[selectCell[0] + 1] - (float) 1 / 2 * bitmapWidth, startPoint[1] - bitmapHeight, new Paint());
+            canvas.drawBitmap(leftBitmap, startPoint[0] - bitmapWidth, pointY[selectCell[1] + 1] - (float) 1 / 2 * bitmapHeight, new Paint());
 
             //记录图标的左上角
             bitmapX[0] = (int) (pointX[selectCell[0] + 1] - (float) 1 / 2 * bitmapWidth);
@@ -276,16 +277,15 @@ public class ChartView extends View {
             //文字的TextAlign会影响起点X坐标
             switch (inputTextBean.getTextPaint().getTextAlign()) {
                 case RIGHT:
-                    startL = pointX[inputTextBean.getInputX() + 1];
+                    startL = pointX[inputTextBean.getInputX() + 1]-chartPadding;
                     break;
                 case LEFT:
-                    startL = pointX[inputTextBean.getInputX()];
+                    startL = pointX[inputTextBean.getInputX()]+chartPadding;
                     break;
                 default:
                     startL = pointX[inputTextBean.getInputX()] + (pointX[inputTextBean.getInputX() + 1] - pointX[inputTextBean.getInputX()]) / 2;
                     break;
             }
-            startL = startL + chartPadding;
 
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < textChars.length; i++) {
@@ -504,41 +504,9 @@ public class ChartView extends View {
             }
         }
 
-        //选中新的单元格，则新增
-//        if (!isSelect) {
-//            paint = TextPaintConfig.getTextPaint();
-//            InputTextBean inputTextBean = new InputTextBean(selectCell[0], selectCell[1], paint, content);
-//            inputTextList.add(inputTextBean);
-//        }
 
-        //计算单行文字高度
-        Paint.FontMetricsInt textFm = paint.getFontMetricsInt();
-        int paintHeight = Math.abs(textFm.top - textFm.bottom);
+        initLines(content, paint, selectCell[0], selectCell[1]);
 
-        //计算行数
-        char[] textChars = content.toCharArray();
-        //当超过单元格宽度时，行数n +1，ww=0.0f;
-        float ww = 0.0f;
-        //行数
-        int n = 1;
-        for (int i = 0; i < textChars.length; i++) {
-            float v = paint.measureText(textChars[i] + "");
-            if (ww + v < width.get(selectCell[0]) * multiple && textChars[i] != '\n') {
-                ww += v;
-            } else {
-                ww = 0.0f;
-                ww += v;
-                n++;
-            }
-        }
-
-        int textHeight = paintHeight * n + chartPadding * 2;
-        //当文字行数高度大于单元格高度时，则将单元格高度置为文字高度
-        if (textHeight >= height.get(selectCell[1]) * multiple) {
-            height.set(selectCell[1], textHeight / multiple);
-        } else {
-
-        }
         init();
 
         invalidate();
@@ -712,7 +680,7 @@ public class ChartView extends View {
     public void stretchCell(int moveX, int moveY) {
         if (moveX != 0) {
 
-            int moveWidth = width.get(selectCell[0]) + moveX / multiple;
+            float moveWidth = width.get(selectCell[0]) + moveX / multiple;
 
             if (moveWidth < defaultWidth.get(selectCell[0])) {
                 moveWidth = defaultWidth.get(selectCell[0]);
@@ -721,7 +689,7 @@ public class ChartView extends View {
         }
 
         if (moveY != 0) {
-            int moveHeight = (height.get(selectCell[1]) + moveY / multiple);
+            float moveHeight = (height.get(selectCell[1]) + moveY / multiple);
             if (moveHeight < defaultHeight.get(selectCell[1])) {
                 moveHeight = defaultHeight.get(selectCell[1]);
             }
@@ -900,10 +868,10 @@ public class ChartView extends View {
     //算法
     public String doMath(final BaseConfig.MathType mathType, final BaseConfig.ScopeType scopeType, final int decimal) {
         doTextType((inputTextBean, tdTextAttributeModelBean, textPaint) -> {
-                inputTextBean.setMathType(mathType);
-                inputTextBean.setScopeType(scopeType);
-                inputTextBean.setDecimal(decimal);
-            }
+                    inputTextBean.setMathType(mathType);
+                    inputTextBean.setScopeType(scopeType);
+                    inputTextBean.setDecimal(decimal);
+                }
         );
 
         List<InputTextBean> beanList = new ArrayList<>();
@@ -1073,40 +1041,47 @@ public class ChartView extends View {
                 ChartBean chartBean = inputTextBean.getChartBean();
                 chartBean.setTdText(replaceText);
                 inputTextBean.setChartBean(chartBean);
-                //计算单行文字高度
-                Paint.FontMetricsInt textFm = inputTextBean.getTextPaint().getFontMetricsInt();
-                int paintHeight = Math.abs(textFm.top - textFm.bottom);
 
-                //计算行数
-                char[] textChars = replaceText.toCharArray();
-                //当超过单元格宽度时，行数n +1，ww=0.0f;
-                float ww = 0.0f;
-                //行数
-                int n = 1;
-                for (int i = 0; i < textChars.length; i++) {
-                    float v = inputTextBean.getTextPaint().measureText(textChars[i] + "");
-                    if (ww + v < width.get(inputTextBean.getInputX()) && textChars[i] != '\n') {
-                        ww += v;
-                    } else {
-                        ww = 0.0f;
-                        ww += v;
-                        n++;
-                    }
-                }
+                initLines(replaceText, inputTextBean.getTextPaint(), inputTextBean.getInputX(), inputTextBean.getInputY());
 
-                //当文字行数高度大于单元格高度时，则将单元格高度置为文字高度
-                if (paintHeight * n >= height.get(inputTextBean.getInputY())) {
-                    height.set(inputTextBean.getInputY(), (paintHeight) * n);
-                }
             }
         }
+        selectInputTextBean();
         init();
         invalidate();
     }
 
+    //计算文字行数
+    private void initLines(String text, TextPaint textPaint, int x, int y) {
+        //计算单行文字高度
+        Paint.FontMetricsInt textFm = textPaint.getFontMetricsInt();
+        float paintHeight = Math.abs(textFm.top - textFm.bottom);
+        //计算行数
+        char[] textChars = text.toCharArray();
+        //当超过单元格宽度时，行数n +1，ww=0.0f;
+        float ww = 0.0f;
+        //行数
+        int n = 1;
+        for (int i = 0; i < textChars.length; i++) {
+            float v = textPaint.measureText(textChars[i] + "");
+            if (ww + v < width.get(x) * multiple - chartPadding * 2 && textChars[i] != '\n') {
+                ww += v;
+            } else {
+                ww = 0.0f;
+                ww += v;
+                n++;
+            }
+        }
+        float textHeight = paintHeight * n + chartPadding * 2;
+        //当文字行数高度大于单元格高度时，则将单元格高度置为文字高度
+        if (textHeight >= height.get(y) * multiple) {
+            height.set(y, textHeight / multiple);
+        }
+    }
+
     //统一宽高
-    private List<Integer> mWidth = new ArrayList<>();
-    private List<Integer> mHeight = new ArrayList<>();
+    private List<Float> mWidth = new ArrayList<>();
+    private List<Float> mHeight = new ArrayList<>();
     //是否是统一宽高
     public boolean isUnifiedWidthHeight = false;
 
@@ -1117,13 +1092,13 @@ public class ChartView extends View {
         mHeight.clear();
         mHeight.addAll(height);
 
-        int maxWidth = width.get(0);
+        float maxWidth = width.get(0);
         for (int i = 1; i < width.size(); i++) {
             if (maxWidth < width.get(i)) {
                 maxWidth = width.get(i);
             }
         }
-        int maxHeight = height.get(0);
+        float maxHeight = height.get(0);
         for (int i = 1; i < height.size(); i++) {
             if (maxHeight < height.get(i)) {
                 maxHeight = height.get(i);
@@ -1171,6 +1146,17 @@ public class ChartView extends View {
         return null;
     }
 
+    public List<InputTextBean> getInputTextList() {
+        return inputTextList;
+    }
+
+    public List<Float> getHeightList() {
+        return height;
+    }
+
+    public List<Float> getWidthList() {
+        return width;
+    }
 
     /*----------------------------------------------------回调--------------------------------------------------------*/
     //选择的单元格后回调，目前用来返回单元格的内容

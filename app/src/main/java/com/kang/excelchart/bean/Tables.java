@@ -12,7 +12,7 @@ public class Tables extends BmobObject {
     private long taUpdateTime;
     private long taCreateTime;
     private String name;
-    private String isColl;
+    private boolean isColl;
     private String fileId;
     private String updateUserToken;
     private String sourceData;
@@ -65,12 +65,12 @@ public class Tables extends BmobObject {
         this.name = name;
     }
 
-    public String getIsColl() {
+    public boolean isColl() {
         return isColl;
     }
 
-    public void setIsColl(String isColl) {
-        this.isColl = isColl;
+    public void setColl(boolean coll) {
+        isColl = coll;
     }
 
     public String getFileId() {
@@ -93,13 +93,14 @@ public class Tables extends BmobObject {
     public String toString() {
         return "Tables{" +
                 "wordStr='" + wordStr + '\'' +
-                ", type='" + type + '\'' +
+                ", type=" + type +
                 ", taUpdateTime=" + taUpdateTime +
                 ", taCreateTime=" + taCreateTime +
                 ", name='" + name + '\'' +
                 ", isColl='" + isColl + '\'' +
                 ", fileId='" + fileId + '\'' +
                 ", updateUserToken='" + updateUserToken + '\'' +
+                ", sourceData='" + sourceData + '\'' +
                 '}';
     }
 }

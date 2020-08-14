@@ -6,7 +6,7 @@ import java.util.Iterator;
 public class TextEmptyUtils {
 
     public static boolean isEmpty(String text) {
-        if (text == null || text.equals("")) {
+        if (text == null || text.equals("") || text=="(null)") {
             return true;
         } else return false;
     }

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
 import com.kang.excelchart.R;
 import com.kang.excelchart.bean.ChartBean;
 import com.kang.excelchart.bean.InputTextBean;
@@ -54,23 +55,19 @@ public class BaseConfig {
         ALL
     }
 
-    public enum UserCreateAt {
-        FIRST,
-        SECOND,
-    }
 
-    public static List<Integer> getWidthList() {
-        List<Integer> list = new ArrayList<>();
+    public static List<Float> getWidthList() {
+        List<Float> list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            list.add(200);
+            list.add(200f);
         }
         return list;
     }
 
-    public static List<Integer> getHeightList() {
-        List<Integer> list = new ArrayList<>();
+    public static List<Float> getHeightList() {
+        List<Float> list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            list.add(80);
+            list.add(80f);
         }
         return list;
     }
@@ -111,5 +108,16 @@ public class BaseConfig {
                 return (Tables_1) table;
             }
         }
+    }
+
+    public static List<ChartBean> getChartList(List<InputTextBean> list) {
+        List<ChartBean> chartBeanList = new ArrayList<>();
+        for (InputTextBean inputTextBean : list) {
+
+            ChartBean chartBean = inputTextBean.getChartBean();
+            chartBeanList.add(chartBean);
+        }
+        return chartBeanList;
+
     }
 }

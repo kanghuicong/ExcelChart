@@ -38,7 +38,6 @@ public class HttpUtils {
             switch (e.getErrorCode()) {
                 //网络原因
                 case 9015:
-                    RxToast.error(activity.getString(R.string.error_network));
                     break;
                 case 211:
                     RxToast.error(activity.getString(R.string.error_login));

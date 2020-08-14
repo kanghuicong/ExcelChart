@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/qb_px_1"
+            app:left_limg="@mipmap/box_plot"
             app:left_text="@string/bulk_insert" />
 
         <com.kang.excelchart.custom.view.SuperItemView
@@ -24,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_1"
             android:padding="@dimen/qb_px_8"
+            app:left_limg="@mipmap/file_search"
             app:left_text="@string/find_and_replace" />
 
         <com.kang.excelchart.custom.view.SuperItemView
@@ -32,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_8"
             android:padding="@dimen/qb_px_8"
+            app:left_limg="@mipmap/column_width"
             app:left_text="@string/unified_wide_high" />
 
         <com.kang.excelchart.custom.view.SuperItemView
@@ -40,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_1"
             android:padding="@dimen/qb_px_8"
+            app:left_limg="@mipmap/wrench"
             app:left_text="@string/super_set" />
 
         <com.kang.excelchart.custom.view.SuperItemView
@@ -48,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_8"
             android:padding="@dimen/qb_px_8"
+            app:left_limg="@mipmap/calendar_check"
             app:left_text="@string/insert_date" />
 
         <com.kang.excelchart.custom.view.SuperItemView
@@ -56,6 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_1"
             android:padding="@dimen/qb_px_8"
+            app:left_limg="@mipmap/field_time"
             app:left_text="@string/insert_time" />
 
         <com.kang.excelchart.custom.view.SuperItemView
@@ -72,6 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_1"
             android:padding="@dimen/qb_px_8"
+            app:left_limg="@mipmap/bar_chart"
             app:left_text="@string/how_create_table" />
 
         <com.kang.excelchart.custom.view.SuperItemView
@@ -80,7 +87,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_1"
             android:padding="@dimen/qb_px_8"
+            app:left_limg="@mipmap/merga"
             app:left_text="@string/how_cell_size" />
+
     </LinearLayout>
 
 

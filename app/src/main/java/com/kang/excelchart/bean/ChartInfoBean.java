@@ -10,9 +10,9 @@ import java.util.List;
  */
 public class ChartInfoBean {
     @JSONField(name = "wa")
-    private List<Integer> width_list;
+    private List<Float> width_list;
     @JSONField(name = "ha")
-    private List<Integer> height_list;
+    private List<Float> height_list;
     @JSONField(name = "h")
     private int height_num;
     @JSONField(name = "w")
@@ -20,19 +20,19 @@ public class ChartInfoBean {
     @JSONField(name = "m")
     private String chart_list;
 
-    public List<Integer> getWidth_list() {
+    public List<Float> getWidth_list() {
         return width_list;
     }
 
-    public void setWidth_list(List<Integer> width_list) {
+    public void setWidth_list(List<Float> width_list) {
         this.width_list = width_list;
     }
 
-    public List<Integer> getHeight_list() {
+    public List<Float> getHeight_list() {
         return height_list;
     }
 
-    public void setHeight_list(List<Integer> height_list) {
+    public void setHeight_list(List<Float> height_list) {
         this.height_list = height_list;
     }
 

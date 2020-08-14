@@ -24,6 +24,7 @@ import com.kang.excelchart.BuildConfig;
 import com.kang.excelchart.bean.ChartBean;
 import com.kang.excelchart.bean.ChartInfoBean;
 import com.kang.excelchart.bean.Tables;
+import com.kang.excelchart.bean.Tables_1;
 import com.kang.excelchart.config.TextPaintConfig;
 import com.kang.excelchart.config.UserConfig;
 import com.kang.excelchart.custom.view.ChartView;
@@ -41,6 +42,7 @@ import com.kang.excelchart.fragment.chart.LineChartFragment;
 import com.kang.excelchart.fragment.chart.MathChartFragment;
 import com.kang.excelchart.fragment.chart.OtherChartFragment;
 import com.kang.excelchart.fragment.chart.TxtChartFragment;
+import com.kang.excelchart.utils.TextEmptyUtils;
 import com.kang.excelchart.utils.TextPaintUtils;
 import com.kang.excelchart.utils.SoftKeyBoardListener;
 import com.vondear.rxtool.RxActivityTool;
@@ -54,6 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 public class ChartActivity extends BaseActivity implements View.OnClickListener {
@@ -64,7 +67,7 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
     private View viewLine;
     private ConstraintLayout llChart;
     public KeyBackEditText etContent;
-    private TextView btConfirm;
+    private ImageButton btConfirm;
     private ConstraintLayout clItem;
     private LinearLayout llItem;
     private ImageButton ivKeyboard;
@@ -80,6 +83,9 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
     public static final int NORMAL_FROM = 0;
     public static final int ADAPTER_FROM = 1;
     private Tables table;
+
+    ChartInfoBean chartInfoBean;
+
     public static void doIntent(Context context, int from, Tables tables) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("tables", tables);
@@ -100,7 +106,7 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
         viewLine = (View) findViewById(R.id.view_line);
         llChart = (ConstraintLayout) findViewById(R.id.ll_chart);
         etContent = (KeyBackEditText) findViewById(R.id.et_content);
-        btConfirm = (TextView) findViewById(R.id.bt_confirm);
+        btConfirm = (ImageButton) findViewById(R.id.bt_confirm);
         clItem = (ConstraintLayout) findViewById(R.id.cl_item);
         llItem = (LinearLayout) findViewById(R.id.ll_item);
         ivKeyboard = (ImageButton) findViewById(R.id.iv_keyboard);
@@ -132,11 +138,17 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
         switch (from) {
             case ADAPTER_FROM:
                 table = (Tables) getIntent().getExtras().getSerializable("tables");
+                titleView.setTitle(table.getName());
+                if (table == null || TextEmptyUtils.isEmpty(table.getSourceData())) {
+                    chartView.setChartData(BaseConfig.getWidthList(), BaseConfig.getHeightList(), lcs);
+                    return;
+                }
+                String date = table.getSourceData();
+                RxLogTool.d("表格总数据：" + table);
+                RxLogTool.d("单元格数据：" + date);
 
-                String date = table.getWordStr();
-                RxLogTool.d("表格总数据：" + date);
 
-                ChartInfoBean chartInfoBean = JSON.parseObject(date, ChartInfoBean.class);
+                chartInfoBean = JSON.parseObject(date, ChartInfoBean.class);
 
                 List<ChartBean> chartBeanList = JSON.parseObject(chartInfoBean.getChart_list(), new TypeReference<List<ChartBean>>() {
                 });
@@ -170,7 +182,7 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
 
 
                     int x = i / chartInfoBean.getHeight_list().size();
-                    InputTextBean inputTextBean = new InputTextBean(x, y, chartBean, textPaint,tdTextAttributeModelBean);
+                    InputTextBean inputTextBean = new InputTextBean(x, y, chartBean, textPaint, tdTextAttributeModelBean);
                     if (y < chartInfoBean.getHeight_list().size() - 1) {
                         y++;
                     } else y = 0;
@@ -335,26 +347,51 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
             llChart.setVisibility(View.GONE);
             RxKeyboardTool.hideSoftInput(this, etContent);
         } else {
-            //已存在的表格——>更新
-            if (table!=null) {
-                String table = BaseConfig.getTableName(this);
 
-                Tables p2 = new Tables();
-                p2.setWordStr();
-                p2.update(this.table.getObjectId(), new UpdateListener() {
+            if (chartView != null) {
 
-                    @Override
-                    public void done(BmobException e) {
-                        if (e == null) {
 
-                        } else {
+//                Tables_1 p2 = BaseConfig.getTableClass(this, null);
+                Tables_1 p2 = new Tables_1();
+                String str = JSON.toJSONString(BaseConfig.getChartList(chartView.getInputTextList()));
+                chartInfoBean.setChart_list(str);
+                chartInfoBean.setHeight_list(chartView.getHeightList());
+                chartInfoBean.setWidth_list(chartView.getWidthList());
+                chartInfoBean.setHeight_num(chartView.getHeightList().size());
+                chartInfoBean.setWidth_num(chartView.getWidthList().size());
 
+                if (table != null && !TextEmptyUtils.isEmpty(table.getSourceData())) {
+                    //已存在的表格——>更新
+                    p2.setWordStr(JSON.toJSONString(chartInfoBean));
+                    p2.update(this.table.getObjectId(), new UpdateListener() {
+
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                RxLogTool.d("更新成功！");
+                            } else {
+                                RxLogTool.d("更新失败！");
+                            }
                         }
-                    }
 
-                });
-                //新表格——>新增
-            }else {
+                    });
+                } else {
+                    //新表格——>新增
+                    p2.setWordStr(JSON.toJSONString(chartInfoBean));
+                    p2.save(new SaveListener<String>() {
+                        @Override
+                        public void done(String objectId, BmobException e) {
+                            if (e == null) {
+                                RxLogTool.d("新增成功！");
+                            } else {
+                                RxLogTool.d("新增失败！");
+                            }
+                        }
+                    });
+                }
+
+
+            } else {
 
             }
 

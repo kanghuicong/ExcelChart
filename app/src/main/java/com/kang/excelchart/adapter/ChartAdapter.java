@@ -48,7 +48,7 @@ public class ChartAdapter<T> extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder vh = (ViewHolder) holder;
 
-        Tables table = BaseConfig.getTableClass(context,list.get(position));
+        Tables table = BaseConfig.getTableClass(context, list.get(position));
 
         vh.tvTitle.setText(table.getName());
 
@@ -67,7 +67,7 @@ public class ChartAdapter<T> extends RecyclerView.Adapter {
         }
         vh.tvTime.setText(time);
 
-        vh.ivWarn.setVisibility(View.VISIBLE);
+        vh.ivWarn.setVisibility(View.GONE);
 
         switch (table.getType()) {
             case 0:
@@ -91,7 +91,7 @@ public class ChartAdapter<T> extends RecyclerView.Adapter {
         }
 
         vh.ivSetting.setOnClickListener((view -> {
-            SettingDialog dialog = new SettingDialog(context);
+            SettingDialog dialog = new SettingDialog(context,table);
             dialog.showDialog();
         }));
 

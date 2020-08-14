@@ -77,7 +77,7 @@ public class TitleView extends RelativeLayout {
         int titleColor = typedArray.getInt(R.styleable.TitleView_title_color, 0xFFFFFFFF);
         tvTitle.setTextColor(titleColor);
         /*标题粗体*/
-        boolean isBold = typedArray.getBoolean(R.styleable.TitleView_isbold, true);
+        boolean isBold = typedArray.getBoolean(R.styleable.TitleView_isbold, false);
         TextPaint tp = tvTitle.getPaint();
         tp.setFakeBoldText(isBold);
 

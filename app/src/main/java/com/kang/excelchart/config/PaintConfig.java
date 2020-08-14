@@ -14,7 +14,7 @@ public class PaintConfig {
     public Paint selectPaint;//选中线条画笔
     public Paint greenPaint;//拉伸线条画笔
 
-    public static final float lineWidth = 4;
+    public static final float lineWidth = 3;
 
     public PaintConfig() {
         setLinePaint();

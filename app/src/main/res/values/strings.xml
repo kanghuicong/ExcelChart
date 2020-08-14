@@ -104,10 +104,16 @@
 
     <!--dialog-->
     <string name="operation">操作</string>
+    <string name="operation_content">对操作[%1$s]进行操作</string>
     <string name="delete_file">删除该文件</string>
     <string name="copy">复制</string>
     <string name="move">移动到</string>
+    <string name="collect_success">收藏成功</string>
+    <string name="collect_failure">收藏失败</string>
     <string name="rename">重命名</string>
+    <string name="rename_success">重命名成功</string>
+    <string name="rename_failure">重命名失败</string>
+    <string name="designation">名称</string>
     <string name="send_file">发送文件</string>
     <string name="create">创建</string>
     <string name="update">更新</string>

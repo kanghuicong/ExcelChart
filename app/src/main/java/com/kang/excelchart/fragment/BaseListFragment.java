@@ -130,7 +130,7 @@ public abstract class BaseListFragment<T> extends BaseFragment {
         httpUtils.doHttpResult(e, new HttpUtils.IHttpResult() {
             @Override
             public void success() {
-                RxLogTool.i("列表刷新：" + object.size() + "-----" + object.get(0).toString());
+                RxLogTool.i("列表刷新：-----" + object.get(0).toString());
                 page = 1;
                 list.clear();
                 list.addAll(object);
@@ -164,6 +164,7 @@ public abstract class BaseListFragment<T> extends BaseFragment {
 
                 } else {
                     page++;
+                    RxLogTool.i("列表刷新：-----" + object.get(0).toString());
                     list.addAll(object);
                     adapter.notifyDataSetChanged();
                     recursiveLoad();

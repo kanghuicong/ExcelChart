@@ -4,100 +4,99 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/qb_px_10">
 
     <LinearLayout
         android:id="@+id/ll_1"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/qb_px_8"
         android:background="@color/white"
         android:orientation="horizontal"
         app:layout_constraintEnd_toStartOf="@+id/ll_2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <ImageButton
             android:id="@+id/tv_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="@dimen/qb_px_8"
-            android:text="粗体" />
+            android:paddingTop="@dimen/qb_px_10"
+            android:paddingBottom="@dimen/qb_px_10"
+            android:src="@mipmap/bold"
+            android:background="@null"/>
 
-        <TextView
+        <ImageButton
             android:id="@+id/tv_italic"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="@dimen/qb_px_8"
-            android:text="斜体" />
+            android:background="@null"
+            android:src="@mipmap/italic"/>
 
-        <TextView
+        <ImageButton
             android:id="@+id/tv_underline"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="@dimen/qb_px_8"
-            android:text="下划线" />
 
-        <TextView
+            android:background="@null"
+            android:src="@mipmap/underline"/>
+
+        <ImageButton
             android:id="@+id/tv_deleteLine"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="@dimen/qb_px_8"
-            android:text="删除线" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_2"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/ll_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ll_1">
+            android:background="@null"
+            android:src="@mipmap/strikethrough"/>
 
         <TextView
+            android:layout_width="@dimen/qb_px_10"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor"/>
+
+
+        <ImageButton
             android:id="@+id/tv_left"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:paddingStart="@dimen/qb_px_12"
-            android:paddingEnd="@dimen/qb_px_12"
-            android:text="居左" />
+            android:src="@mipmap/align_left"
+            android:background="@null" />
 
-        <TextView
+        <ImageButton
             android:id="@+id/tv_center"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:paddingStart="@dimen/qb_px_12"
-            android:paddingEnd="@dimen/qb_px_12"
-            android:text="居中" />
+            android:src="@mipmap/align_center"
+            android:background="@null"/>
 
-        <TextView
+        <ImageButton
             android:id="@+id/tv_right"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:paddingStart="@dimen/qb_px_12"
-            android:paddingEnd="@dimen/qb_px_12"
-            android:text="居右" />
+            android:src="@mipmap/align_right"
+            android:background="@null"/>
     </LinearLayout>
+
 
 
     <LinearLayout
         android:id="@+id/ll_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_8"
+        android:layout_marginTop="@dimen/qb_px_10"
         android:background="@color/white"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -110,78 +109,64 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingTop="@dimen/qb_px_8"
-            android:paddingBottom="@dimen/qb_px_8"
+            android:paddingTop="@dimen/qb_px_10"
+            android:paddingBottom="@dimen/qb_px_10"
             android:text="8" />
 
         <TextView
             android:id="@+id/tv_10"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingTop="@dimen/qb_px_8"
-            android:paddingBottom="@dimen/qb_px_8"
             android:text="10" />
 
         <TextView
             android:id="@+id/tv_12"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingTop="@dimen/qb_px_8"
-            android:paddingBottom="@dimen/qb_px_8"
             android:text="12" />
 
         <TextView
             android:id="@+id/tv_14"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingTop="@dimen/qb_px_8"
-            android:paddingBottom="@dimen/qb_px_8"
             android:text="14" />
 
         <TextView
             android:id="@+id/tv_16"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingTop="@dimen/qb_px_8"
-            android:paddingBottom="@dimen/qb_px_8"
             android:text="16" />
 
         <TextView
             android:id="@+id/tv_18"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingTop="@dimen/qb_px_8"
-            android:paddingBottom="@dimen/qb_px_8"
             android:text="18" />
 
         <TextView
             android:id="@+id/tv_20"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingTop="@dimen/qb_px_8"
-            android:paddingBottom="@dimen/qb_px_8"
             android:text="20" />
 
         <TextView
             android:id="@+id/tv_22"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingTop="@dimen/qb_px_8"
-            android:paddingBottom="@dimen/qb_px_8"
             android:text="22" />
     </LinearLayout>
 
@@ -189,7 +174,7 @@
         android:id="@+id/ll_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_8"
+        android:layout_marginTop="@dimen/qb_px_10"
         android:background="@color/white"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
@@ -200,7 +185,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/qb_px_8"
+            android:padding="@dimen/qb_px_10"
             android:text="样式1" />
 
         <TextView
@@ -208,7 +193,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/qb_px_8"
+            android:padding="@dimen/qb_px_10"
             android:text="样式2" />
 
         <TextView
@@ -216,9 +201,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/qb_px_8"
+            android:padding="@dimen/qb_px_10"
             android:text="样式3" />
-
 
     </LinearLayout>
 

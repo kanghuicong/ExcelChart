@@ -22,7 +22,7 @@
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/operation"
+            android:text="@string/operation_content"
             android:layout_marginTop="@dimen/qb_px_10"
             android:layout_marginStart="@dimen/qb_px_30"
             android:layout_marginEnd="@dimen/qb_px_30"/>
