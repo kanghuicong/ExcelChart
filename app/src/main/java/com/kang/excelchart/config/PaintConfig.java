@@ -9,7 +9,7 @@ import com.kang.excelchart.utils.TextPaintUtils;
  */
 public class PaintConfig {
     public Paint linePaint;//默认线条画笔
-    public static final String defaultLineColor = "#FF8F8F8F";
+    public static final String defaultLineColor = "#ffC0C0C0";
 
     public Paint selectPaint;//选中线条画笔
     public Paint greenPaint;//拉伸线条画笔

@@ -277,10 +277,10 @@ public class ChartView extends View {
             //文字的TextAlign会影响起点X坐标
             switch (inputTextBean.getTextPaint().getTextAlign()) {
                 case RIGHT:
-                    startL = pointX[inputTextBean.getInputX() + 1]-chartPadding;
+                    startL = pointX[inputTextBean.getInputX() + 1] - chartPadding;
                     break;
                 case LEFT:
-                    startL = pointX[inputTextBean.getInputX()]+chartPadding;
+                    startL = pointX[inputTextBean.getInputX()] + chartPadding;
                     break;
                 default:
                     startL = pointX[inputTextBean.getInputX()] + (pointX[inputTextBean.getInputX() + 1] - pointX[inputTextBean.getInputX()]) / 2;
@@ -760,9 +760,7 @@ public class ChartView extends View {
         });
     }
 
-    /**
-     * 设置字体颜色
-     */
+    //设置字体颜色
     public void setTextColor(final String color) {
         doTextType((inputTextBean, tdTextAttributeModelBean, textPaint) -> {
             textPaint.setColor(TextPaintUtils.hexToColor(color));
@@ -770,9 +768,7 @@ public class ChartView extends View {
         });
     }
 
-    /**
-     * 设置字体类型
-     */
+    //设置字体类型
     public void setTypeface(final Typeface typeface) {
         doTextType((inputTextBean, tdTextAttributeModelBean, textPaint) -> {
             textPaint.setTypeface(typeface);
@@ -787,9 +783,7 @@ public class ChartView extends View {
         });
     }
 
-    /**
-     * 设置背景颜色
-     */
+    //设置背景颜色
     public void setBackGroundColor(final String color) {
         doTextType((xInputTextBean, tdTextAttributeModelBean, textPaint) -> {
             //选中了单元格
@@ -844,10 +838,6 @@ public class ChartView extends View {
                 if (inputTextBean.getInputX() == selectCell[0] && inputTextBean.getInputY() == selectCell[1]) {
                     iTextType.doType(inputTextBean, inputTextBean.getTdTextAttributeModelBean(), inputTextBean.getTextPaint());
 
-//                    ChartBean chartBean = inputTextBean.getChartBean();
-//                    TextPaint textPaint = inputTextBean.getTextPaint();
-//                    ChartBean.TdTextAttributeModelBean tdTextAttributeModelBean = new ChartBean.TdTextAttributeModelBean();
-
                     inputTextList.set(i, inputTextBean);
                     invalidate();
                     return;
@@ -863,7 +853,6 @@ public class ChartView extends View {
     }
 
     /*----------------------------------------------------算法--------------------------------------------------------*/
-
 
     //算法
     public String doMath(final BaseConfig.MathType mathType, final BaseConfig.ScopeType scopeType, final int decimal) {

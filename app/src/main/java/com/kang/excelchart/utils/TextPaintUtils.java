@@ -14,11 +14,12 @@ public class TextPaintUtils {
     public static int hexToColor(String color) {
         // #ff00CCFF
         String reg = "#[a-f0-9A-F]{8}";
-        if (!Pattern.matches(reg, color)) {
+        if (color == null || !Pattern.matches(reg, color)) {
             color = "#00ffffff";
         }
         return Color.parseColor(color);
     }
+
     public static String colorToHex(int color) {
         return String.format("#%06X", color);
     }

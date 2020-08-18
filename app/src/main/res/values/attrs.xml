@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <array name="border_color">
+        <item>#ffC0C0C0</item>
+        <item>#ff000000</item>
+        <item>#ff9999FF</item>
+        <item>#ffFFCC00</item>
+        <item>#ffFF9900</item>
+        <item>#ffFF0000</item>
+        <item>#ff3366FF</item>
+        <item>#ff008000</item>
+    </array>
+
+    <array name="font_color">
+        <item>#ff000000</item>
+        <item>#ffFF0000</item>
+        <item>#ff00FF00</item>
+        <item>#ff0000FF</item>
+        <item>#ffFFFF00</item>
+        <item>#ffFF00FF</item>
+        <item>#ff00FFFF</item>
+        <item>#ff660066</item>
+        <item>#ff0066CC</item>
+        <item>#ff000080</item>
+        <item>#ffCC99FF</item>
+        <item>#ff3366FF</item>
+        <item>#ff33CCCC</item>
+        <item>#ff99CC00</item>
+        <item>#ffFF9900</item>
+        <item>#ffFF6600</item>
+        <item>#ff666699</item>
+        <item>#ff003366</item>
+        <item>#ff339966</item>
+        <item>#ff003300</item>
+        <item>#ffFFCC00</item>
+        <item>#ff993300</item>
+        <item>#ff333333</item>
+        <item>#ff333399</item>
+    </array>
+
+
     <declare-styleable name="TitleView">
         <attr name="title" format="string" />
         <attr name="title_color" format="color" />
@@ -19,115 +58,185 @@
     </declare-styleable>
 
     <declare-styleable name="SuperItemView">
-        <attr name="isPadding" format="boolean"/>
+        <attr name="isPadding" format="boolean" />
         <attr name="needBackground" format="boolean" />
         <!--left-left图片-->
-        <attr name="left_limg" format="reference"/>
-        <attr name="left_limg_width" format="integer"/>
-        <attr name="left_limg_height" format="integer"/>
-        <attr name="left_limg_leftMargin" format="integer"/>
-        <attr name="left_limg_rightMargin" format="integer"/>
-        <attr name="left_limg_topMargin" format="integer"/>
-        <attr name="left_limg_bottomMargin" format="integer"/>
-        <attr name="noLeftImageL" format="boolean"/>
+        <attr name="left_limg" format="reference" />
+        <attr name="left_limg_width" format="integer" />
+        <attr name="left_limg_height" format="integer" />
+        <attr name="left_limg_leftMargin" format="integer" />
+        <attr name="left_limg_rightMargin" format="integer" />
+        <attr name="left_limg_topMargin" format="integer" />
+        <attr name="left_limg_bottomMargin" format="integer" />
+        <attr name="noLeftImageL" format="boolean" />
         <!--left文字-->
-        <attr name="left_text" format="string"/>
-        <attr name="left_text_color" format="color"/>
-        <attr name="left_text_size" format="integer"/>
-        <attr name="left_drawable_padding" format="integer"/>
-        <attr name="left_text_rightMargin" format="integer"/>
-        <attr name="left_text_leftMargin" format="integer"/>
-        <attr name="left_text_topMargin" format="integer"/>
-        <attr name="left_text_bottomMargin" format="integer"/>
-        <attr name="left_text_bold" format="boolean"/>
-        <attr name="noLeftText" format="boolean"/>
+        <attr name="left_text" format="string" />
+        <attr name="left_text_color" format="color" />
+        <attr name="left_text_size" format="integer" />
+        <attr name="left_drawable_padding" format="integer" />
+        <attr name="left_text_rightMargin" format="integer" />
+        <attr name="left_text_leftMargin" format="integer" />
+        <attr name="left_text_topMargin" format="integer" />
+        <attr name="left_text_bottomMargin" format="integer" />
+        <attr name="left_text_bold" format="boolean" />
+        <attr name="noLeftText" format="boolean" />
         <!--left-right图片-->
-        <attr name="left_rimg" format="reference"/>
-        <attr name="left_rimg_width" format="integer"/>
-        <attr name="left_rimg_height" format="integer"/>
+        <attr name="left_rimg" format="reference" />
+        <attr name="left_rimg_width" format="integer" />
+        <attr name="left_rimg_height" format="integer" />
         <!--right-left图片-->
-        <attr name="right_rimg" format="reference"/>
-        <attr name="right_limg_width" format="integer"/>
-        <attr name="right_limg_height" format="integer"/>
-        <attr name="right_limg_leftMargin" format="integer"/>
-        <attr name="right_limg_rightMargin" format="integer"/>
-        <attr name="right_limg_topMargin" format="integer"/>
-        <attr name="right_limg_bottomMargin" format="integer"/>
-        <attr name="noRightImgL" format="boolean"/>
+        <attr name="right_rimg" format="reference" />
+        <attr name="right_limg_width" format="integer" />
+        <attr name="right_limg_height" format="integer" />
+        <attr name="right_limg_leftMargin" format="integer" />
+        <attr name="right_limg_rightMargin" format="integer" />
+        <attr name="right_limg_topMargin" format="integer" />
+        <attr name="right_limg_bottomMargin" format="integer" />
+        <attr name="noRightImgL" format="boolean" />
         <!--right文字-->
-        <attr name="right_text" format="string"/>
-        <attr name="right_text_color" format="color"/>
-        <attr name="right_text_size" format="integer"/>
-        <attr name="right_drawable_padding" format="integer"/>
-        <attr name="right_text_rightMargin" format="integer"/>
-        <attr name="right_text_leftMargin" format="integer"/>
-        <attr name="right_text_topMargin" format="integer"/>
-        <attr name="right_text_bottomMargin" format="integer"/>
-        <attr name="noRightText" format="boolean"/>
+        <attr name="right_text" format="string" />
+        <attr name="right_text_color" format="color" />
+        <attr name="right_text_size" format="integer" />
+        <attr name="right_drawable_padding" format="integer" />
+        <attr name="right_text_rightMargin" format="integer" />
+        <attr name="right_text_leftMargin" format="integer" />
+        <attr name="right_text_topMargin" format="integer" />
+        <attr name="right_text_bottomMargin" format="integer" />
+        <attr name="noRightText" format="boolean" />
         <!--right-right图片-->
-        <attr name="right_limg" format="reference"/>
-        <attr name="right_rimg_width" format="integer"/>
-        <attr name="right_rimg_height" format="integer"/>
-        <attr name="isArrow" format="boolean"/>
-        <attr name="noRightImgR" format="boolean"/>
+        <attr name="right_limg" format="reference" />
+        <attr name="right_rimg_width" format="integer" />
+        <attr name="right_rimg_height" format="integer" />
+        <attr name="isArrow" format="boolean" />
+        <attr name="noRightImgR" format="boolean" />
         <!--CheckBox-->
-        <attr name="isCheckBox" format="boolean"/>
-        <attr name="checkBox_width" format="boolean"/>
-        <attr name="checkBox_height" format="boolean"/>
-        <attr name="checkBox_leftMargin" format="boolean"/>
-        <attr name="checkBox_topMargin" format="integer"/>
-        <attr name="checkBox_rightMargin" format="integer"/>
-        <attr name="checkBox_bottomMargin" format="integer"/>
+        <attr name="isCheckBox" format="boolean" />
+        <attr name="checkBox_width" format="boolean" />
+        <attr name="checkBox_height" format="boolean" />
+        <attr name="checkBox_leftMargin" format="boolean" />
+        <attr name="checkBox_topMargin" format="integer" />
+        <attr name="checkBox_rightMargin" format="integer" />
+        <attr name="checkBox_bottomMargin" format="integer" />
         <!--switch-->
-        <attr name="isSwitch" format="boolean"/>
+        <attr name="isSwitch" format="boolean" />
         <!--top-->
-        <attr name="top_gravity" format="string"/>
-        <attr name="top_topMargin" format="integer"/>
-        <attr name="top_leftMargin" format="integer"/>
-        <attr name="top_rightMargin" format="integer"/>
-        <attr name="top_bottomMargin" format="integer"/>
-        <attr name="noTop" format="boolean"/>
-        <attr name="isTopBetween" format="boolean"/>
+        <attr name="top_gravity" format="string" />
+        <attr name="top_topMargin" format="integer" />
+        <attr name="top_leftMargin" format="integer" />
+        <attr name="top_rightMargin" format="integer" />
+        <attr name="top_bottomMargin" format="integer" />
+        <attr name="noTop" format="boolean" />
+        <attr name="isTopBetween" format="boolean" />
         <!--top-left文字-->
-        <attr name="top_left_text" format="string"/>
-        <attr name="top_left_textSize" format="integer"/>
-        <attr name="top_left_textColor" format="color|reference"/>
-        <attr name="top_left_leftMargin" format="integer"/>
-        <attr name="top_left_topMargin" format="integer"/>
-        <attr name="top_left_rightMargin" format="integer"/>
-        <attr name="top_left_bottomMargin" format="integer"/>
+        <attr name="top_left_text" format="string" />
+        <attr name="top_left_textSize" format="integer" />
+        <attr name="top_left_textColor" format="color|reference" />
+        <attr name="top_left_leftMargin" format="integer" />
+        <attr name="top_left_topMargin" format="integer" />
+        <attr name="top_left_rightMargin" format="integer" />
+        <attr name="top_left_bottomMargin" format="integer" />
         <!--top-right文字-->
-        <attr name="top_right_text" format="string"/>
-        <attr name="top_right_textSize" format="integer"/>
-        <attr name="top_right_textColor" format="color|reference"/>
-        <attr name="top_right_leftMargin" format="integer"/>
-        <attr name="top_right_topMargin" format="integer"/>
-        <attr name="top_right_rightMargin" format="integer"/>
-        <attr name="top_right_bottomMargin" format="integer"/>
+        <attr name="top_right_text" format="string" />
+        <attr name="top_right_textSize" format="integer" />
+        <attr name="top_right_textColor" format="color|reference" />
+        <attr name="top_right_leftMargin" format="integer" />
+        <attr name="top_right_topMargin" format="integer" />
+        <attr name="top_right_rightMargin" format="integer" />
+        <attr name="top_right_bottomMargin" format="integer" />
         <!--bottom-->
-        <attr name="bottom_gravity" format="string"/>
-        <attr name="bottom_topMargin" format="integer"/>
-        <attr name="bottom_leftMargin" format="integer"/>
-        <attr name="bottom_rightMargin" format="integer"/>
-        <attr name="bottom_bottomMargin" format="integer"/>
-        <attr name="noBottom" format="boolean"/>
-        <attr name="isBottomBetween" format="boolean"/>
+        <attr name="bottom_gravity" format="string" />
+        <attr name="bottom_topMargin" format="integer" />
+        <attr name="bottom_leftMargin" format="integer" />
+        <attr name="bottom_rightMargin" format="integer" />
+        <attr name="bottom_bottomMargin" format="integer" />
+        <attr name="noBottom" format="boolean" />
+        <attr name="isBottomBetween" format="boolean" />
         <!--bottom-left文字-->
-        <attr name="bottom_left_text" format="string"/>
-        <attr name="bottom_left_textSize" format="integer"/>
-        <attr name="bottom_left_textColor" format="color|reference"/>
-        <attr name="bottom_left_leftMargin" format="integer"/>
-        <attr name="bottom_left_topMargin" format="integer"/>
-        <attr name="bottom_left_rightMargin" format="integer"/>
-        <attr name="bottom_left_bottomMargin" format="integer"/>
+        <attr name="bottom_left_text" format="string" />
+        <attr name="bottom_left_textSize" format="integer" />
+        <attr name="bottom_left_textColor" format="color|reference" />
+        <attr name="bottom_left_leftMargin" format="integer" />
+        <attr name="bottom_left_topMargin" format="integer" />
+        <attr name="bottom_left_rightMargin" format="integer" />
+        <attr name="bottom_left_bottomMargin" format="integer" />
         <!--bottom-right文字-->
-        <attr name="bottom_right_text" format="string"/>
-        <attr name="bottom_right_textSize" format="integer"/>
-        <attr name="bottom_right_textColor" format="color"/>
-        <attr name="bottom_right_leftMargin" format="integer"/>
-        <attr name="bottom_right_topMargin" format="integer"/>
-        <attr name="bottom_right_rightMargin" format="integer"/>
-        <attr name="bottom_right_bottomMargin" format="integer"/>
+        <attr name="bottom_right_text" format="string" />
+        <attr name="bottom_right_textSize" format="integer" />
+        <attr name="bottom_right_textColor" format="color" />
+        <attr name="bottom_right_leftMargin" format="integer" />
+        <attr name="bottom_right_topMargin" format="integer" />
+        <attr name="bottom_right_rightMargin" format="integer" />
+        <attr name="bottom_right_bottomMargin" format="integer" />
 
     </declare-styleable>
+
+    <string-array name="color_all">
+        <item>#ffffffff</item>
+        <item>#ffF4F5F8</item>
+        <item>#ff969696</item>
+        <item>#ffFFCC99</item>
+        <item>#ffFF9900</item>
+        <item>#ffFF8080</item>
+        <item>#ff00CCFF</item>
+        <item>#ff339966</item>
+        <!--其他颜色
+                <item>#fffed75e</item>
+        <item>#ffF5A623</item>
+        <item>#fffe6d6c</item>
+        <item>#ff7bddfa</item>
+        <item>#ff50cf5c</item>
+                !-->
+        <item>#ffFF0000</item>
+        <item>#ff00FF00</item>
+        <item>#ff0000FF</item>
+        <item>#ffFFFF00</item>
+        <item>#ffFF00FF</item>
+        <item>#ff00FFFF</item>
+        <item>#ff800000</item>
+        <item>#ff008000</item>
+        <item>#ff000080</item>
+        <item>#ff808000</item>
+        <item>#ff800080</item>
+        <item>#ff008080</item>
+        <item>#ffC0C0C0</item>
+        <item>#ff808080</item>
+        <item>#ff9999FF</item>
+        <item>#ff993366</item>
+        <item>#ffFFFFCC</item>
+        <item>#ffCCFFFF</item>
+        <item>#ff660066</item>
+        <item>#ff0066CC</item>
+        <item>#ffCCCCFF</item>
+        <item>#ff000080</item>
+        <item>#ffFF00FF</item>
+        <item>#ffFFFF00</item>
+        <item>#ff00FFFF</item>
+        <item>#ff800080</item>
+        <item>#ff800000</item>
+        <item>#ff008080</item>
+        <item>#ff0000FF</item>
+        <item>#ffCCFFFF</item>
+        <item>#ffCCFFCC</item>
+        <item>#ffFFFF99</item>
+        <item>#ff99CCFF</item>
+        <item>#ffFF99CC</item>
+        <item>#ffCC99FF</item>
+
+
+        <item>#ff3366FF</item>
+        <item>#ff33CCCC</item>
+
+        <item>#ff99CC00</item>
+        <item>#ffFFCC00</item>
+        <item>#ffFF6600</item>
+        <item>#ff666699</item>
+        <item>#ff003366</item>
+
+        <item>#ff003300</item>
+        <item>#ff333300</item>
+        <item>#ff993300</item>
+        <item>#ff993366</item>
+        <item>#ff333399</item>
+        <item>#ff333333</item>
+    </string-array>
 </resources>

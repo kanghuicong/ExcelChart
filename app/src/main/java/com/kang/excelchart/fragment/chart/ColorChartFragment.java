@@ -42,7 +42,7 @@ public class ColorChartFragment extends BaseChartFragment {
     @Override
     protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        colorList = TextPaintConfig.getBackgroundColorList(TextPaintConfig.defaultBackgroundColorStr);
+        colorList = TextPaintConfig.getBackgroundColorList(activity, TextPaintConfig.defaultBackgroundColorStr);
         colorAdapter = new ColorAdapter(activity, colorList, new ColorAdapter.ISelectColor() {
             @Override
             public void select(TextColorBean textColorBean) {

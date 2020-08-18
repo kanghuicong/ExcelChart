@@ -118,7 +118,7 @@ public class TxtChartFragment extends BaseChartFragment implements View.OnClickL
     @Override
     protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        colorList = TextPaintConfig.getTextColorList(TextPaintConfig.defaultTextColorStr);
+        colorList = TextPaintConfig.getTextColorList(activity,TextPaintConfig.defaultTextColorStr);
         colorAdapter = new ColorAdapter(activity, colorList, new ColorAdapter.ISelectColor() {
             @Override
             public void select(TextColorBean textColorBean) {
@@ -225,7 +225,7 @@ public class TxtChartFragment extends BaseChartFragment implements View.OnClickL
 
         if (colorAdapter != null && colorList != null) {
             colorList.clear();
-            colorList.addAll(TextPaintConfig.getTextColorList(TextPaintUtils.colorToHex(textPaint.getColor())));
+            colorList.addAll(TextPaintConfig.getTextColorList(activity,TextPaintUtils.colorToHex(textPaint.getColor())));
             colorAdapter.notifyDataSetChanged();
         }
     }
