@@ -128,7 +128,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                         UserConfig.setCreateAt(activity, userCreateAt);
 
                                         RxLogTool.d("user_data:" + object.toString());
-                                        RxActivityTool.skipActivity(activity, MainActivity.class);
+                                        RxActivityTool.skipActivityAndFinish(activity, MainActivity.class);
                                     } else {
                                         RxToast.error(getString(R.string.error_account_password));
                                     }

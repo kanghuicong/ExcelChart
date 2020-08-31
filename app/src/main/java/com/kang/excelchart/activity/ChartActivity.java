@@ -16,11 +16,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.kang.excelchart.BuildConfig;
 import com.kang.excelchart.bean.ChartBean;
 import com.kang.excelchart.bean.ChartInfoBean;
 import com.kang.excelchart.bean.Tables;
@@ -360,35 +355,38 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
                 chartInfoBean.setHeight_num(chartView.getHeightList().size());
                 chartInfoBean.setWidth_num(chartView.getWidthList().size());
 
-                if (table != null && !TextEmptyUtils.isEmpty(table.getSourceData())) {
-                    //已存在的表格——>更新
-                    p2.setWordStr(JSON.toJSONString(chartInfoBean));
-                    p2.update(this.table.getObjectId(), new UpdateListener() {
+                RxLogTool.d("chart转换数据："+JSON.toJSONString(chartInfoBean));
 
-                        @Override
-                        public void done(BmobException e) {
-                            if (e == null) {
-                                RxLogTool.d("更新成功！");
-                            } else {
-                                RxLogTool.d("更新失败！");
-                            }
-                        }
 
-                    });
-                } else {
-                    //新表格——>新增
-                    p2.setWordStr(JSON.toJSONString(chartInfoBean));
-                    p2.save(new SaveListener<String>() {
-                        @Override
-                        public void done(String objectId, BmobException e) {
-                            if (e == null) {
-                                RxLogTool.d("新增成功！");
-                            } else {
-                                RxLogTool.d("新增失败！");
-                            }
-                        }
-                    });
-                }
+//                if (table != null && !TextEmptyUtils.isEmpty(table.getSourceData())) {
+//                    //已存在的表格——>更新
+//                    p2.setWordStr(JSON.toJSONString(chartInfoBean));
+//                    p2.update(this.table.getObjectId(), new UpdateListener() {
+//
+//                        @Override
+//                        public void done(BmobException e) {
+//                            if (e == null) {
+//                                RxLogTool.d("更新成功！");
+//                            } else {
+//                                RxLogTool.d("更新失败！");
+//                            }
+//                        }
+//
+//                    });
+//                } else {
+//                    //新表格——>新增
+//                    p2.setWordStr(JSON.toJSONString(chartInfoBean));
+//                    p2.save(new SaveListener<String>() {
+//                        @Override
+//                        public void done(String objectId, BmobException e) {
+//                            if (e == null) {
+//                                RxLogTool.d("新增成功！");
+//                            } else {
+//                                RxLogTool.d("新增失败！");
+//                            }
+//                        }
+//                    });
+//                }
 
 
             } else {

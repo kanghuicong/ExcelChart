@@ -33,8 +33,12 @@ public class BaseConfig {
     //删除列
     public static final int DELETE_COLUMN = 6;
 
+    //拉伸单元格
     public static final int TOP_BITMAP = 7;
     public static final int LEFT_BITMAP = 8;
+    //扩充单元格的圆
+    public static final int TOP_CIRCLE = 9;
+    public static final int BOTTOM_CIRCLE = 10;
 
     public enum MathType {
         ADDITION,

@@ -13,6 +13,7 @@ public class PaintConfig {
 
     public Paint selectPaint;//选中线条画笔
     public Paint greenPaint;//拉伸线条画笔
+    public Paint circlePaint;//多选单元格时圆的画笔
 
     public static final float lineWidth = 3;
 
@@ -20,6 +21,7 @@ public class PaintConfig {
         setLinePaint();
         setSelectPaint();
         setGreenPaint();
+        setCirclePaint();
     }
 
     //基本边框设置
@@ -52,7 +54,6 @@ public class PaintConfig {
 
     //选择边框设置
     public void setSelectPaint() {
-        selectPaint = new Paint();
         // 基本线条画笔
         selectPaint = new Paint();
         // 设置颜色
@@ -66,4 +67,14 @@ public class PaintConfig {
     }
 
 
+    public static final int circleRadius = 30;
+    public void setCirclePaint(){
+        circlePaint = new Paint();
+        // 设置颜色
+        circlePaint.setColor(0xFFFFFFFF);
+        // 设置抗锯齿
+        selectPaint.setAntiAlias(true);
+        // 设置为填充
+        selectPaint.setStyle(Paint.Style.FILL);
+    }
 }
