@@ -16,6 +16,7 @@ import android.view.View;
 import com.alibaba.fastjson.JSON;
 import com.kang.excelchart.R;
 import com.kang.excelchart.bean.ChartBean;
+import com.kang.excelchart.bean.MergeBean;
 import com.kang.excelchart.config.BaseConfig;
 import com.kang.excelchart.config.PaintConfig;
 import com.kang.excelchart.config.TextPaintConfig;
@@ -186,6 +187,19 @@ public class ChartView extends View {
             }
         }
 
+        //合并单元格
+        if (mergeList != null && mergeList.size() != 0) {
+            for (MergeBean mergeBean : mergeList) {
+                //清除（覆盖）单元格内的x轴线条
+                for (int i = mergeBean.getTopCell()[0] + 1; i < mergeBean.getBottomCell()[0]; i++) {
+                    canvas.drawLine(pointX[i], pointY[mergeBean.getTopCell()[1]], pointX[i], pointY[mergeBean.getBottomCell()[1]], mergeBean.getPaint());
+                }
+                //清除（覆盖）单元格内的y轴线条
+                for (int i = mergeBean.getTopCell()[1] + 1; i < mergeBean.getBottomCell()[1]; i++) {
+                    canvas.drawLine(pointY[mergeBean.getTopCell()[0]], pointY[i], pointY[mergeBean.getBottomCell()[0]], pointY[i], mergeBean.getPaint());
+                }
+            }
+        }
 
         //绘制文字
         for (InputTextBean inputTextBean : inputTextList) {
@@ -421,17 +435,19 @@ public class ChartView extends View {
                         case BaseConfig.TOP_CIRCLE:
                         case BaseConfig.BOTTOM_CIRCLE:
                             for (int i = 0; i < pointX.length; i++) {
-                                if (x > pointX[i]) {
+                                if (x >= pointX[i]) {
                                     if (downType == BaseConfig.TOP_CIRCLE)
                                         selectTopCell[0] = i;
-                                    else selectBottomCell[0] = i;
+                                    else {
+                                        selectBottomCell[0] = i + 1 == pointX.length ? i : i + 1;
+                                    }
                                 }
                             }
                             for (int i = 0; i < pointY.length; i++) {
-                                if (y > pointY[i]) {
+                                if (y >= pointY[i]) {
                                     if (downType == BaseConfig.TOP_CIRCLE)
                                         selectTopCell[1] = i;
-                                    else selectBottomCell[1] = i;
+                                    else selectBottomCell[1] = i + 1 == pointY.length ? i : i + 1;
                                 }
                             }
                             break;
@@ -820,6 +836,7 @@ public class ChartView extends View {
         invalidate();
     }
 
+    //扩展单元格
     private void setExpansion(boolean isShow, int type, int x, int y) {
         if (isShow) {
             switch (type) {
@@ -1202,6 +1219,7 @@ public class ChartView extends View {
     //是否是统一宽高
     public boolean isUnifiedWidthHeight = false;
 
+    //统一宽高
     public void unifiedWidthHeight() {
         mWidth.clear();
         mWidth.addAll(width);
@@ -1247,6 +1265,33 @@ public class ChartView extends View {
         invalidate();
 
         isUnifiedWidthHeight = false;
+    }
+
+    List<MergeBean> mergeList = new ArrayList<>();
+
+    //合并单元格
+    public void mergeCard() {
+        if (selectTopCell[0] != -1 && selectTopCell[1] != -1 &&
+                selectBottomCell[0] != -1 && selectBottomCell[1] != -1 &&
+                (selectBottomCell[0] - selectTopCell[0] > 1 || selectBottomCell[1] - selectTopCell[0] > 1)) {
+            return;
+        }
+        MergeBean mergeBean = new MergeBean();
+        mergeBean.setTopCell(selectTopCell);
+        mergeBean.setBottomCell(selectBottomCell);
+        for (InputTextBean inputTextBean : inputTextList) {
+            if (inputTextBean.getInputX() == selectTopCell[0] && inputTextBean.getInputY() == selectTopCell[1]) {
+                //与PaintConfig里的linePaint基本一致，除了颜色外
+                Paint linePaint = new Paint();
+                linePaint.setColor(TextPaintUtils.hexToColor(inputTextBean.getChartBean().getTdBackgroundColorStr()));
+                linePaint.setAntiAlias(true);
+                linePaint.setStrokeWidth(PaintConfig.lineWidth);
+                linePaint.setStyle(Paint.Style.STROKE);
+                mergeBean.setPaint(linePaint);
+                break;
+            }
+        }
+        mergeList.add(mergeBean);
     }
 
     /*----------------------------------------------------get--------------------------------------------------------*/
