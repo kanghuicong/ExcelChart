@@ -9,7 +9,17 @@ import android.graphics.Paint;
 public class MergeBean {
     int[] topCell;
     int[] bottomCell;
-    Paint paint;
+    Paint linePaint;
+    InputTextBean inputTextBean;
+
+    public InputTextBean getInputTextBean() {
+        return inputTextBean;
+    }
+
+    public void setInputTextBean(InputTextBean inputTextBean) {
+        this.inputTextBean = inputTextBean;
+
+    }
 
     public int[] getTopCell() {
         return topCell;
@@ -27,11 +37,11 @@ public class MergeBean {
         this.bottomCell = bottomCell;
     }
 
-    public Paint getPaint() {
-        return paint;
+    public Paint getLinePaint() {
+        return linePaint;
     }
 
-    public void setPaint(Paint paint) {
-        this.paint = paint;
+    public void setLinePaint(Paint linePaint) {
+        this.linePaint = linePaint;
     }
 }

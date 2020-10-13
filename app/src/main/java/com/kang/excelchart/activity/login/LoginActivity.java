@@ -28,10 +28,12 @@ import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.http.I;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.SaveListener;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private TitleView titleView;
@@ -93,55 +95,67 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
 
                 httpUtils.doHttp(() -> {
-                    BmobQuery<_User> eq1 = new BmobQuery<>();
-                    eq1.addWhereEqualTo("username", account);
-                    BmobQuery<_User> eq2 = new BmobQuery<>();
-                    eq2.addWhereEqualTo("password", password);
-
-                    List<BmobQuery<_User>> queries = new ArrayList<>();
-                    queries.add(eq1);
-                    queries.add(eq2);
-
-                    BmobQuery<_User> query = new BmobQuery<>();
-                    query.and(queries);
-
-                    query.findObjects(new FindListener<_User>() {
+                    BmobUser bmobUser = new BmobUser();
+                    bmobUser.setUsername(account);
+                    bmobUser.setPassword(password);
+                    bmobUser.login(new SaveListener<BmobUser>() {
                         @Override
-                        public void done(List<_User> object, BmobException e) {
-                            httpUtils.doHttpResult(e, new HttpUtils.IHttpResult() {
-                                @Override
-                                public void success() {
-                                    if (object.size() != 0) {
-                                        //本地保存账号/密码/用户id
-                                        UserConfig.setLogin(activity, true);
-                                        UserConfig.setUserAccount(activity, account);
-                                        UserConfig.setUserPwd(activity, password);
-                                        UserConfig.setUserId(activity, object.get(0).getObjectId());
-                                        UserConfig.setVip(activity, object.get(0).isVip());
-                                        UserConfig.setEmail(activity, object.get(0).getEmail());
+                        public void done(BmobUser bmobUser, BmobException e) {
+                            if (e == null) {
+                                BmobQuery<_User> eq1 = new BmobQuery<>();
+                                eq1.addWhereEqualTo("username", account);
+                                BmobQuery<_User> eq2 = new BmobQuery<>();
+                                eq2.addWhereEqualTo("password", password);
 
-                                        if (RxTimeTool.string2Milliseconds(object.get(0).getCreatedAt()) / 1000 < 1594300372) {
-                                            userCreateAt = 0;
-                                        } else {
-                                            userCreateAt = 1;
-                                        }
-                                        UserConfig.setCreateAt(activity, userCreateAt);
+                                List<BmobQuery<_User>> queries = new ArrayList<>();
+                                queries.add(eq1);
+                                queries.add(eq2);
 
-                                        RxLogTool.d("user_data:" + object.toString());
-                                        RxActivityTool.skipActivityAndFinish(activity, MainActivity.class);
-                                    } else {
-                                        RxToast.error(getString(R.string.error_account_password));
+                                BmobQuery<_User> query = new BmobQuery<>();
+                                query.and(queries);
+
+                                query.findObjects(new FindListener<_User>() {
+                                    @Override
+                                    public void done(List<_User> object, BmobException e) {
+                                        httpUtils.doHttpResult(e, new HttpUtils.IHttpResult() {
+                                            @Override
+                                            public void success() {
+                                                if (object.size() != 0) {
+                                                    //本地保存账号/密码/用户id
+                                                    UserConfig.setLogin(activity, true);
+                                                    UserConfig.setUserAccount(activity, account);
+                                                    UserConfig.setUserPwd(activity, password);
+                                                    UserConfig.setUserId(activity, object.get(0).getObjectId());
+                                                    UserConfig.setVip(activity, object.get(0).isVip());
+                                                    UserConfig.setEmail(activity, object.get(0).getEmail());
+
+                                                    if (RxTimeTool.string2Milliseconds(object.get(0).getCreatedAt()) / 1000 < 1594300372) {
+                                                        userCreateAt = 0;
+                                                    } else {
+                                                        userCreateAt = 1;
+                                                    }
+                                                    UserConfig.setCreateAt(activity, userCreateAt);
+
+                                                    RxLogTool.d("user_data:" + object.toString());
+                                                    RxActivityTool.skipActivityAndFinish(activity, MainActivity.class);
+                                                } else {
+                                                    RxToast.error(getString(R.string.error_account_password));
+                                                }
+                                                RxLogTool.d("查询结果:" + object.size() + "");
+                                            }
+
+                                            @Override
+                                            public void failure() {
+
+                                            }
+                                        });
                                     }
-                                    RxLogTool.d("查询结果:" + object.size() + "");
-                                }
-
-                                @Override
-                                public void failure() {
-
-                                }
-                            });
+                                });
+                            }
                         }
                     });
+
+
                 });
 
                 break;

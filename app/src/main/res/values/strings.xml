@@ -16,6 +16,7 @@
     <string name="add_line_bottom">下方插入一行</string>
     <string name="add_line_right">右边插入一列</string>
     <string name="merge_cell">合并单元格</string>
+    <string name="hint_unlock_cell">请先解开合并的单元格</string>
     <string name="add_line_left">左边插入一列</string>
     <string name="add_line_top">上方插入一行</string>
     <string name="delete_line">删除一行</string>

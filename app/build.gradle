@@ -37,7 +37,15 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
+
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -89,4 +97,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     //通用 popup
     implementation "com.github.razerdp:BasePopup:2.2.2.2"
+
+    //穿山甲广告
+    implementation(name: 'open_ad_sdk', ext: 'aar');
+
 }

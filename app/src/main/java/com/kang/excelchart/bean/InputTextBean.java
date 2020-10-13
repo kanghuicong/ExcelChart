@@ -1,9 +1,11 @@
 package com.kang.excelchart.bean;
 
+import android.graphics.Paint;
 import android.text.TextPaint;
 
 import com.kang.excelchart.config.BaseConfig;
 import com.kang.excelchart.config.TextPaintConfig;
+import com.kang.excelchart.utils.TextPaintUtils;
 
 /**
  * 类描述：
@@ -12,8 +14,10 @@ public class InputTextBean {
 
     private int inputX;
     private int inputY;
+
     //    private String content;
     private TextPaint textPaint;
+    private Paint bgPaint= new Paint();
 //    private int backgroundColor = TextPaintConfig.defaultBackgroundColor;
     private ChartBean chartBean;
     private ChartBean.TdTextAttributeModelBean tdTextAttributeModelBean;
@@ -27,8 +31,18 @@ public class InputTextBean {
         this.inputY = inputY;
         this.chartBean = chartBean;
         this.textPaint = textPaint;
+        if (chartBean==null) this.bgPaint.setColor(0xFFFFFFFF);
+        else this.bgPaint.setColor(TextPaintUtils.hexToColor(chartBean.getTdBackgroundColorStr()));
         this.tdTextAttributeModelBean = tdTextAttributeModelBean;
 //        this.content = content;
+    }
+
+    public Paint getBgPaint() {
+        return bgPaint;
+    }
+
+    public void setBgPaint(Paint bgPaint) {
+        this.bgPaint = bgPaint;
     }
 
     public ChartBean.TdTextAttributeModelBean getTdTextAttributeModelBean() {
@@ -44,6 +58,7 @@ public class InputTextBean {
     }
 
     public void setChartBean(ChartBean chartBean) {
+        this.bgPaint.setColor(TextPaintUtils.hexToColor(chartBean.getTdBackgroundColorStr()));
         this.chartBean = chartBean;
     }
 

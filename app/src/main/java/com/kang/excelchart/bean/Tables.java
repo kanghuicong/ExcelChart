@@ -9,8 +9,8 @@ import cn.bmob.v3.BmobObject;
 public class Tables extends BmobObject {
     private String wordStr;
     private int type;
-    private long taUpdateTime;
-    private long taCreateTime;
+    private String taUpdateTime;
+    private String taCreateTime;
     private String name;
     private boolean isColl;
     private String fileId;
@@ -41,19 +41,19 @@ public class Tables extends BmobObject {
         this.type = type;
     }
 
-    public long getTaUpdateTime() {
+    public String getTaUpdateTime() {
         return taUpdateTime;
     }
 
-    public void setTaUpdateTime(long taUpdateTime) {
+    public void setTaUpdateTime(String taUpdateTime) {
         this.taUpdateTime = taUpdateTime;
     }
 
-    public long getTaCreateTime() {
+    public String getTaCreateTime() {
         return taCreateTime;
     }
 
-    public void setTaCreateTime(long taCreateTime) {
+    public void setTaCreateTime(String taCreateTime) {
         this.taCreateTime = taCreateTime;
     }
 

@@ -88,6 +88,13 @@ public class BaseConfig {
         return count;
     }
 
+    public static int[] getArr(String str){
+        String arrStr = str.substring(1,str.length()-1);
+        String[] splitArr= arrStr.split(",");
+        int[] aa={Integer.valueOf(splitArr[0].trim()),Integer.valueOf(splitArr[1].trim())};
+        return aa;
+    }
+
     public static String getTableName(Context context) {
         switch (UserConfig.getCreateAt(context)) {
             case 1:
@@ -117,9 +124,11 @@ public class BaseConfig {
     public static List<ChartBean> getChartList(List<InputTextBean> list) {
         List<ChartBean> chartBeanList = new ArrayList<>();
         for (InputTextBean inputTextBean : list) {
-
-            ChartBean chartBean = inputTextBean.getChartBean();
-            chartBeanList.add(chartBean);
+            if(inputTextBean==null)chartBeanList.add(null);
+            else {
+                ChartBean chartBean = inputTextBean.getChartBean();
+                chartBeanList.add(chartBean);
+            }
         }
         return chartBeanList;
 

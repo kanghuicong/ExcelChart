@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.alibaba.fastjson.JSON;
@@ -25,6 +26,7 @@ import com.kang.excelchart.utils.TextEmptyUtils;
 import com.kang.excelchart.utils.TextPaintUtils;
 import com.vondear.rxtool.RxImageTool;
 import com.vondear.rxtool.RxLogTool;
+import com.vondear.rxtool.view.RxToast;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -61,6 +63,8 @@ public class ChartView extends View {
     public final int minCellX = 200;
     //单元格最小高度
     public final int minCellY = 80;
+    //合并单元格的集合
+    List<MergeBean> mergeList = new ArrayList<>();
 
     private HVScrollView scrollView;
     //画笔
@@ -82,8 +86,6 @@ public class ChartView extends View {
     public float[] moveCircleTop = {0, 0};
     public float[] moveCircleBottom = {0, 0};
 
-    //是否合并
-    public boolean isMerge = false;
     //输入的文字集合，包括左上角和内容
     private List<InputTextBean> inputTextList = new ArrayList<>();
 
@@ -122,6 +124,7 @@ public class ChartView extends View {
         invalidate();
     }
 
+    //初始化config
     public void initConfig() {
         paintConfig = new PaintConfig();
 
@@ -129,11 +132,10 @@ public class ChartView extends View {
         topBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.merga);
         bitmapHeight = topBitmap.getHeight();
         bitmapWidth = leftBitmap.getWidth();
-
-//        barHeight = RxBarTool.getStatusBarHeight(context);
     }
 
 
+    //初始化数据
     public void init() {
 
         heightNum = height.size();
@@ -192,13 +194,21 @@ public class ChartView extends View {
             for (MergeBean mergeBean : mergeList) {
                 //清除（覆盖）单元格内的x轴线条
                 for (int i = mergeBean.getTopCell()[0] + 1; i < mergeBean.getBottomCell()[0]; i++) {
-                    canvas.drawLine(pointX[i], pointY[mergeBean.getTopCell()[1]], pointX[i], pointY[mergeBean.getBottomCell()[1]], mergeBean.getPaint());
+                    canvas.drawLine(pointX[i], pointY[mergeBean.getTopCell()[1]], pointX[i], pointY[mergeBean.getBottomCell()[1]], mergeBean.getLinePaint());
                 }
                 //清除（覆盖）单元格内的y轴线条
                 for (int i = mergeBean.getTopCell()[1] + 1; i < mergeBean.getBottomCell()[1]; i++) {
-                    canvas.drawLine(pointY[mergeBean.getTopCell()[0]], pointY[i], pointY[mergeBean.getBottomCell()[0]], pointY[i], mergeBean.getPaint());
+                    canvas.drawLine(pointX[mergeBean.getTopCell()[0]], pointY[i], pointX[mergeBean.getBottomCell()[0]], pointY[i], mergeBean.getLinePaint());
                 }
+
+                canvas.drawRect(pointX[mergeBean.getTopCell()[0]] + PaintConfig.lineWidth / 2,
+                        pointY[mergeBean.getTopCell()[1]] + PaintConfig.lineWidth / 2,
+                        pointX[mergeBean.getBottomCell()[0]] - PaintConfig.lineWidth / 2,
+                        pointY[mergeBean.getBottomCell()[1]] - PaintConfig.lineWidth / 2,
+                        mergeBean.getInputTextBean().getBgPaint());
+
             }
+
         }
 
         //绘制文字
@@ -252,15 +262,23 @@ public class ChartView extends View {
             //单元格背景
             //不是默认的背景色才进行绘制
 
-            if (!inputTextBean.getChartBean().getTdBackgroundColorStr().equals(TextPaintConfig.defaultBackgroundColorStr)) {
-                float startXbg = pointX[inputTextBean.getInputX()];
-                float endXbg = pointX[inputTextBean.getInputX() + 1];
-                float startYbg = pointY[inputTextBean.getInputY()];
-                float endYbg = pointY[inputTextBean.getInputY() + 1];
+            MergeBean mergeBean = checkMerge(inputTextBean.getInputX(), inputTextBean.getInputY());
+            if (mergeBean == null) {
+                if (!inputTextBean.getChartBean().getTdBackgroundColorStr().equals(TextPaintConfig.defaultBackgroundColorStr)) {
 
-                Paint p = new Paint();
-                p.setColor(TextPaintUtils.hexToColor(inputTextBean.getChartBean().getTdBackgroundColorStr()));
-                canvas.drawRect(startXbg + PaintConfig.lineWidth / 2, startYbg + PaintConfig.lineWidth / 2, endXbg - PaintConfig.lineWidth / 2, endYbg - PaintConfig.lineWidth / 2, p);
+                    float startXbg = pointX[inputTextBean.getInputX()];
+                    float endXbg = pointX[inputTextBean.getInputX() + 1];
+                    float startYbg = pointY[inputTextBean.getInputY()];
+                    float endYbg = pointY[inputTextBean.getInputY() + 1];
+                    //inputTextBean不属于mergeList时绘制背景
+//                    if (mergeBean == null) {
+                    canvas.drawRect(startXbg + PaintConfig.lineWidth / 2,
+                            startYbg + PaintConfig.lineWidth / 2,
+                            endXbg - PaintConfig.lineWidth / 2,
+                            endYbg - PaintConfig.lineWidth / 2,
+                            inputTextBean.getBgPaint());
+//                    }
+                }
             }
 
             // 单行绘制 （先计算出基线和到文字中间的距离,mPaint不是TextPaint）
@@ -274,42 +292,67 @@ public class ChartView extends View {
             //绘制起点
             float startL;
             float startT = pointY[inputTextBean.getInputY()] + singleLineHeight / 2 + offset + chartPadding;
+            //最大宽度
+            float maxWidth = 0;
             //文字的TextAlign会影响起点X坐标
-            switch (inputTextBean.getTextPaint().getTextAlign()) {
-                case RIGHT:
-                    startL = pointX[inputTextBean.getInputX() + 1] - chartPadding;
-                    break;
-                case LEFT:
-                    startL = pointX[inputTextBean.getInputX()] + chartPadding;
-                    break;
-                default:
-                    startL = pointX[inputTextBean.getInputX()] + (pointX[inputTextBean.getInputX() + 1] - pointX[inputTextBean.getInputX()]) / 2;
-                    break;
-            }
-
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < textChars.length; i++) {
-                float v = inputTextBean.getTextPaint().measureText(textChars[i] + "");
-
-                if (ww + v < width.get(inputTextBean.getInputX()) * multiple - chartPadding * 2 && textChars[i] != '\n') {
-                    //未满一行
-                    sb.append(textChars[i]);
-                    ww += v;
-                } else {
-                    //满一行
-                    canvas.drawText(sb.toString(), startL, startT, inputTextBean.getTextPaint());
-                    //新的一行起始点startT递增
-                    startT += singleLineHeight + 0.0f;
-                    //重新加入新一行的文字
-                    sb = new StringBuilder();
-                    ww = 0.0f;
-                    ww += v;
-                    sb.append(textChars[i]);
+            if (BaseConfig.getArr(inputTextBean.getChartBean().getTdSizeStr())[0] == 1 &&
+                    BaseConfig.getArr(inputTextBean.getChartBean().getTdSizeStr())[1] == 1) {
+                switch (inputTextBean.getTextPaint().getTextAlign()) {
+                    case RIGHT:
+                        startL = pointX[inputTextBean.getInputX() + 1] - chartPadding;
+                        break;
+                    case LEFT:
+                        startL = pointX[inputTextBean.getInputX()] + chartPadding;
+                        break;
+                    default:
+                        startL = pointX[inputTextBean.getInputX()] + (pointX[inputTextBean.getInputX() + 1] - pointX[inputTextBean.getInputX()]) / 2;
+                        break;
+                }
+                maxWidth = width.get(inputTextBean.getInputX());
+            } else {
+                switch (inputTextBean.getTextPaint().getTextAlign()) {
+                    case RIGHT:
+                        startL = pointX[inputTextBean.getInputX() + BaseConfig.getArr(inputTextBean.getChartBean().getTdSizeStr())[0]] - chartPadding;
+                        break;
+                    case LEFT:
+                        startL = pointX[inputTextBean.getInputX()] + chartPadding;
+                        break;
+                    default:
+                        startL = pointX[inputTextBean.getInputX()] + (pointX[inputTextBean.getInputX() + BaseConfig.getArr(inputTextBean.getChartBean().getTdSizeStr())[0]] - pointX[inputTextBean.getInputX()]) / 2;
+                        break;
+                }
+                for (int i = 0; i < BaseConfig.getArr(inputTextBean.getChartBean().getTdSizeStr())[0]; i++) {
+                    maxWidth = maxWidth + width.get(inputTextBean.getInputX() + i);
                 }
             }
 
-            if (sb.toString().length() > 0) {
-                canvas.drawText(sb.toString(), startL, startT, inputTextBean.getTextPaint());
+            if (mergeBean != null && (mergeBean.getTopCell()[0] != inputTextBean.getInputX() || mergeBean.getTopCell()[1] != inputTextBean.getInputY())) {
+                //被覆盖的单元格，不绘制文字
+            } else {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < textChars.length; i++) {
+                    float v = inputTextBean.getTextPaint().measureText(textChars[i] + "");
+
+                    if (ww + v < maxWidth * multiple - chartPadding * 2 && textChars[i] != '\n') {
+                        //未满一行
+                        sb.append(textChars[i]);
+                        ww += v;
+                    } else {
+                        //满一行
+                        canvas.drawText(sb.toString(), startL, startT, inputTextBean.getTextPaint());
+                        //新的一行起始点startT递增
+                        startT += singleLineHeight + 0.0f;
+                        //重新加入新一行的文字
+                        sb = new StringBuilder();
+                        ww = 0.0f;
+                        ww += v;
+                        sb.append(textChars[i]);
+                    }
+                }
+
+                if (sb.toString().length() > 0) {
+                    canvas.drawText(sb.toString(), startL, startT, inputTextBean.getTextPaint());
+                }
             }
         }
 
@@ -436,18 +479,54 @@ public class ChartView extends View {
                         case BaseConfig.BOTTOM_CIRCLE:
                             for (int i = 0; i < pointX.length; i++) {
                                 if (x >= pointX[i]) {
-                                    if (downType == BaseConfig.TOP_CIRCLE)
-                                        selectTopCell[0] = i;
-                                    else {
-                                        selectBottomCell[0] = i + 1 == pointX.length ? i : i + 1;
+                                    if (downType == BaseConfig.TOP_CIRCLE) {
+                                        //左上角移到了右下角右边
+                                        if (x >= pointX[selectBottomCell[0]]) {
+                                            selectTopCell[0] = selectBottomCell[0] - 1;
+                                        } else {
+                                            selectTopCell[0] = i;
+                                        }
+                                    } else {
+                                        //右下角移到了左上角左边
+                                        if (x <= pointX[selectTopCell[0]]) {
+                                            selectBottomCell[0] = selectTopCell[0] + 1;
+                                        } else {
+                                            selectBottomCell[0] = i + 1 == pointX.length ? i : i + 1;
+                                        }
                                     }
                                 }
                             }
                             for (int i = 0; i < pointY.length; i++) {
                                 if (y >= pointY[i]) {
-                                    if (downType == BaseConfig.TOP_CIRCLE)
-                                        selectTopCell[1] = i;
-                                    else selectBottomCell[1] = i + 1 == pointY.length ? i : i + 1;
+                                    //左上角移到了右下角下边
+                                    if (downType == BaseConfig.TOP_CIRCLE) {
+                                        if (y >= pointY[selectBottomCell[1]]) {
+                                            selectTopCell[1] = selectBottomCell[1] - 1;
+                                        } else {
+                                            selectTopCell[1] = i;
+                                        }
+                                    } else {
+                                        //右下角移到了左上角上边
+                                        if (y <= pointY[selectTopCell[1]]) {
+                                            selectBottomCell[1] = selectTopCell[1] + 1;
+                                        } else {
+                                            selectBottomCell[1] = i + 1 == pointY.length ? i : i + 1;
+                                        }
+                                    }
+                                }
+                            }
+                            //如果位置在MergeList里
+                            if (downType == BaseConfig.TOP_CIRCLE) {
+                                MergeBean mergeBean = checkMerge(selectTopCell[0], selectTopCell[1]);
+                                if (mergeBean != null) {
+                                    selectTopCell[0] = mergeBean.getTopCell()[0];
+                                    selectTopCell[1] = mergeBean.getTopCell()[1];
+                                }
+                            } else {
+                                MergeBean mergeBean = checkMerge(selectBottomCell[0], selectBottomCell[1]);
+                                if (mergeBean != null) {
+                                    selectBottomCell[0] = mergeBean.getBottomCell()[0];
+                                    selectBottomCell[1] = mergeBean.getBottomCell()[1];
                                 }
                             }
                             break;
@@ -490,13 +569,14 @@ public class ChartView extends View {
         }
         int clickX = selectTopCell[0];
         int clickY = selectTopCell[1];
-        //点击位置已经是选中位置
-
+        //点击位置已经是当前选中位置
         if (selectTopCell[0] != -1 && selectTopCell[1] != -1 && selectBottomCell[0] != -1 && selectBottomCell[1] != -1 &&
                 x < pointX[selectBottomCell[0]] && x > pointX[selectTopCell[0]] &&
                 y < pointY[selectBottomCell[1]] && y > pointY[selectTopCell[1]]) {
+            selectInputTextBean();
             return;
         }
+
 
         for (int i = 0; i < pointX.length; i++) {
             if (x > pointX[i]) {
@@ -522,10 +602,19 @@ public class ChartView extends View {
             }
         }
 
-        selectTopCell[0] = clickX;
-        selectTopCell[1] = clickY;
-        selectBottomCell[0] = clickX + 1;
-        selectBottomCell[1] = clickY + 1;
+        //判断点击位置属于mergeList
+        MergeBean mergeBean = checkMerge(clickX, clickY);
+        if (mergeBean == null) {
+            selectTopCell[0] = clickX;
+            selectTopCell[1] = clickY;
+            selectBottomCell[0] = clickX + 1;
+            selectBottomCell[1] = clickY + 1;
+        } else {
+            selectTopCell[0] = mergeBean.getTopCell()[0];
+            selectTopCell[1] = mergeBean.getTopCell()[1];
+            selectBottomCell[0] = mergeBean.getBottomCell()[0];
+            selectBottomCell[1] = mergeBean.getBottomCell()[1];
+        }
 
         moveCircleTop[0] = 0;
         moveCircleTop[1] = 0;
@@ -537,13 +626,15 @@ public class ChartView extends View {
         selectInputTextBean();
     }
 
+    //选择下一个单元格
     public void selectNexCell() {
         if (startPoint[0] == -1 || startPoint[1] == -1) {
             return;
         }
         //说明是最下边的单元格了
-        if (selectTopCell[1] + 1 < pointY.length - 1) {
-            selectTopCell[1] = selectTopCell[1] + 1;
+        if (selectBottomCell[1] < pointY.length - 1) {
+            selectTopCell[1] = selectBottomCell[1];
+            selectBottomCell[1] = selectBottomCell[1] + 1;
             invalidate();
 
             selectInputTextBean();
@@ -629,7 +720,6 @@ public class ChartView extends View {
                 //左边列补足数据
                 for (int i = 0; i < heightNum; i++) {
                     InputTextBean inputTextBean = TextPaintConfig.getInputTextBean(selectTopCell[0], i);
-
                     inputTextList.add(selectTopCell[0] * heightNum + i, inputTextBean);
                 }
                 selectTopCell[0] = selectTopCell[0] + 1;
@@ -637,17 +727,17 @@ public class ChartView extends View {
                 break;
             //右边
             case BaseConfig.ADD_RIGHT:
-                width.add(selectTopCell[0] + 1, width.get(selectTopCell[0]));
-                defaultWidth.add(selectTopCell[0] + 1, width.get(selectTopCell[0]));
+                width.add(selectBottomCell[0], width.get(selectBottomCell[0]-1));
+                defaultWidth.add(selectBottomCell[0], width.get(selectBottomCell[0]-1));
                 for (InputTextBean inputTextBean : inputTextList) {
-                    if (inputTextBean.getInputX() > selectTopCell[0]) {
+                    if (inputTextBean.getInputX() > selectBottomCell[0]-1) {
                         inputTextBean.setInputX(inputTextBean.getInputX() + 1);
                     }
                 }
                 //右边列补足数据
                 for (int i = 0; i < heightNum; i++) {
-                    InputTextBean inputTextBean = TextPaintConfig.getInputTextBean(selectTopCell[0] + 1, i);
-                    inputTextList.add((selectTopCell[0] + 1) * heightNum + i, inputTextBean);
+                    InputTextBean inputTextBean = TextPaintConfig.getInputTextBean(selectBottomCell[0], i);
+                    inputTextList.add((selectBottomCell[0]) * heightNum + i, inputTextBean);
                 }
                 break;
             //上边
@@ -670,18 +760,18 @@ public class ChartView extends View {
                 break;
             //下边
             case BaseConfig.ADD_BOTTOM:
-                height.add(selectTopCell[1] + 1, height.get(selectTopCell[1]));
-                defaultHeight.add(selectTopCell[1] + 1, height.get(selectTopCell[1]));
+                height.add(selectBottomCell[1], height.get(selectBottomCell[1]-1));
+                defaultHeight.add(selectBottomCell[1], height.get(selectBottomCell[1]-1));
                 for (InputTextBean inputTextBean : inputTextList) {
-                    if (inputTextBean.getInputY() > selectTopCell[1]) {
+                    if (inputTextBean.getInputY() > selectBottomCell[1]-1) {
                         inputTextBean.setInputY(inputTextBean.getInputY() + 1);
                     }
                 }
 
                 //下边行补足数据
                 for (int i = 0; i < widthNum; i++) {
-                    InputTextBean inputTextBean = TextPaintConfig.getInputTextBean(i, selectTopCell[1] + 1);
-                    inputTextList.add((selectTopCell[1] + 1) + heightNum * i, inputTextBean);
+                    InputTextBean inputTextBean = TextPaintConfig.getInputTextBean(i, selectBottomCell[1]);
+                    inputTextList.add((selectBottomCell[1]) + heightNum * i, inputTextBean);
                 }
                 break;
             default:
@@ -702,6 +792,20 @@ public class ChartView extends View {
         switch (delete) {
             case BaseConfig.DELETE_LINE:
                 //删除行
+                boolean canDelete = true;
+                for (int i=0;i<widthNum;i++){
+                    MergeBean mergeBean = checkMerge(i,selectTopCell[1]);
+                    if (mergeBean!=null){
+                        canDelete  =false;
+                        break;
+                    }
+                }
+                //如果删除的行存在合并单元格，则取消删除
+                if (!canDelete){
+                    RxToast.normal(context.getString(R.string.hint_unlock_cell));
+                    return;
+                }
+
                 height.remove(selectTopCell[1]);
                 defaultHeight.remove(selectTopCell[1]);
                 //需要删除的InputTextBean
@@ -716,8 +820,9 @@ public class ChartView extends View {
                     if (inputTextBean.getInputY() > selectTopCell[1]) {
                         inputTextBean.setInputY(inputTextBean.getInputY() - 1);
                     }
-
                 }
+
+
                 //删除的行刚好就是同一行时，删除该InputTextBean
                 if (removeLineList.size() != 0) {
                     for (InputTextBean inputTextBean : removeLineList) {
@@ -728,6 +833,20 @@ public class ChartView extends View {
                 break;
             case BaseConfig.DELETE_COLUMN:
                 //删除列
+                boolean canDeleteColumn = true;
+                for (int i=0;i<heightNum;i++){
+                    MergeBean mergeBean = checkMerge(selectTopCell[0],i);
+                    if (mergeBean!=null){
+                        canDeleteColumn  =false;
+                        break;
+                    }
+                }
+                //如果删除的行存在合并单元格，则取消删除
+                if (!canDeleteColumn){
+                    RxToast.normal(context.getString(R.string.hint_unlock_cell));
+                    return;
+                }
+
                 width.remove(selectTopCell[0]);
                 defaultWidth.remove(selectTopCell[0]);
                 //需要删除的InputTextBean
@@ -795,20 +914,19 @@ public class ChartView extends View {
     public void stretchCell(int moveX, int moveY) {
         if (moveX != 0) {
 
-            float moveWidth = width.get(selectTopCell[0]) + moveX / multiple;
-
-            if (moveWidth < defaultWidth.get(selectTopCell[0])) {
-                moveWidth = defaultWidth.get(selectTopCell[0]);
+            float moveWidth = width.get(selectBottomCell[0] - 1) + moveX / multiple;
+            if (moveWidth < defaultWidth.get(selectBottomCell[0] - 1)) {
+                moveWidth = defaultWidth.get(selectBottomCell[0] - 1);
             }
-            width.set(selectTopCell[0], moveWidth);
+            width.set(selectBottomCell[0] - 1, moveWidth);
         }
 
         if (moveY != 0) {
-            float moveHeight = (height.get(selectTopCell[1]) + moveY / multiple);
-            if (moveHeight < defaultHeight.get(selectTopCell[1])) {
-                moveHeight = defaultHeight.get(selectTopCell[1]);
+            float moveHeight = (height.get(selectBottomCell[1] - 1) + moveY / multiple);
+            if (moveHeight < defaultHeight.get(selectBottomCell[1] - 1)) {
+                moveHeight = defaultHeight.get(selectBottomCell[1] - 1);
             }
-            height.set(selectTopCell[1], moveHeight);
+            height.set(selectBottomCell[1] - 1, moveHeight);
         }
     }
 
@@ -1196,9 +1314,19 @@ public class ChartView extends View {
         float ww = 0.0f;
         //行数
         int n = 1;
+
+        MergeBean mergeBean = checkMerge(x, y);
+        float maxWidth = 0;
+        if (mergeBean != null) {
+            for (int i = 0; i < mergeBean.getBottomCell()[0] - mergeBean.getTopCell()[0]; i++) {
+                maxWidth = maxWidth + width.get(x + i);
+            }
+        } else {
+            maxWidth = width.get(x);
+        }
         for (int i = 0; i < textChars.length; i++) {
             float v = textPaint.measureText(textChars[i] + "");
-            if (ww + v < width.get(x) * multiple - chartPadding * 2 && textChars[i] != '\n') {
+            if (ww + v < maxWidth * multiple - chartPadding * 2 && textChars[i] != '\n') {
                 ww += v;
             } else {
                 ww = 0.0f;
@@ -1208,9 +1336,25 @@ public class ChartView extends View {
         }
         float textHeight = paintHeight * n + chartPadding * 2;
         //当文字行数高度大于单元格高度时，则将单元格高度置为文字高度
-        if (textHeight >= height.get(y) * multiple) {
-            height.set(y, textHeight / multiple);
+        float maxHeight = 0;
+        if (mergeBean != null) {
+            for (int i = 0; i < mergeBean.getBottomCell()[1] - mergeBean.getTopCell()[1]; i++) {
+                maxHeight = maxHeight + height.get(x + i);
+            }
+            if (textHeight >= maxHeight * multiple) {
+                float firstHeight = textHeight / multiple;
+                for (int i = mergeBean.getTopCell()[1] + 1; i < mergeBean.getBottomCell()[1]; i++) {
+                    firstHeight = firstHeight - height.get(i);
+                }
+                height.set(y, firstHeight);
+            }
+        } else {
+            maxHeight = height.get(y);
+            if (textHeight >= maxHeight * multiple) {
+                height.set(y, textHeight / multiple);
+            }
         }
+
     }
 
     //统一宽高
@@ -1267,32 +1411,85 @@ public class ChartView extends View {
         isUnifiedWidthHeight = false;
     }
 
-    List<MergeBean> mergeList = new ArrayList<>();
-
     //合并单元格
     public void mergeCard() {
         if (selectTopCell[0] != -1 && selectTopCell[1] != -1 &&
                 selectBottomCell[0] != -1 && selectBottomCell[1] != -1 &&
                 (selectBottomCell[0] - selectTopCell[0] > 1 || selectBottomCell[1] - selectTopCell[0] > 1)) {
-            return;
+
+            //直接给mTopCell赋值selectTopCell会导致两个数据公用同一个内存地址
+            int x1 = selectTopCell[0];
+            int y1 = selectTopCell[1];
+            int x2 = selectBottomCell[0];
+            int y2 = selectBottomCell[1];
+            int[] mTopCell = {x1, y1};
+            int[] mBottomCell = {x2, y2};
+
+            MergeBean mergeBean = new MergeBean();
+            mergeBean.setTopCell(mTopCell);
+            mergeBean.setBottomCell(mBottomCell);
+
+            for (int i = 0; i < inputTextList.size(); i++) {
+                InputTextBean inputTextBean = inputTextList.get(i);
+                if (inputTextBean.getInputX() == selectTopCell[0] && inputTextBean.getInputY() == selectTopCell[1]) {
+                    //与PaintConfig里的linePaint基本一致，除了颜色外
+                    Paint linePaint = new Paint();
+                    linePaint.setColor(TextPaintUtils.hexToColor(inputTextBean.getChartBean().getTdBackgroundColorStr()));
+                    linePaint.setAntiAlias(true);
+                    linePaint.setStrokeWidth(PaintConfig.lineWidth);
+                    linePaint.setStyle(Paint.Style.STROKE);
+                    mergeBean.setLinePaint(linePaint);
+
+                    Paint bgPaint = new Paint();
+                    bgPaint.setColor(TextPaintUtils.hexToColor(inputTextBean.getChartBean().getTdBackgroundColorStr()));
+//                    inputTextBean.getChartBean().getTdSizeStr()[0] = x2 - x1;
+//                    inputTextBean.getChartBean().getTdSizeStr()[1] = y2 - y1;
+                    inputTextBean.getChartBean().setTdSizeStr("{" + (x2 - x1) + "," + (y2 - y1) + "}");
+                    mergeBean.setInputTextBean(inputTextBean);
+                    break;
+                } else {
+                    if (inputTextBean.getInputX() >= selectTopCell[0] &&
+                            inputTextBean.getInputX() <= selectBottomCell[0] &&
+                            inputTextBean.getInputY() >= selectTopCell[1] &&
+                            inputTextBean.getInputY() <= selectBottomCell[1]) {
+                        //将被合并的单元格设置为初始的inputTextBean
+                        InputTextBean inputTextBean2 = TextPaintConfig.getInputTextBean(inputTextBean.getInputX(), inputTextBean.getInputY());
+                        inputTextList.set(i, inputTextBean2);
+                    }
+                }
+            }
+            //剔除被覆盖的MergeBean
+            for (MergeBean mergeBean1 : mergeList) {
+                if (mergeBean1.getTopCell()[0] >= mergeBean.getTopCell()[0] &&
+                        mergeBean1.getTopCell()[1] >= mergeBean.getTopCell()[1] &&
+                        mergeBean1.getBottomCell()[0] <= mergeBean.getBottomCell()[0] &&
+                        mergeBean1.getBottomCell()[1] <= mergeBean.getBottomCell()[1]) {
+                    mergeList.remove(mergeBean1);
+                }
+            }
+
+            mergeList.add(mergeBean);
+
+            init();
+            invalidate();
         }
-        MergeBean mergeBean = new MergeBean();
-        mergeBean.setTopCell(selectTopCell);
-        mergeBean.setBottomCell(selectBottomCell);
-        for (InputTextBean inputTextBean : inputTextList) {
-            if (inputTextBean.getInputX() == selectTopCell[0] && inputTextBean.getInputY() == selectTopCell[1]) {
-                //与PaintConfig里的linePaint基本一致，除了颜色外
-                Paint linePaint = new Paint();
-                linePaint.setColor(TextPaintUtils.hexToColor(inputTextBean.getChartBean().getTdBackgroundColorStr()));
-                linePaint.setAntiAlias(true);
-                linePaint.setStrokeWidth(PaintConfig.lineWidth);
-                linePaint.setStyle(Paint.Style.STROKE);
-                mergeBean.setPaint(linePaint);
-                break;
+    }
+
+    //判断当前点击是否属于mergeList
+    private MergeBean checkMerge(int x, int y) {
+        if (mergeList != null && mergeList.size() != 0) {
+            for (MergeBean mergeBean : mergeList) {
+                if (x >= mergeBean.getTopCell()[0] &&
+                        y >= mergeBean.getTopCell()[1] &&
+                        x < mergeBean.getBottomCell()[0] &&
+                        y < mergeBean.getBottomCell()[1]) {
+                    return mergeBean;
+                }
             }
         }
-        mergeList.add(mergeBean);
+        return null;
     }
+
 
     /*----------------------------------------------------get--------------------------------------------------------*/
     //获取当前选择的单元格InputTextBean

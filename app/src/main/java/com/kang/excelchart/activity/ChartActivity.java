@@ -15,11 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.kang.excelchart.bean.ChartBean;
 import com.kang.excelchart.bean.ChartInfoBean;
 import com.kang.excelchart.bean.Tables;
 import com.kang.excelchart.bean.Tables_1;
+import com.kang.excelchart.config.PaintConfig;
 import com.kang.excelchart.config.TextPaintConfig;
 import com.kang.excelchart.config.UserConfig;
 import com.kang.excelchart.custom.view.ChartView;
@@ -48,7 +50,9 @@ import com.vondear.rxtool.RxLogTool;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -184,7 +188,7 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
 
                     lcs.add(inputTextBean);
 
-                    RxLogTool.d("chart:-------" + i + "----" + chartBean.toString());
+//                    RxLogTool.d("chart:-------" + i + "----" + chartBean.toString());
                 }
 
                 chartView.setChartData(chartInfoBean.getWidth_list(), chartInfoBean.getHeight_list(), lcs);
@@ -207,25 +211,22 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
         //ChartView
         chartView.setScrollView(scrollView);
 
-        chartView.setISelectChart(new ChartView.ISelectChart() {
-            @Override
-            public void selectChart(InputTextBean inputTextBean) {
-
-                if (llChart.getVisibility() != View.VISIBLE) {
-                    llChart.setVisibility(View.VISIBLE);
-                    RxKeyboardTool.showSoftInput(activity, etContent);
-                }
-
-                etContent.setText(inputTextBean.getChartBean().getTdText());
-                etContent.setSelection(inputTextBean.getChartBean().getTdText().length());
-
-                //通知各个fragment，选中框已改变
-                EventBus.getDefault().postSticky(inputTextBean);
-
+        chartView.setISelectChart((inputTextBean) -> {
+            if (llChart.getVisibility() != View.VISIBLE) {
+                llChart.setVisibility(View.VISIBLE);
+                RxKeyboardTool.showSoftInput(activity, etContent);
             }
+
+            etContent.setText(inputTextBean.getChartBean().getTdText());
+            etContent.setSelection(inputTextBean.getChartBean().getTdText().length());
+
+            //通知各个fragment，选中框已改变
+            EventBus.getDefault().postSticky(inputTextBean);
         });
 
-
+        titleView.setClickFinishLister((view) -> {
+            onBackPressed();
+        });
     }
 
     private List<Fragment> fragmentList = new ArrayList<>();
@@ -345,52 +346,91 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
 
             if (chartView != null) {
 
-
 //                Tables_1 p2 = BaseConfig.getTableClass(this, null);
                 Tables_1 p2 = new Tables_1();
-                String str = JSON.toJSONString(BaseConfig.getChartList(chartView.getInputTextList()));
-                chartInfoBean.setChart_list(str);
+//                for (int i = 0; i < chartView.getInputTextList().size(); i++) {
+//                    InputTextBean inputTextBean = chartView.getInputTextList().get(i);
+//                    if (inputTextBean.getChartBean().getTdText().equals("") && inputTextBean.getChartBean().getTdBackgroundColorStr().equals(TextPaintConfig.defaultBackgroundColorStr)) {
+//                        RxLogTool.i("----" + i + "-----");
+//                        chartView.getInputTextList().set(i, null);
+//                    }
+//                }
+
+                List<String> list = new ArrayList<>();
+                for (InputTextBean inputTextBean : chartView.getInputTextList()) {
+//                    if (inputTextBean.getChartBean().getTdText().equals("") && inputTextBean.getChartBean().getTdBackgroundColorStr().equals(TextPaintConfig.defaultBackgroundColorStr)) {
+//                        inputTextBean=null;
+//                    }else {
+                    Map map = new HashMap();
+                    if (!inputTextBean.getChartBean().getTdText().equals(""))
+                        map.put("tx", inputTextBean.getChartBean().getTdText());
+                    if (inputTextBean.getChartBean().isFx()) map.put("if", true);
+                    if (inputTextBean.getChartBean().isBottomBorder()) map.put("b", true);
+                    if (!inputTextBean.getChartBean().getFxStr().equals("js"))
+                        map.put("fx", inputTextBean.getChartBean().getFxStr());
+                    if (inputTextBean.getChartBean().isLeftBorder()) map.put("l", true);
+                    if (inputTextBean.getChartBean().getChartOrientation() != 1)
+                        map.put("o", inputTextBean.getChartBean().getChartOrientation());
+                    if (inputTextBean.getChartBean().getChart() != 1)
+                        map.put("ic", inputTextBean.getChartBean().getChart());
+                    if (!inputTextBean.getChartBean().getTdSizeStr().equals("{1,1}"))
+                        map.put("s", inputTextBean.getChartBean().getTdSizeStr());
+                    if (inputTextBean.getChartBean().isRightBorder()) map.put("r", true);
+                    if (!inputTextBean.getChartBean().getTdBorderColorStr().equals(PaintConfig.defaultLineColor))
+                        map.put("boc", inputTextBean.getChartBean().getTdBorderColorStr());
+                    if (inputTextBean.getChartBean().getChartTheme() != 1)
+                        map.put("k", inputTextBean.getChartBean().getChartTheme());
+                    if (!inputTextBean.getChartBean().getTdBackgroundColorStr().equals(TextPaintConfig.defaultBackgroundColorStr))
+                        map.put("bc", inputTextBean.getChartBean().getTdBackgroundColorStr());
+                    if (inputTextBean.getChartBean().isFill()) map.put("f", true);
+                    if (inputTextBean.getChartBean().isTopBorder()) map.put("t", true);
+
+                    map.put("m", inputTextBean.getChartBean().getTdTextAttributeModel());
+//                    }
+                    String json = JSON.toJSONString(map);
+                    list.add(json);
+
+                }
+                RxLogTool.d("list转换数据：" + list.toString());
+
+//                String str = JSON.toJSONString(BaseConfig.getChartList(chartView.getInputTextList()));
+                chartInfoBean.setChart_list(list.toString());
                 chartInfoBean.setHeight_list(chartView.getHeightList());
                 chartInfoBean.setWidth_list(chartView.getWidthList());
                 chartInfoBean.setHeight_num(chartView.getHeightList().size());
                 chartInfoBean.setWidth_num(chartView.getWidthList().size());
 
-                RxLogTool.d("chart转换数据："+JSON.toJSONString(chartInfoBean));
 
+                RxLogTool.d("chart转换数据：" + JSON.toJSONString(chartInfoBean));
 
-//                if (table != null && !TextEmptyUtils.isEmpty(table.getSourceData())) {
-//                    //已存在的表格——>更新
-//                    p2.setWordStr(JSON.toJSONString(chartInfoBean));
-//                    p2.update(this.table.getObjectId(), new UpdateListener() {
-//
-//                        @Override
-//                        public void done(BmobException e) {
-//                            if (e == null) {
-//                                RxLogTool.d("更新成功！");
-//                            } else {
-//                                RxLogTool.d("更新失败！");
-//                            }
-//                        }
-//
-//                    });
-//                } else {
-//                    //新表格——>新增
-//                    p2.setWordStr(JSON.toJSONString(chartInfoBean));
-//                    p2.save(new SaveListener<String>() {
-//                        @Override
-//                        public void done(String objectId, BmobException e) {
-//                            if (e == null) {
-//                                RxLogTool.d("新增成功！");
-//                            } else {
-//                                RxLogTool.d("新增失败！");
-//                            }
-//                        }
-//                    });
-//                }
+                if (table != null && !TextEmptyUtils.isEmpty(table.getSourceData())) {
+                    //已存在的表格——>更新
+                    p2.setWordStr(JSON.toJSONString(chartInfoBean));
+                    p2.update(this.table.getObjectId(), new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                RxLogTool.d("更新成功！");
+                            } else {
+                                RxLogTool.d("更新失败！----"+e.toString());
+                            }
+                        }
 
-
-            } else {
-
+                    });
+                } else {
+                    //新表格——>新增
+                    p2.setWordStr(JSON.toJSONString(chartInfoBean));
+                    p2.save(new SaveListener<String>() {
+                        @Override
+                        public void done(String objectId, BmobException e) {
+                            if (e == null) {
+                                RxLogTool.d("新增成功！");
+                            } else {
+                                RxLogTool.d("新增失败！");
+                            }
+                        }
+                    });
+                }
             }
 
             super.onBackPressed();

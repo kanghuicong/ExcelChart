@@ -17,7 +17,12 @@ import androidx.multidex.MultiDexApplication;
 
 import cn.bmob.v3.Bmob;
 
+import com.bytedance.sdk.openadsdk.TTAdConfig;
+import com.bytedance.sdk.openadsdk.TTAdConstant;
+import com.bytedance.sdk.openadsdk.TTAdSdk;
+import com.kang.excelchart.R;
 import com.kang.excelchart.config.UserConfig;
+import com.kang.excelchart.utils.TTAdManagerHolder;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -101,6 +106,9 @@ public class BaseApplication extends MultiDexApplication implements Application.
         }
 
         Bmob.initialize(this, "80c24431e79606ad4cac39e4b50d0ec9");
+
+
+        TTAdManagerHolder.init(this);
 
     }
 

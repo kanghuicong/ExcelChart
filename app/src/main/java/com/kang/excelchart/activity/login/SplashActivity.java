@@ -14,6 +14,7 @@ import com.kang.excelchart.MainActivity;
 import com.kang.excelchart.R;
 import com.kang.excelchart.config.UserConfig;
 import com.kang.excelchart.utils.LanguageUtils;
+import com.kang.excelchart.utils.TTAdManagerHolder;
 import com.vondear.rxtool.RxActivityTool;
 
 /**
@@ -36,6 +37,7 @@ public class SplashActivity extends Activity {
                 LanguageUtils.languageVERSION_N(this, language);
             }
         }
+        TTAdManagerHolder.get().requestPermissionIfNecessary(SplashActivity.this);
 
         //可设置动画（目前无动画）
         AlphaAnimation animation = new AlphaAnimation(1.0f, 1.0f);
@@ -54,15 +56,16 @@ public class SplashActivity extends Activity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 setTheme(R.style.AppTheme);
-                //本地未保存用户数据，跳转到登陆页面
-                if (!UserConfig.hasLogin(SplashActivity.this) ||
-                        UserConfig.getUserAccount(SplashActivity.this).isEmpty()) {
-                    RxActivityTool.skipActivity(SplashActivity.this, LoginActivity.class);
-                } else {
-                    //进入首页
-                    RxActivityTool.skipActivity(SplashActivity.this, MainActivity.class);
-                }
+//                //本地未保存用户数据，跳转到登陆页面
+//                if (!UserConfig.hasLogin(SplashActivity.this) ||
+//                        UserConfig.getUserAccount(SplashActivity.this).isEmpty()) {
+//                    RxActivityTool.skipActivity(SplashActivity.this, LoginActivity.class);
+//                } else {
+//                    //进入首页
+//                    RxActivityTool.skipActivity(SplashActivity.this, MainActivity.class);
+//                }
 
+                RxActivityTool.skipActivity(SplashActivity.this, AdvActivity.class);
                 finish();
             }
         });

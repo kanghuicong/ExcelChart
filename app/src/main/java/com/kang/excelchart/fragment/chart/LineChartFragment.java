@@ -59,6 +59,13 @@ public class LineChartFragment extends BaseChartFragment {
                 chartView.addChart(BaseConfig.ADD_RIGHT);
             }
         });
+        mergeCell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chartView.mergeCard();
+            }
+        });
+
         addTop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
