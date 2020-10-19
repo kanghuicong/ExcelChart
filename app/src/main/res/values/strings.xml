@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">ExcelChart</string>
+    <string name="wechat_id">wechat</string>
 
     <string name="home">首页</string>
     <string name="recently">最近</string>

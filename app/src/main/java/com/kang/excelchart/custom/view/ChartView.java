@@ -1042,6 +1042,8 @@ public class ChartView extends View {
                 tdTextAttributeModelBean.setFontName("PingFangSC-Regular");
             } else if (Typeface.SERIF.equals(typeface)) {
                 tdTextAttributeModelBean.setFontName("PingFangSC-Regular");
+            }else {
+                tdTextAttributeModelBean.setFontName("PingFangSC-Regular");
             }
         });
     }

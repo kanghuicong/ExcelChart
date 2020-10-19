@@ -37,13 +37,13 @@ public class ChartBean {
     @JSONField(name = "b")
     private boolean isBottomBorder = false;//下边框
     @JSONField(name = "fx")
-    private String fxStr = "js";//计算公式
+    private String fxStr = "";//计算公式
     @JSONField(name = "l")
     private boolean isLeftBorder = false;//左边框
     @JSONField(name = "o")
-    private int chartOrientation = 1;//图表对齐方式
+    private int chartOrientation = 0;//图表对齐方式
     @JSONField(name = "ic")
-    private int chart = 1;//是否图表
+    private int chart = 0;//是否图表
     @JSONField(name = "s")
     private String tdSizeStr = "{1,1}";//单元格size,没合并的都是1.1
     @JSONField(name = "tx")
@@ -53,7 +53,7 @@ public class ChartBean {
     @JSONField(name = "boc")
     private String tdBorderColorStr = PaintConfig.defaultLineColor;//边框颜色
     @JSONField(name = "k")
-    private int chartTheme = 1;//图标主题
+    private int chartTheme = 0;//图标主题
     @JSONField(name = "j")
     private String chartTitle = "";//图标标题
     @JSONField(name = "bc")
@@ -61,7 +61,7 @@ public class ChartBean {
     @JSONField(name = "m")
     private String tdTextAttributeModel;
     @JSONField(name = "f")
-    private boolean isFill = false;//是否填满
+    private boolean isFill = true;//是否填满
     @JSONField(name = "t")
     private boolean isTopBorder = false;//上边框
 
@@ -205,7 +205,7 @@ public class ChartBean {
          * isUnder : false
          */
         @JSONField(name = "f")
-        private String fontName = "";//字体名称
+        private String fontName = "PingFangSC-Regular";//字体名称
         @JSONField(name = "b")
         private boolean isBold = false;//是否加粗
         @JSONField(name = "t")

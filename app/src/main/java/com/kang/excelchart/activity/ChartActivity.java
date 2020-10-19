@@ -15,12 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.kang.excelchart.bean.ChartBean;
 import com.kang.excelchart.bean.ChartInfoBean;
 import com.kang.excelchart.bean.Tables;
 import com.kang.excelchart.bean.Tables_1;
+import com.kang.excelchart.bean.UpdateEvent;
+import com.kang.excelchart.bean._User;
 import com.kang.excelchart.config.PaintConfig;
 import com.kang.excelchart.config.TextPaintConfig;
 import com.kang.excelchart.config.UserConfig;
@@ -46,14 +47,18 @@ import com.vondear.rxtool.RxActivityTool;
 import com.vondear.rxtool.RxImageTool;
 import com.vondear.rxtool.RxKeyboardTool;
 import com.vondear.rxtool.RxLogTool;
+import com.vondear.rxtool.RxTimeTool;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -195,6 +200,14 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
 
                 break;
             default:
+                titleView.setTitle("无标题排班表(" + RxTimeTool.getCurTimeMills() + ")");
+                chartInfoBean = new ChartInfoBean();
+                lcs.clear();
+                for (int i = 0; i < BaseConfig.getHeightList().size(); i++) {
+                    for (int n = 0; n < BaseConfig.getWidthList().size(); n++) {
+                        lcs.add(TextPaintConfig.getInputTextBean(i, n));
+                    }
+                }
                 chartView.setChartData(BaseConfig.getWidthList(), BaseConfig.getHeightList(), lcs);
                 break;
         }
@@ -343,96 +356,84 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
             llChart.setVisibility(View.GONE);
             RxKeyboardTool.hideSoftInput(this, etContent);
         } else {
-
             if (chartView != null) {
-
-//                Tables_1 p2 = BaseConfig.getTableClass(this, null);
                 Tables_1 p2 = new Tables_1();
-//                for (int i = 0; i < chartView.getInputTextList().size(); i++) {
-//                    InputTextBean inputTextBean = chartView.getInputTextList().get(i);
-//                    if (inputTextBean.getChartBean().getTdText().equals("") && inputTextBean.getChartBean().getTdBackgroundColorStr().equals(TextPaintConfig.defaultBackgroundColorStr)) {
-//                        RxLogTool.i("----" + i + "-----");
-//                        chartView.getInputTextList().set(i, null);
-//                    }
-//                }
 
                 List<String> list = new ArrayList<>();
                 for (InputTextBean inputTextBean : chartView.getInputTextList()) {
-//                    if (inputTextBean.getChartBean().getTdText().equals("") && inputTextBean.getChartBean().getTdBackgroundColorStr().equals(TextPaintConfig.defaultBackgroundColorStr)) {
-//                        inputTextBean=null;
-//                    }else {
-                    Map map = new HashMap();
-                    if (!inputTextBean.getChartBean().getTdText().equals(""))
-                        map.put("tx", inputTextBean.getChartBean().getTdText());
-                    if (inputTextBean.getChartBean().isFx()) map.put("if", true);
-                    if (inputTextBean.getChartBean().isBottomBorder()) map.put("b", true);
-                    if (!inputTextBean.getChartBean().getFxStr().equals("js"))
-                        map.put("fx", inputTextBean.getChartBean().getFxStr());
-                    if (inputTextBean.getChartBean().isLeftBorder()) map.put("l", true);
-                    if (inputTextBean.getChartBean().getChartOrientation() != 1)
-                        map.put("o", inputTextBean.getChartBean().getChartOrientation());
-                    if (inputTextBean.getChartBean().getChart() != 1)
-                        map.put("ic", inputTextBean.getChartBean().getChart());
-                    if (!inputTextBean.getChartBean().getTdSizeStr().equals("{1,1}"))
-                        map.put("s", inputTextBean.getChartBean().getTdSizeStr());
-                    if (inputTextBean.getChartBean().isRightBorder()) map.put("r", true);
-                    if (!inputTextBean.getChartBean().getTdBorderColorStr().equals(PaintConfig.defaultLineColor))
-                        map.put("boc", inputTextBean.getChartBean().getTdBorderColorStr());
-                    if (inputTextBean.getChartBean().getChartTheme() != 1)
-                        map.put("k", inputTextBean.getChartBean().getChartTheme());
-                    if (!inputTextBean.getChartBean().getTdBackgroundColorStr().equals(TextPaintConfig.defaultBackgroundColorStr))
-                        map.put("bc", inputTextBean.getChartBean().getTdBackgroundColorStr());
-                    if (inputTextBean.getChartBean().isFill()) map.put("f", true);
-                    if (inputTextBean.getChartBean().isTopBorder()) map.put("t", true);
-
-                    map.put("m", inputTextBean.getChartBean().getTdTextAttributeModel());
-//                    }
-                    String json = JSON.toJSONString(map);
-                    list.add(json);
-
+                    list.add(JSON.toJSONString(inputTextBean.getChartBean()));
                 }
-                RxLogTool.d("list转换数据：" + list.toString());
 
-//                String str = JSON.toJSONString(BaseConfig.getChartList(chartView.getInputTextList()));
-                chartInfoBean.setChart_list(list.toString());
-                chartInfoBean.setHeight_list(chartView.getHeightList());
-                chartInfoBean.setWidth_list(chartView.getWidthList());
-                chartInfoBean.setHeight_num(chartView.getHeightList().size());
-                chartInfoBean.setWidth_num(chartView.getWidthList().size());
+//                chartInfoBean.setChart_list(list.toString());
+//                chartInfoBean.setHeight_list(chartView.getHeightList());
+//                chartInfoBean.setWidth_list(chartView.getWidthList());
+//                chartInfoBean.setHeight_num(chartView.getHeightList().size());
+//                chartInfoBean.setWidth_num(chartView.getWidthList().size());
 
+                String json = "{\"w\":" + chartView.getWidthList().size() +
+                        ",\"h\":" + chartView.getHeightList().size() +
+                        ",\"ha\":" + chartView.getHeightList() +
+                        ",\"wa\":" + chartView.getWidthList() +
+                        ",\"m\":" + list.toString() +
+                        ",\"t\":" + 0 +
+                        "}";
+//                json.replace("\\", "");
+                RxLogTool.d("chart转换数据：" + json);
 
-                RxLogTool.d("chart转换数据：" + JSON.toJSONString(chartInfoBean));
+                p2.setSourceData(json);
+                p2.setName(titleView.getTitleText().getText().toString());
 
                 if (table != null && !TextEmptyUtils.isEmpty(table.getSourceData())) {
                     //已存在的表格——>更新
-                    p2.setWordStr(JSON.toJSONString(chartInfoBean));
+                    //json = JSON.toJSONString(chartInfoBean);  //数据会 ///"
                     p2.update(this.table.getObjectId(), new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
                             if (e == null) {
                                 RxLogTool.d("更新成功！");
                             } else {
-                                RxLogTool.d("更新失败！----"+e.toString());
+                                RxLogTool.d("更新失败！----" + e.toString());
                             }
                         }
-
                     });
                 } else {
                     //新表格——>新增
-                    p2.setWordStr(JSON.toJSONString(chartInfoBean));
+                    p2.setFileId(-1);
+                    p2.setType(0);
+                    p2.setIsCollection(false);
+                    p2.setTaCreateTime(RxTimeTool.getCurTimeMills() / 1000 + "");
+                    p2.setTaUpdateTime(RxTimeTool.getCurTimeMills() / 1000 + "");
                     p2.save(new SaveListener<String>() {
                         @Override
                         public void done(String objectId, BmobException e) {
                             if (e == null) {
                                 RxLogTool.d("新增成功！");
+                                _User user = BmobUser.getCurrentUser(_User.class);
+                                user.setObjectId(UserConfig.getUserId(activity));
+
+                                BmobRelation relation = new BmobRelation();
+                                Tables_1 tables_1 = new Tables_1();
+                                tables_1.setObjectId(objectId);
+                                relation.add(tables_1);
+                                user.setTables_1(relation);
+                                user.update(new UpdateListener() {
+                                    @Override
+                                    public void done(BmobException e) {
+                                        if(e==null){
+                                            RxLogTool.d("bmob","多对多关联添加成功");
+                                        }else{
+                                            RxLogTool.d("bmob","失败："+e.getMessage());
+                                        }
+                                    }
+                                });
                             } else {
-                                RxLogTool.d("新增失败！");
+                                RxLogTool.d("新增失败！----" + e.toString());
                             }
                         }
                     });
                 }
             }
-
+            EventBus.getDefault().post(new UpdateEvent());
             super.onBackPressed();
         }
     }

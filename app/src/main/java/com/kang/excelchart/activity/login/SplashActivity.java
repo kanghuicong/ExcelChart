@@ -37,7 +37,8 @@ public class SplashActivity extends Activity {
                 LanguageUtils.languageVERSION_N(this, language);
             }
         }
-        TTAdManagerHolder.get().requestPermissionIfNecessary(SplashActivity.this);
+
+//        TTAdManagerHolder.get().requestPermissionIfNecessary(SplashActivity.this);
 
         //可设置动画（目前无动画）
         AlphaAnimation animation = new AlphaAnimation(1.0f, 1.0f);

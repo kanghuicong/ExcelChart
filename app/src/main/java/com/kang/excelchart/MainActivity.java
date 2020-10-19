@@ -1,5 +1,6 @@
 package com.kang.excelchart;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -10,12 +11,14 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.kang.excelchart.activity.ChartActivity;
 import com.kang.excelchart.base.BaseActivity;
 import com.kang.excelchart.fragment.CollectFragment;
 import com.kang.excelchart.fragment.BaseListFragment;
 import com.kang.excelchart.fragment.HomeFragment;
 import com.kang.excelchart.fragment.MineFragment;
 import com.kang.excelchart.fragment.RecentFragment;
+import com.vondear.rxtool.RxActivityTool;
 
 import java.util.List;
 
@@ -102,6 +105,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 transaction.commitAllowingStateLoss();
                 break;
             case R.id.iv_add:
+                ChartActivity.doIntent(context, ChartActivity.NORMAL_FROM, null);
                 break;
             case R.id.rb4:
                 setSelect(4);
@@ -146,5 +150,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         drawable5.setBounds(0, 0, drawable5.getMinimumWidth(), drawable1.getMinimumHeight());
         rb5.setCompoundDrawables(null, drawable5, null, null);
         rb5.setTextColor(ContextCompat.getColor(this, position == 5 ? R.color.main_color : R.color.blackA6_00));
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        RxActivityTool.finishAllActivity();
     }
 }

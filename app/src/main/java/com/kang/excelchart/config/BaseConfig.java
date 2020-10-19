@@ -63,7 +63,7 @@ public class BaseConfig {
     public static List<Float> getWidthList() {
         List<Float> list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            list.add(200f);
+            list.add(90f);
         }
         return list;
     }
@@ -71,7 +71,7 @@ public class BaseConfig {
     public static List<Float> getHeightList() {
         List<Float> list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            list.add(80f);
+            list.add(40f);
         }
         return list;
     }

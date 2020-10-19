@@ -11,6 +11,7 @@ import com.kang.excelchart.adapter.ChartAdapter;
 import com.kang.excelchart.base.BaseFragment;
 import com.kang.excelchart.bean.Tables;
 import com.kang.excelchart.bean.Tables_1;
+import com.kang.excelchart.bean.UpdateEvent;
 import com.kang.excelchart.config.BaseConfig;
 import com.kang.excelchart.config.UserConfig;
 import com.kang.excelchart.custom.view.TitleView;
@@ -21,6 +22,10 @@ import com.vondear.rxtool.RxLogTool;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +77,8 @@ public abstract class BaseListFragment<T> extends BaseFragment {
         adapter = new ChartAdapter(activity, initFrom(), list);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setAdapter(adapter);
+
+        EventBus.getDefault().register(this);
 
         refreshLayout.autoRefresh();//自动刷新
         //刷新
@@ -130,7 +137,6 @@ public abstract class BaseListFragment<T> extends BaseFragment {
         httpUtils.doHttpResult(e, new HttpUtils.IHttpResult() {
             @Override
             public void success() {
-                RxLogTool.i("列表刷新：-----" + object.get(0).toString());
                 page = 1;
                 list.clear();
                 list.addAll(object);
@@ -164,7 +170,6 @@ public abstract class BaseListFragment<T> extends BaseFragment {
 
                 } else {
                     page++;
-                    RxLogTool.i("列表刷新：-----" + object.get(0).toString());
                     list.addAll(object);
                     adapter.notifyDataSetChanged();
                     recursiveLoad();
@@ -198,7 +203,19 @@ public abstract class BaseListFragment<T> extends BaseFragment {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateEvent(final UpdateEvent event) {
+        refreshLayout.autoRefresh();
+    }
+
+
     private interface ILoadResult<T> {
         void done(List<T> object, BmobException e);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

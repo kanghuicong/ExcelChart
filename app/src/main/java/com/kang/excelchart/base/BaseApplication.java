@@ -22,6 +22,7 @@ import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.kang.excelchart.R;
 import com.kang.excelchart.config.UserConfig;
+import com.kang.excelchart.utils.GreenDaoManager;
 import com.kang.excelchart.utils.TTAdManagerHolder;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
@@ -107,6 +108,7 @@ public class BaseApplication extends MultiDexApplication implements Application.
 
         Bmob.initialize(this, "80c24431e79606ad4cac39e4b50d0ec9");
 
+        GreenDaoManager.getInstance();
 
         TTAdManagerHolder.init(this);
 

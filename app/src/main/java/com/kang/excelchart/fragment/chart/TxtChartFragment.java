@@ -162,7 +162,7 @@ public class TxtChartFragment extends BaseChartFragment implements View.OnClickL
                 chartView.setDeleteLine(!isDeleteLine);
                 isSelectView(tvDeleteLine, !isDeleteLine);
             case R.id.tv_style1:
-                setTypeface(false, Typeface.SANS_SERIF);
+                setTypeface(false, Typeface.DEFAULT);
                 break;
             case R.id.tv_style2:
                 setTypeface(false, Typeface.DEFAULT_BOLD);
@@ -266,7 +266,7 @@ public class TxtChartFragment extends BaseChartFragment implements View.OnClickL
             chartView.setTypeface(typeface);
         }
 
-        isSelectView(tvStyle1, typeface == Typeface.SANS_SERIF);
+        isSelectView(tvStyle1, typeface == Typeface.DEFAULT);
         isSelectView(tvStyle2, typeface == Typeface.DEFAULT_BOLD);
         isSelectView(tvStyle3, typeface == Typeface.SERIF);
     }
