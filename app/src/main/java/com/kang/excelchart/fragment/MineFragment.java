@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import com.kang.excelchart.R;
 import com.kang.excelchart.activity.mine.MineAccountActivity;
 import com.kang.excelchart.activity.mine.MineFeedBackActivity;
+import com.kang.excelchart.activity.mine.MineVideoActivity;
 import com.kang.excelchart.activity.mine.MineVipActivity;
 import com.kang.excelchart.base.BaseFragment;
+import com.kang.excelchart.bean.LogoutEvent;
 import com.kang.excelchart.config.UserConfig;
 import com.kang.excelchart.custom.view.SuperItemView;
 import com.vondear.rxtool.RxActivityTool;
@@ -18,6 +20,10 @@ import com.vondear.rxtool.view.RxToast;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class MineFragment extends BaseFragment implements View.OnClickListener {
     private SuperItemView superAccount;
@@ -65,16 +71,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        superAccount.setRightText(UserConfig.getUserAccount(activity));
+        EventBus.getDefault().register(this);
 
-        isVip = UserConfig.isVip(activity);
-        if (isVip) {
-            superUser.setRightText(getString(R.string.vip_forever));
-            superAccount.setRightImageL(R.mipmap.vip);
-        } else {
-            superUser.setRightText(getString(R.string.not_available));
-        }
-
+        initData();
     }
 
     @Override
@@ -91,11 +90,36 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 }
                 break;
             case R.id.super_video:
-                break;
+                RxActivityTool.skipActivity(activity, MineVideoActivity.class);
 
+                break;
             case R.id.super_feedback:
                 RxActivityTool.skipActivity(activity, MineFeedBackActivity.class);
                 break;
         }
+    }
+
+    public void initData(){
+        superAccount.setRightText(UserConfig.getUserAccount(activity));
+
+        isVip = UserConfig.isVip(activity);
+        if (isVip) {
+            superUser.setRightText(getString(R.string.vip_forever));
+            superAccount.setRightImageL(R.mipmap.vip);
+        } else {
+            superUser.setRightText(getString(R.string.not_available));
+            superAccount.setRightImageL(R.color.transparent);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void LogoutEvent(LogoutEvent event) {
+        initData();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

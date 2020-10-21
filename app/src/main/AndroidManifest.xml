@@ -72,6 +72,14 @@
             android:name=".activity.mine.MineVipActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.mine.MineVideoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.XWebActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
             android:authorities="com.kang.excelchart.BmobContentProvider" />

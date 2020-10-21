@@ -3,11 +3,14 @@ package com.kang.excelchart.activity.mine;
 import android.os.Bundle;
 import android.view.View;
 
+import com.kang.excelchart.MainActivity;
 import com.kang.excelchart.R;
 import com.kang.excelchart.activity.login.LoginActivity;
 import com.kang.excelchart.base.BaseActivity;
+import com.kang.excelchart.bean.LogoutEvent;
 import com.kang.excelchart.bean._User;
 import com.kang.excelchart.config.UserConfig;
+import com.kang.excelchart.custom.dialog.BaseDialog;
 import com.kang.excelchart.custom.dialog.VerifyDialog;
 import com.kang.excelchart.custom.view.SuperItemView;
 import com.kang.excelchart.utils.HttpUtils;
@@ -16,12 +19,16 @@ import com.vondear.rxtool.RxActivityTool;
 import com.vondear.rxtool.RxLogTool;
 import com.vondear.rxtool.view.RxToast;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 public class MineAccountActivity extends BaseActivity implements View.OnClickListener {
@@ -33,6 +40,7 @@ public class MineAccountActivity extends BaseActivity implements View.OnClickLis
     private SuperItemView superLogout;
 
     private boolean isVip;
+    private BaseDialog logoutDialog;
 
     @Override
     public int initLayout() {
@@ -81,7 +89,7 @@ public class MineAccountActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.super_pwd:
+            case R.id.super_pwd://修改密码
                 VerifyDialog verifyDialog1 = new VerifyDialog(activity,
                         getString(R.string.change_password),
                         getString(R.string.input_old_pwd),
@@ -136,7 +144,7 @@ public class MineAccountActivity extends BaseActivity implements View.OnClickLis
                         }));
                 verifyDialog1.show();
                 break;
-            case R.id.super_email:
+            case R.id.super_email: //修改邮箱
                 VerifyDialog verifyDialog2 = new VerifyDialog(activity,
                         getString(R.string.email),
                         getString(R.string.input_email),
@@ -167,22 +175,89 @@ public class MineAccountActivity extends BaseActivity implements View.OnClickLis
                         }));
                 verifyDialog2.show();
                 break;
-            case R.id.super_user:
+            case R.id.super_user://开通会员
                 if (isVip) {
                     RxToast.normal(getString(R.string.you_was_vip));
                 } else {
                     RxActivityTool.skipActivity(activity, MineVipActivity.class);
                 }
                 break;
-            case R.id.super_logout:
-                UserConfig.setLogin(activity, false);
-                UserConfig.setUserId(activity, "");
-                UserConfig.setVip(activity, false);
-                UserConfig.setEmail(activity, "");
-                UserConfig.setCreateAt(activity, 0);
+            case R.id.super_re_login://重新登录
+                String account= UserConfig.getUserAccount(this);
+                String password= UserConfig.getUserPwd(this);
 
-                RxActivityTool.skipActivity(activity, LoginActivity.class);
+                BmobUser bmobUser = new BmobUser();
+                bmobUser.setUsername(account);
+                bmobUser.setPassword(password);
+                bmobUser.login(new SaveListener<BmobUser>() {
+                    @Override
+                    public void done(BmobUser bmobUser, BmobException e) {
+                        if (e == null) {
+                            BmobQuery<_User> eq1 = new BmobQuery<>();
+                            eq1.addWhereEqualTo("username", account);
+                            BmobQuery<_User> eq2 = new BmobQuery<>();
+                            eq2.addWhereEqualTo("password", password);
 
+                            List<BmobQuery<_User>> queries = new ArrayList<>();
+                            queries.add(eq1);
+                            queries.add(eq2);
+
+                            BmobQuery<_User> query = new BmobQuery<>();
+                            query.and(queries);
+
+                            query.findObjects(new FindListener<_User>() {
+                                @Override
+                                public void done(List<_User> object, BmobException e) {
+                                    httpUtils.doHttpResult(e, new HttpUtils.IHttpResult() {
+                                        @Override
+                                        public void success() {
+                                            if (object.size() != 0) {
+                                                UserConfig.setUserLogin(activity,account,password,object);
+                                                RxToast.success(getString(R.string.success_login));
+                                            } else {
+                                                RxToast.error(getString(R.string.error_account_password));
+                                            }
+                                        }
+
+                                        @Override
+                                        public void failure() {
+
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }
+                });
+                break;
+            case R.id.super_logout://退出
+                if (logoutDialog == null) {
+                    logoutDialog = new BaseDialog(this,
+                            null,
+                            getString(R.string.hint_logout),
+                            getString(R.string.confirm),
+                            getString(R.string.cancel),
+                            0,
+                            0,
+                            false,
+                            new BaseDialog.IBaseDialog() {
+                                @Override
+                                public void clickLeft(View v) {
+                                    UserConfig.setUserLogout(activity);
+
+                                    RxActivityTool.skipActivityAndFinishAll(activity, LoginActivity.class);
+
+//                                    EventBus.getDefault().post(new LogoutEvent());
+                                }
+
+                                @Override
+                                public void clickRight(View v) {
+
+                                }
+                            });
+
+                }
+                logoutDialog.show();
                 break;
         }
     }

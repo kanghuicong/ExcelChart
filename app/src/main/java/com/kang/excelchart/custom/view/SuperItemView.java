@@ -342,8 +342,7 @@ public class SuperItemView extends LinearLayout {
 
     private void init() {
         if (isPadding) {
-
-            this.setPadding(fitSize(16), fitSize(10), fitSize(16), fitSize(10));
+            this.setPadding(fitSize(16), fitSize(15), fitSize(16), fitSize(15));
         } else
             this.setPadding(this.getPaddingLeft(), this.getPaddingTop(), this.getPaddingRight(), this.getPaddingBottom());
         this.setOrientation(HORIZONTAL);
@@ -806,6 +805,11 @@ public class SuperItemView extends LinearLayout {
         return this;
     }
 
+
+    public SuperItemView isPadding(boolean isPadding) {
+        this.isPadding = isPadding;
+        return this;
+    }
     /*-------------------------------------------switch----------------------------------------------*/
     public SuperItemView setSwitch(boolean isSwitch) {
         switchCompat.setChecked(isSwitch);

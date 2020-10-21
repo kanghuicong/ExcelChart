@@ -41,7 +41,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private EditText etPassword;
     private TextView btLogin;
     private TextView btForget;
-    public int userCreateAt;
 
     @Override
     public int initLayout() {
@@ -121,27 +120,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                             @Override
                                             public void success() {
                                                 if (object.size() != 0) {
-                                                    //本地保存账号/密码/用户id
-                                                    UserConfig.setLogin(activity, true);
-                                                    UserConfig.setUserAccount(activity, account);
-                                                    UserConfig.setUserPwd(activity, password);
-                                                    UserConfig.setUserId(activity, object.get(0).getObjectId());
-                                                    UserConfig.setVip(activity, object.get(0).isVip());
-                                                    UserConfig.setEmail(activity, object.get(0).getEmail());
-
-                                                    if (RxTimeTool.string2Milliseconds(object.get(0).getCreatedAt()) / 1000 < 1594300372) {
-                                                        userCreateAt = 0;
-                                                    } else {
-                                                        userCreateAt = 1;
-                                                    }
-                                                    UserConfig.setCreateAt(activity, userCreateAt);
-
-                                                    RxLogTool.d("user_data:" + object.toString());
+                                                    RxToast.success(getString(R.string.success_login));
+                                                    UserConfig.setUserLogin(activity,account,password,object);
                                                     RxActivityTool.skipActivityAndFinish(activity, MainActivity.class);
                                                 } else {
                                                     RxToast.error(getString(R.string.error_account_password));
                                                 }
-                                                RxLogTool.d("查询结果:" + object.size() + "");
                                             }
 
                                             @Override
