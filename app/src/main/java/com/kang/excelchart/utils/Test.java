@@ -3,7 +3,7 @@ package com.kang.excelchart.utils;
 import com.alibaba.fastjson.JSON;
 import com.kang.excelchart.bean.InputTextBean;
 import com.kang.excelchart.config.PaintConfig;
-import com.kang.excelchart.config.TextPaintConfig;
+import com.kang.excelchart.config.BaseObjectConfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +35,7 @@ class Test {
             map.put("boc", inputTextBean.getChartBean().getTdBorderColorStr());
         if (inputTextBean.getChartBean().getChartTheme() != 1)
             map.put("k", inputTextBean.getChartBean().getChartTheme());
-        if (!inputTextBean.getChartBean().getTdBackgroundColorStr().equals(TextPaintConfig.defaultBackgroundColorStr))
+        if (!inputTextBean.getChartBean().getTdBackgroundColorStr().equals(BaseObjectConfig.defaultBackgroundColorStr))
             map.put("bc", inputTextBean.getChartBean().getTdBackgroundColorStr());
         if (inputTextBean.getChartBean().isFill()) map.put("f", true);
         if (inputTextBean.getChartBean().isTopBorder()) map.put("t", true);

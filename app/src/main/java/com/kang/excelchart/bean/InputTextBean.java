@@ -4,7 +4,6 @@ import android.graphics.Paint;
 import android.text.TextPaint;
 
 import com.kang.excelchart.config.BaseConfig;
-import com.kang.excelchart.config.TextPaintConfig;
 import com.kang.excelchart.utils.TextPaintUtils;
 
 /**

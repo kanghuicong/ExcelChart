@@ -65,23 +65,6 @@ public class MineVideoActivity extends BaseActivity {
                 }
             }
         });
-
-//        BmobQuery<ExampleVideoPlayers> query = new BmobQuery<ExampleVideoPlayers>();
-////返回50条数据，如果不加上这条语句，默认返回10条数据
-//        query.setLimit(50);
-////执行查询方法
-//        query.findObjects(new FindListener<ExampleVideoPlayers>() {
-//            @Override
-//            public void done(List<ExampleVideoPlayers> object, BmobException e) {
-//                if(e==null){
-//                    list.clear();
-//                    list.addAll(object);
-//                    adapter.notifyDataSetChanged();
-//                }else{
-//                    RxToast.error(e.getMessage());
-//                }
-//            }
-//        });
     }
 
     @Override

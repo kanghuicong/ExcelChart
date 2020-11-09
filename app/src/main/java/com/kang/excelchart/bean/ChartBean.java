@@ -1,14 +1,8 @@
 package com.kang.excelchart.bean;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.kang.excelchart.config.BaseConfig;
 import com.kang.excelchart.config.PaintConfig;
-import com.kang.excelchart.config.TextPaintConfig;
-import com.kang.excelchart.utils.TextPaintUtils;
-
-import java.util.List;
-
-import static com.kang.excelchart.config.PaintConfig.defaultLineColor;
+import com.kang.excelchart.config.BaseObjectConfig;
 
 /**
  * 类描述：
@@ -57,7 +51,7 @@ public class ChartBean {
     @JSONField(name = "j")
     private String chartTitle = "";//图标标题
     @JSONField(name = "bc")
-    private String tdBackgroundColorStr = TextPaintConfig.defaultBackgroundColorStr;//背景颜色
+    private String tdBackgroundColorStr = BaseObjectConfig.defaultBackgroundColorStr;//背景颜色
     @JSONField(name = "m")
     private String tdTextAttributeModel;
     @JSONField(name = "f")
@@ -211,7 +205,7 @@ public class ChartBean {
         @JSONField(name = "t")
         private boolean isTilt = false;//是否倾斜
         @JSONField(name = "c")
-        private String colorStr = TextPaintConfig.defaultTextColorStr;//字体颜色
+        private String colorStr = BaseObjectConfig.defaultTextColorStr;//字体颜色
         @JSONField(name = "a")
         private int textAlignment = 1;//对齐方式
         @JSONField(name = "p")

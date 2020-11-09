@@ -1,239 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
-    android:orientation="vertical"
-    android:padding="@dimen/qb_px_10">
+    android:background="@color/backgroundColor">
 
-    <LinearLayout
-        android:id="@+id/ll_1"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toStartOf="@+id/ll_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/qb_px_10">
 
-        <ImageButton
-            android:id="@+id/tv_bold"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/ll_1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingTop="@dimen/qb_px_10"
-            android:paddingBottom="@dimen/qb_px_10"
-            android:src="@mipmap/bold"
-            android:background="@null"/>
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/ll_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/tv_italic"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@null"
-            android:src="@mipmap/italic"/>
+            <ImageButton
+                android:id="@+id/tv_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/qb_px_10"
+                android:paddingBottom="@dimen/qb_px_10"
+                android:src="@mipmap/bold"
+                android:background="@null"/>
 
-        <ImageButton
-            android:id="@+id/tv_underline"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
+            <ImageButton
+                android:id="@+id/tv_italic"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@null"
+                android:src="@mipmap/italic"/>
 
-            android:background="@null"
-            android:src="@mipmap/underline"/>
+            <ImageButton
+                android:id="@+id/tv_underline"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
 
-        <ImageButton
-            android:id="@+id/tv_deleteLine"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@null"
-            android:src="@mipmap/strikethrough"/>
+                android:background="@null"
+                android:src="@mipmap/underline"/>
 
-        <TextView
-            android:layout_width="@dimen/qb_px_10"
-            android:layout_height="match_parent"
-            android:background="@color/backgroundColor"/>
+            <ImageButton
+                android:id="@+id/tv_deleteLine"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@null"
+                android:src="@mipmap/strikethrough"/>
 
-
-        <ImageButton
-            android:id="@+id/tv_left"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:src="@mipmap/align_left"
-            android:background="@null" />
-
-        <ImageButton
-            android:id="@+id/tv_center"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:src="@mipmap/align_center"
-            android:background="@null"/>
-
-        <ImageButton
-            android:id="@+id/tv_right"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:src="@mipmap/align_right"
-            android:background="@null"/>
-    </LinearLayout>
+            <TextView
+                android:layout_width="@dimen/qb_px_10"
+                android:layout_height="match_parent"
+                android:background="@color/backgroundColor"/>
 
 
+            <ImageButton
+                android:id="@+id/tv_left"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:src="@mipmap/align_left"
+                android:background="@null" />
 
-    <LinearLayout
-        android:id="@+id/ll_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_10"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_1">
+            <ImageButton
+                android:id="@+id/tv_center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:src="@mipmap/align_center"
+                android:background="@null"/>
 
-        <TextView
-            android:id="@+id/tv_8"
-            android:layout_width="0dp"
+            <ImageButton
+                android:id="@+id/tv_right"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:src="@mipmap/align_right"
+                android:background="@null"/>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingTop="@dimen/qb_px_10"
-            android:paddingBottom="@dimen/qb_px_10"
-            android:text="8" />
+            android:layout_marginTop="@dimen/qb_px_10"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_1">
 
-        <TextView
-            android:id="@+id/tv_10"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="10" />
+            <TextView
+                android:id="@+id/tv_8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/qb_px_10"
+                android:paddingBottom="@dimen/qb_px_10"
+                android:text="8" />
 
-        <TextView
-            android:id="@+id/tv_12"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="12" />
+            <TextView
+                android:id="@+id/tv_10"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="10" />
 
-        <TextView
-            android:id="@+id/tv_14"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="14" />
+            <TextView
+                android:id="@+id/tv_12"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="12" />
 
-        <TextView
-            android:id="@+id/tv_16"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="16" />
+            <TextView
+                android:id="@+id/tv_14"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="14" />
 
-        <TextView
-            android:id="@+id/tv_18"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="18" />
+            <TextView
+                android:id="@+id/tv_16"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="16" />
 
-        <TextView
-            android:id="@+id/tv_20"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="20" />
+            <TextView
+                android:id="@+id/tv_18"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="18" />
 
-        <TextView
-            android:id="@+id/tv_22"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="22" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_20"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="20" />
 
-    <LinearLayout
-        android:id="@+id/ll_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_10"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_3">
+            <TextView
+                android:id="@+id/tv_22"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="22" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_style1"
+        <LinearLayout
+            android:id="@+id/ll_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_10"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_3">
+
+            <TextView
+                android:id="@+id/tv_style1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/qb_px_10"
+                android:text="样式1" />
+
+            <TextView
+                android:id="@+id/tv_style2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/qb_px_10"
+                android:text="样式2" />
+
+            <TextView
+                android:id="@+id/tv_style3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/qb_px_10"
+                android:text="样式3" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/qb_px_8"
+            android:background="@color/white"
             android:gravity="center"
-            android:padding="@dimen/qb_px_10"
-            android:text="样式1" />
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/ll_4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ll_4"
+            app:layout_constraintTop_toTopOf="@id/ll_4">
 
-        <TextView
-            android:id="@+id/tv_style2"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自动填充" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_color"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/qb_px_10"
-            android:text="样式2" />
-
-        <TextView
-            android:id="@+id/tv_style3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/qb_px_10"
-            android:text="样式3" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/qb_px_8"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@id/ll_4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ll_4"
-        app:layout_constraintTop_toTopOf="@id/ll_4">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="自动填充" />
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_color"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_8"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_4" />
+            android:layout_marginTop="@dimen/qb_px_8"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_4" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
+

@@ -12,7 +12,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -22,8 +21,7 @@ import com.kang.excelchart.bean.Tables;
 import com.kang.excelchart.bean.Tables_1;
 import com.kang.excelchart.bean.UpdateEvent;
 import com.kang.excelchart.bean._User;
-import com.kang.excelchart.config.PaintConfig;
-import com.kang.excelchart.config.TextPaintConfig;
+import com.kang.excelchart.config.BaseObjectConfig;
 import com.kang.excelchart.config.UserConfig;
 import com.kang.excelchart.custom.view.ChartView;
 import com.kang.excelchart.custom.view.HVScrollView;
@@ -50,12 +48,9 @@ import com.vondear.rxtool.RxLogTool;
 import com.vondear.rxtool.RxTimeTool;
 
 import org.greenrobot.eventbus.EventBus;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobRelation;
@@ -89,6 +84,8 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
     private Tables table;
 
     ChartInfoBean chartInfoBean;
+    //根据传入的数据构造出来的List<InputTextBean>
+    List<InputTextBean> lcs = new ArrayList<>();
 
     public static void doIntent(Context context, int from, Tables tables) {
         Bundle bundle = new Bundle();
@@ -138,7 +135,7 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
     public void init(Bundle savedInstanceState) {
         int from = getIntent().getExtras().getInt("from", NORMAL_FROM);
 
-        List<InputTextBean> lcs = new ArrayList<>();
+
         switch (from) {
             case ADAPTER_FROM:
                 table = (Tables) getIntent().getExtras().getSerializable("tables");
@@ -181,7 +178,7 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
                         textPaint.setTextAlign(TextPaintUtils.getAlign(tdTextAttributeModelBean.getTextAlignment()));
                         textPaint.setColor(TextPaintUtils.hexToColor(tdTextAttributeModelBean.getColorStr()));
                     } else {
-                        textPaint = TextPaintConfig.getTextPaint();
+                        textPaint = BaseObjectConfig.getTextPaint();
                     }
 
 
@@ -205,7 +202,7 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
                 lcs.clear();
                 for (int i = 0; i < BaseConfig.getHeightList().size(); i++) {
                     for (int n = 0; n < BaseConfig.getWidthList().size(); n++) {
-                        lcs.add(TextPaintConfig.getInputTextBean(i, n));
+                        lcs.add(BaseObjectConfig.getInputTextBean(i, n));
                     }
                 }
                 chartView.setChartData(BaseConfig.getWidthList(), BaseConfig.getHeightList(), lcs);
@@ -357,6 +354,12 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
             RxKeyboardTool.hideSoftInput(this, etContent);
         } else {
             if (chartView != null) {
+                //啥都没做，直接返回
+                if (lcs.retainAll(chartView.getInputTextList())) {
+                    super.onBackPressed();
+                    return;
+                }
+
                 Tables_1 p2 = new Tables_1();
 
                 List<String> list = new ArrayList<>();
@@ -419,10 +422,10 @@ public class ChartActivity extends BaseActivity implements View.OnClickListener 
                                 user.update(new UpdateListener() {
                                     @Override
                                     public void done(BmobException e) {
-                                        if(e==null){
-                                            RxLogTool.d("bmob","多对多关联添加成功");
-                                        }else{
-                                            RxLogTool.d("bmob","失败："+e.getMessage());
+                                        if (e == null) {
+                                            RxLogTool.d("bmob", "多对多关联添加成功");
+                                        } else {
+                                            RxLogTool.d("bmob", "失败：" + e.getMessage());
                                         }
                                     }
                                 });

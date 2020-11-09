@@ -16,12 +16,10 @@ import com.vondear.rxtool.RxImageTool;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bmob.v3.http.I;
-
 /**
  * 类描述：
  */
-public class TextPaintConfig {
+public class BaseObjectConfig {
     //默认背景
     public static final String defaultBackgroundColorStr = "#ffffffff";
     //默认字体颜色
@@ -76,7 +74,7 @@ public class TextPaintConfig {
 
     //获取一个新的InputTextBean（新增行列等）
     public static InputTextBean getInputTextBean(int x, int y) {
-        InputTextBean inputTextBean = new InputTextBean(x, y, null, TextPaintConfig.getTextPaint(), new ChartBean.TdTextAttributeModelBean());
+        InputTextBean inputTextBean = new InputTextBean(x, y, null, BaseObjectConfig.getTextPaint(), new ChartBean.TdTextAttributeModelBean());
         ChartBean chartBean = new ChartBean();
         ChartBean.TdTextAttributeModelBean tdTextAttributeModelBean = new ChartBean.TdTextAttributeModelBean();
         String tdTextAttributeModel = JSON.toJSONString(tdTextAttributeModelBean);

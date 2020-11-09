@@ -120,6 +120,9 @@
     <string name="create">创建</string>
     <string name="update">更新</string>
     <string name="hint_logout">确定退出当前账号吗？</string>
+    <string name="hint_delete_file">确定删除当前文件吗？</string>
+    <string name="success_delete">删除成功</string>
+    <string name="failure_delete">删除失败</string>
 
     <!--login-->
     <string name="login">登录</string>

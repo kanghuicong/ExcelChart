@@ -38,7 +38,6 @@ public class SplashActivity extends Activity {
             }
         }
 
-//        TTAdManagerHolder.get().requestPermissionIfNecessary(SplashActivity.this);
 
         //可设置动画（目前无动画）
         AlphaAnimation animation = new AlphaAnimation(1.0f, 1.0f);
@@ -65,6 +64,7 @@ public class SplashActivity extends Activity {
 //                    //进入首页
 //                    RxActivityTool.skipActivity(SplashActivity.this, MainActivity.class);
 //                }
+        TTAdManagerHolder.get().requestPermissionIfNecessary(SplashActivity.this);
 
                 RxActivityTool.skipActivity(SplashActivity.this, AdvActivity.class);
                 finish();

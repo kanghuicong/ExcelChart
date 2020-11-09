@@ -9,10 +9,16 @@ import android.widget.TextView;
 
 import com.kang.excelchart.BuildConfig;
 import com.kang.excelchart.R;
+import com.kang.excelchart.activity.login.LoginActivity;
 import com.kang.excelchart.bean.Tables;
+import com.kang.excelchart.bean.UpdateEvent;
 import com.kang.excelchart.config.BaseConfig;
+import com.kang.excelchart.config.UserConfig;
+import com.vondear.rxtool.RxActivityTool;
 import com.vondear.rxtool.RxLogTool;
 import com.vondear.rxtool.view.RxToast;
+
+import org.greenrobot.eventbus.EventBus;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
@@ -47,20 +53,40 @@ public class SettingDialog extends BasePopupWindow {
 
         //删除
         tvDelete.setOnClickListener((view) -> {
-//            Tables p2 = BaseConfig.getTableClass(context, null);
-//            p2.setObjectId(tables.getObjectId());
-//            p2.delete(new UpdateListener() {
-//
-//                @Override
-//                public void done(BmobException e) {
-//                    if (e == null) {
-//                        RxLogTool.d("删除成功:" + p2.getUpdatedAt());
-//                    } else {
-//                        RxLogTool.d("删除失败：" + e.getMessage());
-//                    }
-//                }
-//
-//            });
+            dismiss();
+            BaseDialog logoutDialog = new BaseDialog(context,
+                    null,
+                    context.getString(R.string.hint_delete_file),
+                    context.getString(R.string.confirm),
+                    context.getString(R.string.cancel),
+                    0,
+                    0,
+                    false,
+                    new BaseDialog.IBaseDialog() {
+                        @Override
+                        public void clickLeft(View v) {
+                            Tables p2 = BaseConfig.getTableClass(context, null);
+                            p2.setObjectId(tables.getObjectId());
+                            p2.delete(new UpdateListener() {
+                                @Override
+                                public void done(BmobException e) {
+                                    if (e == null) {
+                                        RxToast.success(context.getString(R.string.success_delete));
+                                        EventBus.getDefault().post(new UpdateEvent());
+                                    } else {
+                                        RxToast.success(context.getString(R.string.failure_delete)+"!"+e.getMessage());
+                                    }
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void clickRight(View v) {
+
+                        }
+                    });
+            logoutDialog.show();
+
         });
 
         //收藏
@@ -73,6 +99,7 @@ public class SettingDialog extends BasePopupWindow {
                 public void done(BmobException e) {
                     if (e == null) {
                         RxToast.success(context.getString(R.string.collect_success));
+                        EventBus.getDefault().post(new UpdateEvent());
                     } else {
                         RxLogTool.d("更新失败：" + e.getMessage());
                         RxToast.error(context.getString(R.string.collect_failure));
@@ -87,7 +114,7 @@ public class SettingDialog extends BasePopupWindow {
             VerifyDialog verifyDialog = new VerifyDialog(context,
                     context.getString(R.string.rename),
                     context.getString(R.string.designation),
-                    "",
+                    null,
                     (str, str2) -> {
                         Tables p2 = BaseConfig.getTableClass(context, null);
                         p2.setName(str);
@@ -96,6 +123,7 @@ public class SettingDialog extends BasePopupWindow {
                             public void done(BmobException e) {
                                 if (e == null) {
                                     RxToast.success(context.getString(R.string.rename_success));
+                                    EventBus.getDefault().post(new UpdateEvent());
                                 } else {
                                     RxLogTool.d("更新失败：" + e.getMessage());
                                     RxToast.error(context.getString(R.string.rename_failure));

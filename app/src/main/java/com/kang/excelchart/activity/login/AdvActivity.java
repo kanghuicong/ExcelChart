@@ -36,7 +36,7 @@ public class AdvActivity extends Activity {
 
     //开屏广告加载超时时间,建议大于3000,这里为了冷启动第一次加载到广告并且展示,示例设置了3000ms
     private static final int AD_TIME_OUT = 3000;
-    private String mCodeId = "887387190";
+
     private boolean mIsExpress = false; //是否请求模板广告
 
     @SuppressWarnings("RedundantCast")
@@ -64,7 +64,7 @@ public class AdvActivity extends Activity {
         }
         String codeId = intent.getStringExtra("splash_rit");
         if (!TextUtils.isEmpty(codeId)) {
-            mCodeId = codeId;
+            TTAdManagerHolder.mCodeId = codeId;
         }
         mIsExpress = intent.getBooleanExtra("is_express", false);
     }
@@ -96,14 +96,14 @@ public class AdvActivity extends Activity {
             //float expressViewWidth = UIUtils.getScreenWidthDp(this);
             //float expressViewHeight = UIUtils.getHeight(this);
             adSlot = new AdSlot.Builder()
-                    .setCodeId(mCodeId)
+                    .setCodeId(TTAdManagerHolder.mCodeId)
                     //模板广告需要设置期望个性化模板广告的大小,单位dp,代码位是否属于个性化模板广告，请在穿山甲平台查看
                     //view宽高等于图片的宽高
                     .setExpressViewAcceptedSize(1080, 1920)
                     .build();
         } else {
             adSlot = new AdSlot.Builder()
-                    .setCodeId(mCodeId)
+                    .setCodeId(TTAdManagerHolder.mCodeId)
                     .setImageAcceptedSize(1080, 1920)
                     .build();
         }
@@ -121,7 +121,7 @@ public class AdvActivity extends Activity {
             @Override
             @MainThread
             public void onTimeout() {
-                showToast("开屏广告加载超时");
+                Log.d(TAG,"开屏广告加载超时");
                 goToMainActivity();
             }
 
@@ -148,28 +148,24 @@ public class AdvActivity extends Activity {
                 ad.setSplashInteractionListener(new TTSplashAd.AdInteractionListener() {
                     @Override
                     public void onAdClicked(View view, int type) {
-                        Log.d(TAG, "onAdClicked");
-                        showToast("开屏广告点击");
+                        Log.d(TAG,"开屏广告点击");
                     }
 
                     @Override
                     public void onAdShow(View view, int type) {
-                        Log.d(TAG, "onAdShow");
-                        showToast("开屏广告展示");
+                        Log.d(TAG,"开屏广告展示");
                     }
 
                     @Override
                     public void onAdSkip() {
-                        Log.d(TAG, "onAdSkip");
-                        showToast("开屏广告跳过");
+                        Log.d(TAG,"开屏广告跳过");
                         goToMainActivity();
 
                     }
 
                     @Override
                     public void onAdTimeOver() {
-                        Log.d(TAG, "onAdTimeOver");
-                        showToast("开屏广告倒计时结束");
+                        Log.d(TAG,"开屏广告倒计时结束");
                         goToMainActivity();
                     }
                 });

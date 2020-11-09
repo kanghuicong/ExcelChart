@@ -6,6 +6,7 @@ import com.bytedance.sdk.openadsdk.TTAdConfig;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.bytedance.sdk.openadsdk.TTAdManager;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
+import com.kang.excelchart.activity.login.AdvActivity;
 import com.kang.excelchart.http.MyOkStack3;
 
 /**
@@ -14,7 +15,8 @@ import com.kang.excelchart.http.MyOkStack3;
 public class TTAdManagerHolder {
 
     private static boolean sInit;
-
+    public static String mCodeId = "887394798";
+    public static String mAppID = "5114168";
 
     public static TTAdManager get() {
         if (!sInit) {
@@ -37,7 +39,7 @@ public class TTAdManagerHolder {
 
     private static TTAdConfig buildConfig(Context context) {
         return new TTAdConfig.Builder()
-                .appId("5109578")
+                .appId(mAppID)
                 .useTextureView(true) //使用TextureView控件播放视频,默认为SurfaceView,当有SurfaceView冲突的场景，可以使用TextureView
                 .allowShowNotify(true) //是否允许sdk展示通知栏提示
                 .allowShowPageWhenScreenLock(true) // 锁屏下穿山甲SDK不会再出落地页，此API已废弃，调用没有任何效果

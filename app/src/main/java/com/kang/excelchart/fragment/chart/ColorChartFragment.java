@@ -14,7 +14,7 @@ import com.kang.excelchart.R;
 import com.kang.excelchart.adapter.ColorAdapter;
 import com.kang.excelchart.config.BaseConfig;
 import com.kang.excelchart.base.BaseChartFragment;
-import com.kang.excelchart.config.TextPaintConfig;
+import com.kang.excelchart.config.BaseObjectConfig;
 import com.kang.excelchart.bean.InputTextBean;
 import com.kang.excelchart.bean.TextColorBean;
 
@@ -42,7 +42,7 @@ public class ColorChartFragment extends BaseChartFragment {
     @Override
     protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        colorList = TextPaintConfig.getBackgroundColorList(activity, TextPaintConfig.defaultBackgroundColorStr);
+        colorList = BaseObjectConfig.getBackgroundColorList(activity, BaseObjectConfig.defaultBackgroundColorStr);
         colorAdapter = new ColorAdapter(activity, colorList, new ColorAdapter.ISelectColor() {
             @Override
             public void select(TextColorBean textColorBean) {
